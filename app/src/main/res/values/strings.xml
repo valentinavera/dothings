@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">doThings</string>
+<<<<<<< HEAD
     <string name="Comenzar">Comenzar</string>
     <string name="icono">icono</string>
     <string name="nada">nada</string>
     <string name="do_things">DO THINGS</string>
+=======
+>>>>>>> 7b1b1c70622382e8800a4f6398606923ba353f12
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
