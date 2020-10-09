@@ -3,4 +3,9 @@
     <string name="Comenzar">Comenzar</string>
     <string name="icono">icono</string>
     <string name="do_things">DO THINGS</string>
+    <string name="settings">Settings</string>
+    <string name="team">Team</string>
+    <string name="schedule">Schedule</string>
+    <string name="myday">My Day</string>
+    <string name="task">Task</string>
 </resources>
