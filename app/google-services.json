@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "806589340226",
+    "firebase_url": "https://do-things-db3c3.firebaseio.com",
+    "project_id": "do-things-db3c3",
+    "storage_bucket": "do-things-db3c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806589340226:android:40865b6d914f198ab4abdb",
+        "android_client_info": {
+          "package_name": "edu.unicauca.main"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806589340226-mllktus3sv30tc6jm0hotm4lcsj0r6ma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.unicauca.main",
+            "certificate_hash": "365304f35253c82d99c3534f866763d3eef6abb4"
+          }
+        },
+        {
+          "client_id": "806589340226-1aphkfr26re4vjb7ljhgav1tisngba65.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmN4W5QKA8yIA4M1mtu89Ve-B4NM7IWIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806589340226-1aphkfr26re4vjb7ljhgav1tisngba65.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

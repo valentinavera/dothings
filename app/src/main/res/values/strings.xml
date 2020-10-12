@@ -8,4 +8,8 @@
     <string name="schedule">Schedule</string>
     <string name="myday">My Day</string>
     <string name="task">Task</string>
+    <string name="username">Username</string>
+    <string name="name">Name</string>
+    <string name="password" >Password</string>
+    <string name="submit">Submit</string>
 </resources>
