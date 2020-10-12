@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,7 +23,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import edu.unicauca.main.models.TaskModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +45,7 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
     private String mParam2;
     View rootView ;
     DatabaseReference db;
-    EditText mEditTextName,mEditTextUserName,mEditTextPassword;
+    EditText mEditTextName,mEditTextDescription;
     Button btnSubmit;
     public DayFragment() {
         // Required empty public constructor
@@ -84,29 +88,22 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
 
         btnSubmit =rootView.findViewById(R.id.btnSubmitUser);
         btnSubmit.setOnClickListener(this);
-        mEditTextName = rootView.findViewById(R.id.etName);
-        mEditTextUserName = rootView.findViewById(R.id.etUsername);
-        mEditTextPassword = rootView.findViewById(R.id.etPassword);
-        db =  FirebaseDatabase.getInstance().getReference();
-        return this.rootView;
+        mEditTextName = rootView.findViewById(R.id.etNameTask);
+        mEditTextDescription = rootView.findViewById(R.id.etDescriptionTask);
         loadTasks();
+        return this.rootView;
     }
 
     @Override
     public void onClick(View v) {
-        // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("name", mEditTextName.getText().toString());
-        user.put("username",  mEditTextUserName.getText().toString());
-        user.put("password",  mEditTextPassword.getText().toString());
-        try { 
-            Task<Void> user1 = db.child("User").push().setValue(user);
-        }catch (Exception e) {
-            Log.println(1,"tag", e.getMessage());
-
+        String name = mEditTextName.getText().toString();
+        String description = mEditTextDescription.getText().toString();
+        TaskModel.createTask(name,description);
+    }
+    private  void loadTasks(){
+        List<TaskModel> tasks = TaskModel.allTasks();
+        for (TaskModel task: tasks) {
+            Log.e("task: ",task.getName());
         }
-
-
-
     }
 }
