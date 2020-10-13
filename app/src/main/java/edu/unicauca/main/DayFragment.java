@@ -1,32 +1,25 @@
 package edu.unicauca.main;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ListView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import androidx.fragment.app.Fragment;
+
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import edu.unicauca.main.models.TaskModel;
+
+import static android.R.layout.simple_list_item_1;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,7 +39,12 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
     View rootView ;
     DatabaseReference db;
     EditText mEditTextName,mEditTextDescription;
+    ListView lista;
     Button btnSubmit;
+    final ArrayList<String> todoItems = new ArrayList<String>();
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> arrayList =new ArrayList<>();
+
     public DayFragment() {
         // Required empty public constructor
     }
@@ -61,7 +59,7 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
      */
     // TODO: Rename and change types and number of parameters
     public static DayFragment newInstance(String param1, String param2) {
-        DayFragment fragment = new DayFragment();
+        DayFragment fragment = new DayFragment ();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -78,6 +76,7 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
         }
 
 
+
     }
 
     @Override
@@ -85,12 +84,12 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         this.rootView =  inflater.inflate(R.layout.fragment_day, container, false);
-
         btnSubmit =rootView.findViewById(R.id.btnSubmitUser);
         btnSubmit.setOnClickListener(this);
         mEditTextName = rootView.findViewById(R.id.etNameTask);
         mEditTextDescription = rootView.findViewById(R.id.etDescriptionTask);
-        loadTasks();
+
+       // loadTasks();
         return this.rootView;
     }
 
@@ -104,6 +103,11 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
         List<TaskModel> tasks = TaskModel.allTasks();
         for (TaskModel task: tasks) {
             Log.e("task: ",task.getName());
+
         }
     }
+
+
+
 }
+

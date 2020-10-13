@@ -10,8 +10,13 @@
     <string name="task">Task</string>
     <string name="username">Username</string>
     <string name="name">Name</string>
-    <string name="password" >Password</string>
+    <string name="password">Password</string>
     <string name="submit">Submit</string>
     <string name="nameTask">Name Task</string>
     <string name="descriptionTask">Description Task</string>
+    <string name="fab_content_desc">fab_content</string>
+    <string name="addtask">addTask</string>
+    <string name="heljjlo_my_day_fragment">Heljjlo MY DAY fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
