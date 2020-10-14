@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -81,21 +82,21 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-            View vista = inflater.inflate (R.layout.fragment_task, container, false);
+            final View vista = inflater.inflate (R.layout.fragment_task, container, false);
+            mTaskList.clear ();
             TextViewCreateTask = vista.findViewById (R.id.viewTask);
-            mDataBase = FirebaseDatabase.getInstance ().getReference ();
+            mDataBase = FirebaseDatabase.getInstance ().getReference ().child ("ListaTareas");
             fabSendTask = vista.findViewById (R.id.floating_button_Dialog);
             mRecyclerView = (RecyclerView) vista.findViewById (R.id.recyclerViewTareas);
             mRecyclerView.setLayoutManager (new LinearLayoutManager (getActivity ()));
             getTaskFromFirebase ();
-            mAdapter = new TaskAdapter (mTaskList, R.layout.tareas_view);
-            mRecyclerView.setAdapter (mAdapter);
+
             fabSendTask.setOnClickListener (new View.OnClickListener () {
                 @Override
                 public void onClick(View v) {
-                openDialog ();
 
-                }
+                openDialog ();
+                          }
 
             });
             // Inflate the layout for this fragment
@@ -104,8 +105,8 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
     }
 
     private void openDialog() {
+        mTaskList.clear ();
         DialogTaskClass dialogTaskClass= new DialogTaskClass ();
-        //TODO: aqui es dónde está el problema !! con el get supportaFragmentManager
         dialogTaskClass.setTargetFragment (this, 0);
         dialogTaskClass.show (this.getActivity ().getSupportFragmentManager ().beginTransaction (), "Task dialog");
 
@@ -114,23 +115,20 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
 
     @Override
     public void applyText(String task) {
-
-        TextViewCreateTask.setText (task);
-
+        //TextViewCreateTask.setText (task);
     }
     private  void getTaskFromFirebase(){
-        mDataBase.child("ListaTareas").addValueEventListener (new ValueEventListener () {
+        mDataBase.addValueEventListener (new ValueEventListener () {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists ()){
-                    for(DataSnapshot ds: snapshot.getChildren ()){
-                        String task = ds.child ("nameTask").getValue ().toString ();
-                        mTaskList.add (new Task (task));
-                    }
 
+                for (DataSnapshot ds : snapshot.getChildren ()) {
+                    Task task = ds.getValue (Task.class);
+                    mTaskList.add (task);
                 }
+                mAdapter = new TaskAdapter (mTaskList, R.layout.tareas_view);
+                mRecyclerView.setAdapter (mAdapter);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

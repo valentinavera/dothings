@@ -104,25 +104,5 @@ public class ScheduleFragment extends Fragment {
         return vista;
     }
 
-    private void getTaskFromFirebase() {
-        mDataBase = FirebaseDatabase.getInstance ().getReference ().child ("ListaTareas");
-        mDataBase.addValueEventListener (new ValueEventListener () {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    for (DataSnapshot ds : snapshot.getChildren ()) {
-                        Task task = ds.getValue (Task.class);
-                        mTaskList.add (task);
-                    }
-                mAdapter = new TaskAdapter (mTaskList, R.layout.tareas_view);
-                mRecyclerView.setAdapter (mAdapter);
-                }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
-    }
 
 }

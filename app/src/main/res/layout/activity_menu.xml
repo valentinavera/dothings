@@ -135,8 +135,8 @@
 
     <FrameLayout
         android:id="@+id/contentfragment"
-        android:layout_width="385dp"
-        android:layout_height="694dp"
+        android:layout_width="410dp"
+        android:layout_height="644dp"
         app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.615"

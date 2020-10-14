@@ -61,7 +61,6 @@ public class MenuActivity extends AppCompatActivity implements DialogTaskClass.D
     public void applyText(String task) {
         TaskFragment fragment = (TaskFragment) getSupportFragmentManager ().findFragmentById (taskfrag.getId ());
         fragment.applyText (task);
-
     }
 
 }

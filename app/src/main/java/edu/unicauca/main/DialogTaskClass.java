@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,10 +45,7 @@ public class DialogTaskClass extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.newtaskdialog, null);
         createTask = (EditText) view.findViewById(R.id.createTask);
-
         builder.setView(view);
-        //Para que funcionará con el botón Add
-
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -58,10 +56,10 @@ public class DialogTaskClass extends DialogFragment {
         builder.setPositiveButton ("save", new DialogInterface.OnClickListener () {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //mRecyclerView.setLayoutManager (new LinearLayoutManager(getActivity ()));
                 String task=  createTask.getText().toString();
                 mDataBase.child ("ListaTareas").push().child("nameTask").setValue (task);
-                listener.applyText (task);
+                //listener.applyText (task);
+
             }
         });
 

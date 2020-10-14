@@ -14,6 +14,7 @@ import edu.unicauca.main.R;
 
 public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.ViewHolder> {
     private int resource;
+    private String[] mDataset;
     private ArrayList<Task> taskList;
     public TaskAdapter(ArrayList<Task> taskList, int resource){
         this.taskList=taskList;
@@ -35,7 +36,7 @@ public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return taskList.size ();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
