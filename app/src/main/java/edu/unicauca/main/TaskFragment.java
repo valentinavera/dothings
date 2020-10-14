@@ -88,6 +88,8 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
             mRecyclerView = (RecyclerView) vista.findViewById (R.id.recyclerViewTareas);
             mRecyclerView.setLayoutManager (new LinearLayoutManager (getActivity ()));
             getTaskFromFirebase ();
+            mAdapter = new TaskAdapter (mTaskList, R.layout.tareas_view);
+            mRecyclerView.setAdapter (mAdapter);
             fabSendTask.setOnClickListener (new View.OnClickListener () {
                 @Override
                 public void onClick(View v) {
@@ -125,8 +127,7 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
                         String task = ds.child ("nameTask").getValue ().toString ();
                         mTaskList.add (new Task (task));
                     }
-                    mAdapter = new TaskAdapter (mTaskList, R.layout.tareas_view);
-                    mRecyclerView.setAdapter (mAdapter);
+
                 }
             }
 
