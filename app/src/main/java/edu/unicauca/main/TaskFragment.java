@@ -94,7 +94,7 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
             fabSendTask.setOnClickListener (new View.OnClickListener () {
                 @Override
                 public void onClick(View v) {
-
+                mTaskList.clear ();
                 openDialog ();
                           }
 
