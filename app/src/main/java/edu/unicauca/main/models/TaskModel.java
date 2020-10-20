@@ -2,31 +2,29 @@ package edu.unicauca.main.models;
 
 import android.util.Log;
 
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public  class TaskModel{
+import edu.unicauca.main.patterns.observer.Observed;
+@IgnoreExtraProperties
+public  class TaskModel extends Model<TaskModel> {
+    private static  TaskModel taskModelObject;
     private static String entityName = "Task";
     private  static  FirebaseConnection db = new FirebaseConnection();
     private  String name;
     private  String description;
-    public  static boolean createTask(String name, String description){
-        Map<String, Object> task = new HashMap<>();
-        task.put("name",name);
-        task.put("description", description);
-        return db.push(entityName,task);
+    public  TaskModel(){
+         db.linkModel(TaskModel.class,entityName,this);
     }
-    public static List<TaskModel>  allTasks(){
-        List<TaskModel> tasks = new ArrayList<TaskModel>();
-        for (Object t: db.getAllData(TaskModel.class,entityName)){
-            TaskModel task = (TaskModel) t;
-            tasks.add(task);
+    public static  TaskModel getTaskConnection(){
+        if(taskModelObject == null){
+            taskModelObject = new TaskModel();
         }
-        return tasks;
+        return taskModelObject;
     }
 
     public String getName() {
@@ -39,5 +37,13 @@ public  class TaskModel{
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+
+    public boolean  create(String name, String description) {
+        Map<String, Object> task = new HashMap<>();
+        task.put("name",name);
+        task.put("description", description);
+        return db.push(entityName,task);
     }
 }

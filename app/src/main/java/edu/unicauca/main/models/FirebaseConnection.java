@@ -3,6 +3,8 @@ package edu.unicauca.main.models;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -12,6 +14,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import edu.unicauca.main.patterns.observer.Observed;
 
 public  class FirebaseConnection{
     private static DatabaseReference db;
@@ -33,22 +37,22 @@ public  class FirebaseConnection{
             return false;
         }
     }
-    public List<Object> getAllData(final Class<?> T , final String entity){
+    public void linkModel(final Class<?> T , final String entity, final Model model) {
         connect();
-        final List<Object> objects = new ArrayList<>();
+/*
         db.child(entity).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                for(final DataSnapshot snapshot : dataSnapshot.getChildren()){
-
+                for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    model.clearCache();
                     db.child(entity);
                     db.child(snapshot.getKey());
                     db.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            Object  o  =snapshot.getValue(T);
-                            Log.e("object",o.toString());
+                            Object o = snapshot.getValue(T);
+                            model.addToCache(o);
 
                         }
 
@@ -60,7 +64,7 @@ public  class FirebaseConnection{
 
 
                 }
-
+                model.notify_observers();
             }
 
             @Override
@@ -68,7 +72,25 @@ public  class FirebaseConnection{
 
             }
         });
-        return objects;
+        */
+        db.child(entity).addValueEventListener (new ValueEventListener () {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot ds : snapshot.getChildren ()) {
+                    //Object o = snapshot.getValue(T);
+                    Object o  =ds.getValue(T);
+                    model.addToCache(o);
+
+                }
+                model.notify_observers();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
     }
 
 }

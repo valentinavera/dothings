@@ -2,7 +2,6 @@ package edu.unicauca.main;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,27 +10,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import edu.unicauca.main.models.Task;
 import edu.unicauca.main.models.TaskAdapter;
+import edu.unicauca.main.models.TaskModel;
+import edu.unicauca.main.patterns.observer.Observed;
+import edu.unicauca.main.patterns.observer.Observer;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ScheduleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ScheduleFragment extends Fragment {
-    private DatabaseReference mDataBase;
+public class ScheduleFragment extends Fragment implements Observer {
+    private TaskModel taskModel  = TaskModel.getTaskConnection();
+    //private DatabaseReference mDataBase;
     private TaskAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private ArrayList<Task> mTaskList = new ArrayList<> ();
+    private List<TaskModel> mTaskList = new ArrayList<> ();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,6 +71,7 @@ public class ScheduleFragment extends Fragment {
             mParam1 = getArguments ().getString (ARG_PARAM1);
             mParam2 = getArguments ().getString (ARG_PARAM2);
         }
+        taskModel.addObserver( this);
     }
 
     @Override
@@ -81,7 +82,8 @@ public class ScheduleFragment extends Fragment {
         mRecyclerView = (RecyclerView) vista.findViewById (R.id.vistaRecycler);
         mRecyclerView.setLayoutManager (new LinearLayoutManager (getContext ()));
         mRecyclerView.setHasFixedSize (true);
-        mDataBase = FirebaseDatabase.getInstance ().getReference ().child ("ListaTareas");
+        //mDataBase = FirebaseDatabase.getInstance ().getReference ().child ("ListaTareas");
+        /*
         mDataBase.addValueEventListener (new ValueEventListener () {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -100,9 +102,17 @@ public class ScheduleFragment extends Fragment {
 
         });
 
-
+*/
         return vista;
     }
 
 
+
+    @Override
+    public void notify(Observed observed) {
+        mTaskList = taskModel.getAll();
+
+        mAdapter = new TaskAdapter (mTaskList, R.layout.tareas_view);
+        mRecyclerView.setAdapter (mAdapter);
+    }
 }

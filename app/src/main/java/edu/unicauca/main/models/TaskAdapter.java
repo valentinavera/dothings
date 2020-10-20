@@ -8,15 +8,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import edu.unicauca.main.R;
 
 public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.ViewHolder> {
     private int resource;
     private String[] mDataset;
-    private ArrayList<Task> taskList;
-    public TaskAdapter(ArrayList<Task> taskList, int resource){
+    private List<TaskModel> taskList;
+    public TaskAdapter(List<TaskModel> taskList, int resource){
         this.taskList=taskList;
         this.resource = resource;
 
@@ -30,8 +30,8 @@ public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-      Task objTask = taskList.get (position);
-      holder.textViewTarea.setText (objTask.getNameTask ());
+      TaskModel objTask = taskList.get (position);
+      holder.textViewTarea.setText (objTask.getName());
     }
 
     @Override

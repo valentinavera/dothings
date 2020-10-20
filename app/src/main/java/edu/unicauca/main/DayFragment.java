@@ -37,6 +37,7 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
     View rootView ;
+    private TaskModel taskModel = TaskModel.getTaskConnection();
     DatabaseReference db;
     EditText mEditTextName,mEditTextDescription;
     ListView lista;
@@ -97,10 +98,10 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
     public void onClick(View v) {
         String name = mEditTextName.getText().toString();
         String description = mEditTextDescription.getText().toString();
-        TaskModel.createTask(name,description);
+        taskModel.create(name,description);
     }
     private  void loadTasks(){
-        List<TaskModel> tasks = TaskModel.allTasks();
+        List<TaskModel> tasks = taskModel.getAll();
         for (TaskModel task: tasks) {
             Log.e("task: ",task.getName());
 
