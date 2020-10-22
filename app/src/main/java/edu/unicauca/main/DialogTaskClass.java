@@ -22,7 +22,7 @@ public class DialogTaskClass extends DialogFragment {
     //Task objTask = new Task ();
     DialogListener listener;
     private EditText createTask;
-    private TaskModel taskModel = TaskModel.getTaskConnection();
+    private TaskModel taskModel = TaskModel.getTaskConnection(null);
      public DialogTaskClass(){}
     @NonNull
     @Override

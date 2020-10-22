@@ -1,4 +1,4 @@
-package edu.unicauca.main.models;
+package edu.unicauca.main;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.unicauca.main.R;
+import edu.unicauca.main.models.TaskModel;
 
 public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.ViewHolder> {
     private int resource;

@@ -6,8 +6,6 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import edu.unicauca.main.models.TaskAdapter;
-
 import static edu.unicauca.main.R.id.contentfragment;
 
 public class MenuActivity extends AppCompatActivity implements DialogTaskClass.DialogListener{

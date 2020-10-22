@@ -10,20 +10,29 @@ import java.util.List;
 import java.util.Map;
 
 import edu.unicauca.main.patterns.observer.Observed;
+import edu.unicauca.main.patterns.observer.Observer;
+
 @IgnoreExtraProperties
 public  class TaskModel extends Model<TaskModel> {
     private static  TaskModel taskModelObject;
     private static String entityName = "Task";
-    private  static  FirebaseConnection db = new FirebaseConnection();
+    private    IConnection db ;
     private  String name;
     private  String description;
     public  TaskModel(){
-         db.linkModel(TaskModel.class,entityName,this);
+        //db.linkModel(entityName,this);
     }
-    public static  TaskModel getTaskConnection(){
+
+
+    public static  TaskModel getTaskConnection(Observer o){
         if(taskModelObject == null){
             taskModelObject = new TaskModel();
-        }
+            if(o != null)  taskModelObject.addObserver(o);
+            //taskModelObject.db  = new FirebaseConnection();
+            taskModelObject.db  = new MongoDBConnection();
+            taskModelObject.create("asdasd","adasdas");
+            taskModelObject.db.linkModel(entityName,taskModelObject);
+        }else  if(o != null)  taskModelObject.addObserver(o);
         return taskModelObject;
     }
 
@@ -46,4 +55,12 @@ public  class TaskModel extends Model<TaskModel> {
         task.put("description", description);
         return db.push(entityName,task);
     }
+    @Override
+    public Model createModel(Map<String, Object> data) {
+        TaskModel taskModel = new TaskModel();
+        taskModel.description =(String) data.get("description");
+        taskModel.name =(String) data.get("name");
+        return taskModel;
+    }
+
 }

@@ -37,7 +37,7 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
     View rootView ;
-    private TaskModel taskModel = TaskModel.getTaskConnection();
+    private TaskModel taskModel = TaskModel.getTaskConnection(null);
     DatabaseReference db;
     EditText mEditTextName,mEditTextDescription;
     ListView lista;

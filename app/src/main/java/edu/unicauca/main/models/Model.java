@@ -1,7 +1,10 @@
 package edu.unicauca.main.models;
 
+import android.view.Display;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import edu.unicauca.main.patterns.observer.Observed;
 
@@ -20,4 +23,5 @@ public abstract  class Model<T> extends Observed {
     public  List<T> getAll(){
         return cacheList;
     }
+    public abstract Model createModel(Map<String, Object> data);
 }

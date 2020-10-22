@@ -12,12 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-import edu.unicauca.main.models.TaskAdapter;
 import edu.unicauca.main.models.TaskModel;
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
@@ -28,7 +25,7 @@ import edu.unicauca.main.patterns.observer.Observer;
  * create an instance of this fragment.
  */
 public class TaskFragment extends Fragment implements DialogTaskClass.DialogListener, Observer {
-    private TaskModel taskModel = new TaskModel();
+    private TaskModel taskModel = TaskModel.getTaskConnection(this);
     private TextView TextViewCreateTask;
     private FloatingActionButton fabSendTask;
     private String tarea;
@@ -75,7 +72,6 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
             mParam1 = getArguments ().getString (ARG_PARAM1);
             mParam2 = getArguments ().getString (ARG_PARAM2);
         }
-        taskModel.addObserver(this);
     }
 
     @Override

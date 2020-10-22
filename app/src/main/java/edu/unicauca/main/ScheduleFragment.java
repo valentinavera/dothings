@@ -10,13 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.unicauca.main.models.TaskAdapter;
 import edu.unicauca.main.models.TaskModel;
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
@@ -27,7 +23,7 @@ import edu.unicauca.main.patterns.observer.Observer;
  * create an instance of this fragment.
  */
 public class ScheduleFragment extends Fragment implements Observer {
-    private TaskModel taskModel  = TaskModel.getTaskConnection();
+    private TaskModel taskModel  = TaskModel.getTaskConnection(this);
     //private DatabaseReference mDataBase;
     private TaskAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -71,7 +67,6 @@ public class ScheduleFragment extends Fragment implements Observer {
             mParam1 = getArguments ().getString (ARG_PARAM1);
             mParam2 = getArguments ().getString (ARG_PARAM2);
         }
-        taskModel.addObserver( this);
     }
 
     @Override
