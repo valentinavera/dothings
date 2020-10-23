@@ -25,7 +25,7 @@ import edu.unicauca.main.patterns.observer.Observer;
  * create an instance of this fragment.
  */
 public class TaskFragment extends Fragment implements DialogTaskClass.DialogListener, Observer {
-    private TaskModel taskModel = TaskModel.getTaskConnection(this);
+    private TaskModel taskModel;
     private TextView TextViewCreateTask;
     private FloatingActionButton fabSendTask;
     private String tarea;
@@ -46,7 +46,14 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
     public TaskFragment() {
         // Required empty public constructor
     }
-
+    public static  TaskFragment newInstance(TaskModel tm){
+        TaskFragment fragment = new TaskFragment();
+        fragment.taskModel  =tm;
+        tm.addObserver(fragment);
+        Bundle bundle = new Bundle();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -78,28 +85,30 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
             final View vista = inflater.inflate (R.layout.fragment_task, container, false);
-            taskModel.clearCache();
+
             TextViewCreateTask = vista.findViewById (R.id.viewTask);
             //mDataBase = FirebaseDatabase.getInstance ().getReference ().child ("ListaTareas");
             fabSendTask = vista.findViewById (R.id.floating_button_Dialog);
             mRecyclerView = (RecyclerView) vista.findViewById (R.id.recyclerViewTareas);
             mRecyclerView.setLayoutManager (new LinearLayoutManager (getActivity ()));
-
+            this.notify(taskModel);
             fabSendTask.setOnClickListener (new View.OnClickListener () {
                 @Override
                 public void onClick(View v) {
-                    taskModel.clearCache();
+                   // taskModel.clearCache();
                 openDialog ();
                           }
 
             });
+
+
             // Inflate the layout for this fragment
 
         return vista;
     }
 
     private void openDialog() {
-        taskModel.clearCache();
+
         DialogTaskClass dialogTaskClass= new DialogTaskClass ();
         dialogTaskClass.setTargetFragment (this, 0);
         dialogTaskClass.show (this.getActivity ().getSupportFragmentManager ().beginTransaction (), "Task dialog");
@@ -117,7 +126,11 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
     public void notify(Observed observed) {
         List<TaskModel> tasks = taskModel.getAll();
         mAdapter = new TaskAdapter (tasks, R.layout.tareas_view);
-        mRecyclerView.setAdapter (mAdapter);
+        try {
+            mRecyclerView.setAdapter (mAdapter);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         Log.e("Notify:","hola");
     }
 }

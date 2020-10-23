@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import edu.unicauca.main.models.TaskModel;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -15,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void nextView(View view){
+        TaskModel.getTaskConnection(null,this);
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }

@@ -22,7 +22,7 @@ public class DialogTaskClass extends DialogFragment {
     //Task objTask = new Task ();
     DialogListener listener;
     private EditText createTask;
-    private TaskModel taskModel = TaskModel.getTaskConnection(null);
+    private TaskModel taskModel ;
      public DialogTaskClass(){}
     @NonNull
     @Override
@@ -47,6 +47,7 @@ public class DialogTaskClass extends DialogFragment {
                 taskModel.create(task,"asdasd");
             }
         });
+        taskModel = TaskModel.getTaskConnection(null,null);
 
         return builder.create ();
 

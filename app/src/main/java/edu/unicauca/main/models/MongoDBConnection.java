@@ -39,7 +39,7 @@ public  class MongoDBConnection implements IConnection{
     }
 
     @Override
-    public boolean push(String entity, Map<String, Object> data) {
+    public boolean push(Model m,String entity, Map<String, Object> data) {
         connect();
         try {
             DBObject document = new BasicDBObject(data) ;

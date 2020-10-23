@@ -1,5 +1,6 @@
 package edu.unicauca.main.models;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.firebase.database.IgnoreExtraProperties;
@@ -24,16 +25,17 @@ public  class TaskModel extends Model<TaskModel> {
     }
 
 
-    public static  TaskModel getTaskConnection(Observer o){
+    public static  TaskModel getTaskConnection(Observer o, Context context){
         if(taskModelObject == null){
             taskModelObject = new TaskModel();
             if(o != null)  taskModelObject.addObserver(o);
-            //taskModelObject.db  = new FirebaseConnection();
-            taskModelObject.db  = new MongoDBConnection();
-            taskModelObject.create("asdasd","adasdas");
+           // taskModelObject.db  = new FirebaseConnection();
+            taskModelObject.db  = new SqliteConnection(context);
+            //taskModelObject.db  = new MongoDBConnection();
             taskModelObject.db.linkModel(entityName,taskModelObject);
         }else  if(o != null)  taskModelObject.addObserver(o);
-        return taskModelObject;
+        //taskModelObject.notify_observers();
+            return taskModelObject;
     }
 
     public String getName() {
@@ -53,7 +55,11 @@ public  class TaskModel extends Model<TaskModel> {
         Map<String, Object> task = new HashMap<>();
         task.put("name",name);
         task.put("description", description);
-        return db.push(entityName,task);
+        boolean push = db.push(this,entityName, task);
+        if(push){
+            this.notify_observers();
+        }
+        return push;
     }
     @Override
     public Model createModel(Map<String, Object> data) {
@@ -61,6 +67,14 @@ public  class TaskModel extends Model<TaskModel> {
         taskModel.description =(String) data.get("description");
         taskModel.name =(String) data.get("name");
         return taskModel;
+    }
+    @Override
+    public Map<String, Class> getColumtypes() {
+        Map<String, Class> task = new HashMap<>();
+        task.put("name",String.class);
+        task.put("description", String.class);
+        return  task;
+
     }
 
 }

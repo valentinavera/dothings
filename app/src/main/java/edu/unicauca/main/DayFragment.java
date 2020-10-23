@@ -37,7 +37,7 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
     View rootView ;
-    private TaskModel taskModel = TaskModel.getTaskConnection(null);
+    private TaskModel taskModel;
     DatabaseReference db;
     EditText mEditTextName,mEditTextDescription;
     ListView lista;
@@ -59,12 +59,20 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
      * @return A new instance of fragment DayFragment.
      */
     // TODO: Rename and change types and number of parameters
+
     public static DayFragment newInstance(String param1, String param2) {
         DayFragment fragment = new DayFragment ();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+        return fragment;
+    }
+    public static  DayFragment newInstance(TaskModel tm){
+        DayFragment fragment = new DayFragment();
+        fragment.taskModel  =tm;
+        Bundle bundle = new Bundle();
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -100,13 +108,7 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
         String description = mEditTextDescription.getText().toString();
         taskModel.create(name,description);
     }
-    private  void loadTasks(){
-        List<TaskModel> tasks = taskModel.getAll();
-        for (TaskModel task: tasks) {
-            Log.e("task: ",task.getName());
 
-        }
-    }
 
 
 

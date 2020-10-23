@@ -23,7 +23,7 @@ import edu.unicauca.main.patterns.observer.Observer;
  * create an instance of this fragment.
  */
 public class ScheduleFragment extends Fragment implements Observer {
-    private TaskModel taskModel  = TaskModel.getTaskConnection(this);
+    private TaskModel taskModel ;
     //private DatabaseReference mDataBase;
     private TaskAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -59,7 +59,14 @@ public class ScheduleFragment extends Fragment implements Observer {
         fragment.setArguments (args);
         return fragment;
     }
-
+    public static  ScheduleFragment newInstance(TaskModel tm){
+        ScheduleFragment fragment = new ScheduleFragment();
+        fragment.taskModel  =tm;
+        tm.addObserver(fragment);
+        Bundle bundle = new Bundle();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
@@ -77,27 +84,8 @@ public class ScheduleFragment extends Fragment implements Observer {
         mRecyclerView = (RecyclerView) vista.findViewById (R.id.vistaRecycler);
         mRecyclerView.setLayoutManager (new LinearLayoutManager (getContext ()));
         mRecyclerView.setHasFixedSize (true);
-        //mDataBase = FirebaseDatabase.getInstance ().getReference ().child ("ListaTareas");
-        /*
-        mDataBase.addValueEventListener (new ValueEventListener () {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+        this.notify(taskModel);
 
-                for (DataSnapshot ds : snapshot.getChildren ()) {
-                    Task task = ds.getValue (Task.class);
-                    mTaskList.add (task);
-                }
-                mAdapter = new TaskAdapter (mTaskList, R.layout.tareas_view);
-                mRecyclerView.setAdapter (mAdapter);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
-
-*/
         return vista;
     }
 

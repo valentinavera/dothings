@@ -14,7 +14,6 @@ import edu.unicauca.main.models.TaskModel;
 
 public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.ViewHolder> {
     private int resource;
-    private String[] mDataset;
     private List<TaskModel> taskList;
     public TaskAdapter(List<TaskModel> taskList, int resource){
         this.taskList=taskList;

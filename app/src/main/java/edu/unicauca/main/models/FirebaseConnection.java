@@ -27,7 +27,7 @@ public  class FirebaseConnection implements  IConnection{
             db =  FirebaseDatabase.getInstance().getReference();
         }
     }
-    public    boolean push(String entity, Map<String, Object> data){
+    public    boolean push(Model m,String entity, Map<String, Object> data){
         connect();
         try {
             db.child(entity).push().setValue(data);
