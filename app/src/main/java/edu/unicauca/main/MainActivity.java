@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void nextView(View view){
-        TaskModel.getTaskConnection(null,this);
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }

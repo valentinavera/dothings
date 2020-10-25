@@ -97,11 +97,10 @@ public  class SqliteConnection implements IConnection {
         Cursor cursor = db.getAllData(entity);
         Map<String,Class> columtypes= model.getColumtypes();
         Map<String, Object> data = new HashMap<>();
-        try {
-            int count = cursor.getCount();
-            cursor.moveToFirst();
-        }catch (Exception e){
-            e.printStackTrace();
+        cursor.moveToFirst();
+        if(cursor.getCount() == 0){
+            model.notify_observers();
+            return;
         }
         do {
             int i = 1;

@@ -1,5 +1,6 @@
 package edu.unicauca.main;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
@@ -11,7 +12,7 @@ import edu.unicauca.main.models.TaskModel;
 import static edu.unicauca.main.R.id.contentfragment;
 
 public class MenuActivity extends AppCompatActivity implements DialogTaskClass.DialogListener{
-    private TaskModel taskModel = TaskModel.getTaskConnection(null,null);
+    private TaskModel taskModel ;
     TaskFragment taskfrag;
     DayFragment dayfragment;
     ScheduleFragment scheduleFragment;
@@ -22,13 +23,14 @@ public class MenuActivity extends AppCompatActivity implements DialogTaskClass.D
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        taskModel = TaskModel.getTaskConnection(null,getApplicationContext());
         taskfrag = TaskFragment.newInstance(taskModel);
-
         getSupportFragmentManager().beginTransaction().add(contentfragment, taskfrag).commit();
 
     }
 
     public void onClick(View view) {
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         dayfragment =  DayFragment.newInstance(taskModel);
 
