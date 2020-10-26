@@ -35,6 +35,7 @@ public class TaskFragment extends Fragment implements Observer {
     private TaskAdapter mAdapter;
     private RecyclerView mRecyclerView;
     //private ArrayList<Task> mTaskList = new ArrayList<> ();
+    private List<TaskModel> tasks;
     private BottomSheetDialog bottomSheetDialog;
     private int position;
     private EditText editNameText;
@@ -117,14 +118,14 @@ public class TaskFragment extends Fragment implements Observer {
 
     @Override
     public void notify(Observed observed) {
-        List<TaskModel> tasks = taskModel.getAll();
+        tasks = taskModel.getAll();
         mAdapter = new TaskAdapter (tasks, R.layout.tareas_view);
         mAdapter.setOnClickListen(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 position = mRecyclerView.getChildAdapterPosition(view);
-                Toast.makeText(getActivity().getApplicationContext(),"position"+position,Toast.LENGTH_SHORT).show();
-                //showModal();
+                //Toast.makeText(getActivity().getApplicationContext(),"position"+position,Toast.LENGTH_SHORT).show();
+                showModal();
             }
         });
         try {
@@ -136,15 +137,15 @@ public class TaskFragment extends Fragment implements Observer {
     }
 
     private void showModal() {
-       /* bottomSheetDialog = new BottomSheetDialog(getActivity());
+       bottomSheetDialog = new BottomSheetDialog(getActivity());
         View view = getLayoutInflater().from(getActivity()).inflate(R.layout.fragment_modal_edit_task,null);
         editNameText = view.findViewById(R.id.editNameTask);
         if(position != -1){
-            editNameText.setText(this.mTaskList.get(position).getNameTask());
+            editNameText.setText(this.tasks.get(position).getName());
         }
 
         bottomSheetDialog.setContentView(view);
-        bottomSheetDialog.show(); */
+        bottomSheetDialog.show();
     }
 
     @Override
