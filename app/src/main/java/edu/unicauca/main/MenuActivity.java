@@ -11,7 +11,7 @@ import edu.unicauca.main.models.TaskModel;
 
 import static edu.unicauca.main.R.id.contentfragment;
 
-public class MenuActivity extends AppCompatActivity implements DialogTaskClass.DialogListener{
+public class MenuActivity extends AppCompatActivity {
     private TaskModel taskModel ;
     TaskFragment taskfrag;
     DayFragment dayfragment;
@@ -48,12 +48,6 @@ public class MenuActivity extends AppCompatActivity implements DialogTaskClass.D
                 transaction = getSupportFragmentManager().beginTransaction().replace(contentfragment, scheduleFragment);
                 break;
         }transaction.commit();
-    }
-
-    @Override
-    public void applyText(String task) {
-        TaskFragment fragment = (TaskFragment) getSupportFragmentManager ().findFragmentById (taskfrag.getId ());
-        fragment.applyText (task);
     }
 
 }

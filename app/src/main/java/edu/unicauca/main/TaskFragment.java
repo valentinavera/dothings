@@ -5,12 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -24,15 +27,17 @@ import edu.unicauca.main.patterns.observer.Observer;
  * Use the {@link TaskFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TaskFragment extends Fragment implements DialogTaskClass.DialogListener, Observer {
+public class TaskFragment extends Fragment implements Observer {
     private TaskModel taskModel;
     private TextView TextViewCreateTask;
     private FloatingActionButton fabSendTask;
-    private String tarea;
     //private DatabaseReference mDataBase;
     private TaskAdapter mAdapter;
     private RecyclerView mRecyclerView;
     //private ArrayList<Task> mTaskList = new ArrayList<> ();
+    private BottomSheetDialog bottomSheetDialog;
+    private int position;
+    private EditText editNameText;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,13 +99,8 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
             this.notify(taskModel);
             fabSendTask.setOnClickListener (new View.OnClickListener () {
                 @Override
-                public void onClick(View v) {
-                   // taskModel.clearCache();
-                openDialog ();
-                          }
-
+                public void onClick(View v) { openDialog (); }
             });
-
 
             // Inflate the layout for this fragment
 
@@ -112,13 +112,6 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
         DialogTaskClass dialogTaskClass= new DialogTaskClass ();
         dialogTaskClass.setTargetFragment (this, 0);
         dialogTaskClass.show (this.getActivity ().getSupportFragmentManager ().beginTransaction (), "Task dialog");
-
-
-    }
-
-    @Override
-    public void applyText(String task) {
-        //TextViewCreateTask.setText (task);
     }
 
 
@@ -126,13 +119,40 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
     public void notify(Observed observed) {
         List<TaskModel> tasks = taskModel.getAll();
         mAdapter = new TaskAdapter (tasks, R.layout.tareas_view);
+        mAdapter.setOnClickListen(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                position = mRecyclerView.getChildAdapterPosition(view);
+                Toast.makeText(getActivity().getApplicationContext(),"position"+position,Toast.LENGTH_SHORT).show();
+                //showModal();
+            }
+        });
         try {
             mRecyclerView.setAdapter (mAdapter);
         }catch (Exception e){
             e.printStackTrace();
         }
-        Log.e("Notify:","hola");
+        //Log.e("Notify:","hola");
     }
+
+    private void showModal() {
+       /* bottomSheetDialog = new BottomSheetDialog(getActivity());
+        View view = getLayoutInflater().from(getActivity()).inflate(R.layout.fragment_modal_edit_task,null);
+        editNameText = view.findViewById(R.id.editNameTask);
+        if(position != -1){
+            editNameText.setText(this.mTaskList.get(position).getNameTask());
+        }
+
+        bottomSheetDialog.setContentView(view);
+        bottomSheetDialog.show(); */
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        bottomSheetDialog.dismiss();
+    }
+
 }
 
 

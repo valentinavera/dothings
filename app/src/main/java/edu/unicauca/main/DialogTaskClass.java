@@ -19,8 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import edu.unicauca.main.models.TaskModel;
 
 public class DialogTaskClass extends DialogFragment {
-    //Task objTask = new Task ();
-    DialogListener listener;
+
     private EditText createTask;
     private TaskModel taskModel ;
      public DialogTaskClass(){}
@@ -52,19 +51,5 @@ public class DialogTaskClass extends DialogFragment {
         return builder.create ();
 
     }
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            listener = (DialogListener) activity;
-        }catch (ClassCastException e) {
-            throw new ClassCastException(
-                    activity.toString() +
-                            " no implementó OnSetTitleListener");
 
-        }
-    }
-    public interface DialogListener{
-        void applyText(String task);
-    }
 }
