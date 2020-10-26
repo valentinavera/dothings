@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.unicauca.main.models.TaskModel;
+import edu.unicauca.main.persistence.models.TaskModel;
 
 public class TaskAdapter extends RecyclerView.Adapter <TaskAdapter.ViewHolder> {
     private int resource;

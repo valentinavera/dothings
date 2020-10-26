@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-import edu.unicauca.main.models.TaskModel;
+import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
 
@@ -49,7 +49,7 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
     public static  TaskFragment newInstance(TaskModel tm){
         TaskFragment fragment = new TaskFragment();
         fragment.taskModel  =tm;
-        tm.addObserver(fragment);
+        tm.getManager().addObserver(fragment);
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
@@ -91,7 +91,7 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
             fabSendTask = vista.findViewById (R.id.floating_button_Dialog);
             mRecyclerView = (RecyclerView) vista.findViewById (R.id.recyclerViewTareas);
             mRecyclerView.setLayoutManager (new LinearLayoutManager (getActivity ()));
-            this.notify(taskModel);
+            this.notify(null);
             fabSendTask.setOnClickListener (new View.OnClickListener () {
                 @Override
                 public void onClick(View v) {
@@ -124,7 +124,7 @@ public class TaskFragment extends Fragment implements DialogTaskClass.DialogList
 
     @Override
     public void notify(Observed observed) {
-        List<TaskModel> tasks = taskModel.getAll();
+        List<TaskModel> tasks = taskModel.getManager().getAll();
         mAdapter = new TaskAdapter (tasks, R.layout.tareas_view);
         try {
             mRecyclerView.setAdapter (mAdapter);

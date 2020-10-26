@@ -1,23 +1,17 @@
-package edu.unicauca.main.models;
+package edu.unicauca.main.persistence.connections;
 
-import com.google.android.gms.common.util.BiConsumer;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
-import com.mongodb.WriteResult;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.DBCollectionCountOptions;
-
-import org.bson.Document;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import edu.unicauca.main.persistence.managers.ModelManager;
+import edu.unicauca.main.persistence.models.Model;
 
 public  class MongoDBConnection implements IConnection{
     private  MongoClient mongo ;
@@ -39,8 +33,9 @@ public  class MongoDBConnection implements IConnection{
     }
 
     @Override
-    public boolean push(Model m,String entity, Map<String, Object> data) {
+    public boolean create(ModelManager m, Map<String, Object> data) {
         connect();
+        String entity = m.getModel().getEntityName();
         try {
             DBObject document = new BasicDBObject(data) ;
             if (!db.collectionExists(entity)){
@@ -58,8 +53,14 @@ public  class MongoDBConnection implements IConnection{
     }
 
     @Override
-    public void linkModel(String entity, Model model) {
+    public boolean update(ModelManager m, Map<String, Object> data) {
+        return false;
+    }
+
+    @Override
+    public void linkModelManager( ModelManager model) {
         connect();
+        String entity = model.getModel().getEntityName();
         if(!db.collectionExists(entity)){
             model.notify_observers();
             return;

@@ -13,10 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import edu.unicauca.main.models.TaskModel;
+import edu.unicauca.main.persistence.models.TaskModel;
 
 public class DialogTaskClass extends DialogFragment {
     //Task objTask = new Task ();
@@ -44,10 +41,13 @@ public class DialogTaskClass extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String task=  createTask.getText().toString();
-                taskModel.create(task,"asdasd");
+                TaskModel t = new TaskModel(task,"descpription");
+                t.save();
+                //t.setName("New nameee");
+             //   t.save();
             }
         });
-        taskModel = TaskModel.getTaskConnection(null,null);
+        taskModel = new TaskModel();
 
         return builder.create ();
 
