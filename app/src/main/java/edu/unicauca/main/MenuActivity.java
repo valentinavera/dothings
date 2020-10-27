@@ -1,13 +1,12 @@
 package edu.unicauca.main;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import edu.unicauca.main.models.TaskModel;
+import edu.unicauca.main.persistence.models.TaskModel;
 
 import static edu.unicauca.main.R.id.contentfragment;
 
@@ -23,7 +22,7 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        taskModel = TaskModel.getTaskConnection(null,getApplicationContext());
+        taskModel = new TaskModel();//(getApplicationContext());
         taskfrag = TaskFragment.newInstance(taskModel);
         getSupportFragmentManager().beginTransaction().add(contentfragment, taskfrag).commit();
 

@@ -1,4 +1,4 @@
-package edu.unicauca.main.models;
+package edu.unicauca.main.persistence.connections;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import edu.unicauca.main.persistence.managers.ModelManager;
+import edu.unicauca.main.persistence.models.Model;
 
 class  SqliteConnectionHelper extends SQLiteOpenHelper {
 
@@ -32,10 +35,24 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
     }
 
 
-    public  void insert(String entity, ContentValues values){
+    public  int insert(String entity, ContentValues values){
         try {
             SQLiteDatabase wdb = this.getWritableDatabase();
-            wdb.insert(entity,null,values);
+            long insert = wdb.insert(entity, null, values);
+            wdb.close();
+            return (int) insert;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+
+    }
+    public  void update(String entity, String key,ContentValues values){
+        try {
+            String whereClausule = "_id = ?";
+            SQLiteDatabase wdb = this.getWritableDatabase();
+            wdb.update(entity,values,whereClausule,new String[]{key});
             wdb.close();
         }catch (Exception e){
             e.printStackTrace();
@@ -76,44 +93,64 @@ public  class SqliteConnection implements IConnection {
     }
 
     @Override
-    public boolean push(Model m ,String entity, Map<String, Object> data) {
+    public boolean create(ModelManager manager, Map<String, Object> data) {
         connect();
+        String entity = manager.getModel().getEntityName();
         ContentValues values = new ContentValues( );
         for (Map.Entry<String,Object> i:data.entrySet()) {
             values.put(i.getKey(),i.getValue().toString());
 
         }
-        db.insert(entity,values);
-        this.linkModel(entity,m);
+        int id = db.insert(entity, values);
+        if(id == -1)
+            return false;
+        //m.setKey(String.valueOf(id));
+        this.linkModelManager(manager);
         return true;
 
     }
 
     @Override
-    public void linkModel(String entity, Model model) {
+    public boolean update(ModelManager manager, Map<String, Object> data) {
         connect();
-        model.clearCache();
-        //Cursor cursor = db.rawQuery("SELECT * FROM " + entity, null);
+        String entity = manager.getModel().getEntityName();
+        String key = (String) data.remove("key");
+        ContentValues values = new ContentValues( );
+        for (Map.Entry<String,Object> i:data.entrySet()) {
+            values.put(i.getKey(),i.getValue().toString());
+
+        }
+        db.update(entity,key,values);
+        this.linkModelManager(manager);
+        return true;
+
+    }
+
+    @Override
+    public void linkModelManager( ModelManager manager) {
+        connect();
+        manager.clearCache();
+        String entity = manager.getModel().getEntityName();
         Cursor cursor = db.getAllData(entity);
-        Map<String,Class> columtypes= model.getColumtypes();
         Map<String, Object> data = new HashMap<>();
         cursor.moveToFirst();
         if(cursor.getCount() == 0){
-            model.notify_observers();
+            manager.notify_observers();
             return;
         }
         do {
-            int i = 1;
-            for(Map.Entry<String,Class> ctype: columtypes.entrySet()) {
+            int i = 0;
+            String[] columnNames = cursor.getColumnNames();
+            for(String column: columnNames) {
                 String field = cursor.getString(i);
-                data.put(ctype.getKey(),field);
+                data.put(column,field);
                 i++;
             }
-            model.addToCache(model.createModel(data));
+            manager.addToCache(manager.makeModel(data));
         } while (cursor.moveToNext());
 
 
 
-        model.notify_observers();
+        manager.notify_observers();
     }
 }

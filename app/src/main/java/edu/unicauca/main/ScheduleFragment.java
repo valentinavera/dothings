@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.unicauca.main.models.TaskModel;
+import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
 
@@ -62,7 +62,7 @@ public class ScheduleFragment extends Fragment implements Observer {
     public static  ScheduleFragment newInstance(TaskModel tm){
         ScheduleFragment fragment = new ScheduleFragment();
         fragment.taskModel  =tm;
-        tm.addObserver(fragment);
+        tm.getManager().addObserver(fragment);
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
@@ -84,7 +84,7 @@ public class ScheduleFragment extends Fragment implements Observer {
         mRecyclerView = (RecyclerView) vista.findViewById (R.id.vistaRecycler);
         mRecyclerView.setLayoutManager (new LinearLayoutManager (getContext ()));
         mRecyclerView.setHasFixedSize (true);
-        this.notify(taskModel);
+        this.notify(null);
 
         return vista;
     }
@@ -93,7 +93,7 @@ public class ScheduleFragment extends Fragment implements Observer {
 
     @Override
     public void notify(Observed observed) {
-        mTaskList = taskModel.getAll();
+        mTaskList = taskModel.getManager().getAll();
 
         mAdapter = new TaskAdapter (mTaskList, R.layout.tareas_view);
         mRecyclerView.setAdapter (mAdapter);

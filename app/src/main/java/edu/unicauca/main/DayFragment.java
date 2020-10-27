@@ -1,7 +1,6 @@
 package edu.unicauca.main;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +14,8 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import edu.unicauca.main.models.TaskModel;
-
-import static android.R.layout.simple_list_item_1;
+import edu.unicauca.main.persistence.models.TaskModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -106,7 +102,8 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
     public void onClick(View v) {
         String name = mEditTextName.getText().toString();
         String description = mEditTextDescription.getText().toString();
-        taskModel.create(name,description);
+        TaskModel t = new TaskModel(name,description);
+        t.save();
     }
 
 
