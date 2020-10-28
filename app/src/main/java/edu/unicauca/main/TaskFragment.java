@@ -144,6 +144,7 @@ public class TaskFragment extends Fragment implements Observer {
         if(position != -1){
             editNameText.setText(this.tasks.get(position).getName());
         }
+        //Botton save
 
         bottomSheetDialog.setContentView(view);
         bottomSheetDialog.show();

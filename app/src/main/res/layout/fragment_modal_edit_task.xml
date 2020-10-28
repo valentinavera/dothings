@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="getNameTask" />
+        android:text="getNameTask"
+        android:inputType="textShortMessage"/>
 
     <Button
         android:id="@+id/button"
@@ -29,5 +30,13 @@
         android:background="@color/white"
         android:hint="Agregar nota"
         android:inputType="textMultiLine" />
+
+
+
+    <Button
+        android:id="@+id/SaveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="save" />
 
 </LinearLayout>
