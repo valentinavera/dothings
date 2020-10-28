@@ -6,8 +6,6 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import edu.unicauca.main.models.TaskModel;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
