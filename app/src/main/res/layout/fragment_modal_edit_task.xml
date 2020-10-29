@@ -28,15 +28,15 @@
         android:layout_marginLeft="40dp"
         android:layout_marginTop="13dp"
         android:background="@color/white"
-        android:hint="Agregar nota"
+        android:hint="@string/add_note"
         android:inputType="textMultiLine" />
 
 
 
     <Button
-        android:id="@+id/SaveButton"
+        android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="save" />
+        android:text="save"/>
 
 </LinearLayout>

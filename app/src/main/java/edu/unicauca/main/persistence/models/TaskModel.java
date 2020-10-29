@@ -100,4 +100,5 @@ public  class TaskModel extends Model<TaskModel> {
     public void setName(String name) {
         this.name = name;
     }
+    public void setDescription(String des){ this.description = des;}
 }
