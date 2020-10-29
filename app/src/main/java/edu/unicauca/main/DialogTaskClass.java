@@ -24,7 +24,6 @@ public class DialogTaskClass extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.newtaskdialog, null);
         createTask = (EditText) view.findViewById(R.id.createTask);

@@ -40,6 +40,7 @@ public  abstract class ModelManager<T> extends Observed {
     public  IConnection getDb(){
         return db;
     }
+    public  IConnection setDb(){return db;}
     public abstract Model makeModel(Map<String, Object> data);
 
     public  Model getModel(){
@@ -47,7 +48,7 @@ public  abstract class ModelManager<T> extends Observed {
     }
 
     public  boolean update(Map<String, Object> data){
-        return db.update(this, data);
+        return db.update (this, data);
     }
 
     public  boolean create(Map<String, Object> data){

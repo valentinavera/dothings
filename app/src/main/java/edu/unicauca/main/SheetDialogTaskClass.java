@@ -42,6 +42,7 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment implements V
 
     @Override
     public void onClick(View v) {
+        objTask.getKey ();
         objTask.setName(editNameText.getText().toString());
         objTask.setDescription("hola");
         objTask.save();

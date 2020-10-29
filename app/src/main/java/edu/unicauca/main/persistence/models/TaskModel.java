@@ -77,8 +77,8 @@ public  class TaskModel extends Model<TaskModel> {
                 result = objects.create( task);
         }
         else {
-          //  task.put("key", key);
-            result = objects.update(task);
+                task.put("key", getKey ());
+                result = objects.update(task);
         }
 
 
