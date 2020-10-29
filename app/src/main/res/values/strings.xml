@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">doThings</string>
-    <string name="Comenzar">Comenzar</string>
-    <string name="icono">icono</string>
-    <string name="do_things">DO THINGS</string>
+    <string name="Comenzar">Let\'s start</string>
+    <string name="icono">icon</string>
+    <string name="do_things" translatable="false">DO THINGS</string>
     <string name="settings">Settings</string>
     <string name="team">Team</string>
     <string name="schedule">Schedule</string>
@@ -14,9 +14,7 @@
     <string name="submit">Submit</string>
     <string name="nameTask">Name Task</string>
     <string name="descriptionTask">Description Task</string>
-    <string name="fab_content_desc">fab_content</string>
-    <string name="addtask">addTask</string>
-    <string name="heljjlo_my_day_fragment">Heljjlo MY DAY fragment</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fab_content_desc" translatable="false">fab_content</string>
+    <string name="addtask">Add Task</string>
+    <string name="add_note">Add Notes</string>
 </resources>

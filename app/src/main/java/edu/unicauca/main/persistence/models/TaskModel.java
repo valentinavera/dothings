@@ -75,7 +75,6 @@ public  class TaskModel extends Model<TaskModel> {
         boolean result;
         if(this.getKey() == null) {// save
                 result = objects.create( task);
-
         }
         else {
           //  task.put("key", key);
@@ -101,4 +100,5 @@ public  class TaskModel extends Model<TaskModel> {
     public void setName(String name) {
         this.name = name;
     }
+    public void setDescription(String des){ this.description = des;}
 }

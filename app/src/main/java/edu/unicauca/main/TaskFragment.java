@@ -34,11 +34,8 @@ public class TaskFragment extends Fragment implements Observer {
     //private DatabaseReference mDataBase;
     private TaskAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    //private ArrayList<Task> mTaskList = new ArrayList<> ();
     private List<TaskModel> tasks;
-    private BottomSheetDialog bottomSheetDialog;
     private int position;
-    private EditText editNameText;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -115,9 +112,9 @@ public class TaskFragment extends Fragment implements Observer {
         dialogTaskClass.show (this.getActivity ().getSupportFragmentManager ().beginTransaction (), "Task dialog");
     }
 
-
     @Override
     public void notify(Observed observed) {
+
         tasks = taskModel.getManager().getAll();
         mAdapter = new TaskAdapter (tasks, R.layout.tareas_view);
         mAdapter.setOnClickListen(new View.OnClickListener() {
@@ -137,21 +134,12 @@ public class TaskFragment extends Fragment implements Observer {
     }
 
     private void showModal() {
-       bottomSheetDialog = new BottomSheetDialog(getActivity());
-        View view = getLayoutInflater().from(getActivity()).inflate(R.layout.fragment_modal_edit_task,null);
-        editNameText = view.findViewById(R.id.editNameTask);
+        TaskModel objTaskModel = null;
         if(position != -1){
-            editNameText.setText(this.tasks.get(position).getName());
+            objTaskModel = this.tasks.get(position);
         }
-
-        bottomSheetDialog.setContentView(view);
-        bottomSheetDialog.show();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        bottomSheetDialog.dismiss();
+        SheetDialogTaskClass sheetDialogTaskClass = new SheetDialogTaskClass(objTaskModel);
+        sheetDialogTaskClass.show(getActivity().getSupportFragmentManager(),"task modal");
     }
 
 }

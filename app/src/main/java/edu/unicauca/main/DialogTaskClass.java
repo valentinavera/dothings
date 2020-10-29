@@ -40,16 +40,12 @@ public class DialogTaskClass extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String task=  createTask.getText().toString();
-                TaskModel t = new TaskModel(task,"descpription");
-                t.save();
-                //t.setName("New nameee");
-             //   t.save();
+                taskModel = new TaskModel(task,"descpription");
+                taskModel.save();
             }
         });
-        taskModel = new TaskModel();
 
         return builder.create ();
-
     }
 
 }

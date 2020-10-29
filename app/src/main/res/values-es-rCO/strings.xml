@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">doThings</string>
+    <string name="Comenzar">Comenzar</string>
+    <string name="icono">icono</string>
+    <string name="settings">Ajustes</string>
+    <string name="team">Grupo</string>
+    <string name="schedule">Calendario</string>
+    <string name="myday">Mi día</string>
+    <string name="task">Tarea</string>
+    <string name="username">Usiario</string>
+    <string name="name">Nombre</string>
+    <string name="password">Contraseña</string>
+    <string name="submit" translatable="false">Enviar</string>
+    <string name="nameTask">Nombre de la tarea</string>
+    <string name="descriptionTask">descripción de la tarea</string>
+    <string name="addtask">Añadir tarea</string>
+    <string name="add_note">Añadir nota</string>
+</resources>

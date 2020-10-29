@@ -47,7 +47,7 @@ import edu.unicauca.main.persistence.models.Model;
         String entity = manager.getModel().getEntityName();
         try {
             String key = (String) data.remove("key");
-            db.child(entity).child(key).setValue(data);
+            db.child(entity).child(key).updateChildren(data);
             return true;
         }catch (Exception e){
             Log.e("Push "+entity+": ",e.toString());
