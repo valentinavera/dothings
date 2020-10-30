@@ -3,6 +3,7 @@ package edu.unicauca.main;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,6 +22,11 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.ic_launcher);
+
         setContentView(R.layout.activity_menu);
         taskModel = new TaskModel(getApplicationContext());//(getApplicationContext());
         taskfrag = TaskFragment.newInstance(taskModel);

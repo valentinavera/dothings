@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">doThings</string>
+    <string name="app_name">DO-THINGS</string>
     <string name="Comenzar">Let\'s start</string>
     <string name="icono">icon</string>
     <string name="do_things" translatable="false">DO THINGS</string>

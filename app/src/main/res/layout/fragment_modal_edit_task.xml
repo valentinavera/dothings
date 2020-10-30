@@ -32,11 +32,28 @@
         android:inputType="textMultiLine" />
 
 
-
-    <Button
-        android:id="@+id/saveButton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="save"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="10dp"
+            android:text="save" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="43dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginLeft="22dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/delete" />
+    </LinearLayout>
 
 </LinearLayout>
