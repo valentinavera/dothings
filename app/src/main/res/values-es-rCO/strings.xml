@@ -8,12 +8,18 @@
     <string name="schedule">Calendario</string>
     <string name="myday">Mi día</string>
     <string name="task">Tarea</string>
-    <string name="username">Usiario</string>
+    <string name="username">Usuario</string>
     <string name="name">Nombre</string>
     <string name="password">Contraseña</string>
-    <string name="submit" translatable="false">Enviar</string>
+    <string name="submit">Enviar</string>
     <string name="nameTask">Nombre de la tarea</string>
-    <string name="descriptionTask">descripción de la tarea</string>
+    <string name="descriptionTask">Descripción de la tarea</string>
     <string name="addtask">Añadir tarea</string>
     <string name="add_note">Añadir nota</string>
+    <string name="change_list_task">Mover a mi día</string>
+    <string name="addTag">Añadir etiquetas</string>
+    <string name="reminder">Añadir recordatorio</string>
+    <string name="addDate">Fecha límite</string>
+    <string name="repeat">Repetir</string>
+    <string name="attach"> Adjuntar archivo</string>
 </resources>

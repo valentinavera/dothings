@@ -1,42 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <EditText
         android:id="@+id/editNameTask"
-        android:layout_width="match_parent"
+        android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="getNameTask"
-        android:inputType="textShortMessage"/>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:drawableLeft="@drawable/sunset"
-        android:text="Mover a mi día" />
+        android:inputType="textShortMessage"
+        android:layout_gravity="center"/>
 
     <EditText
         android:id="@+id/textView3"
-        android:layout_width="329dp"
+        android:layout_width="330dp"
         android:layout_height="108dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="13dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
         android:background="@color/white"
         android:hint="@string/add_note"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        />
 
+    <Button
+        android:id="@+id/ListButton"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/sunset"
+        android:text="@string/change_list_task"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/buttonTag"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/ic_baseline_label_24"
+        android:text="@string/addTag"
+        android:layout_gravity="center"
+        android:textAlignment="textStart"
+        tools:ignore="RtlCompat"/>
+    <Button
+        android:id="@+id/buttonReminder"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/ic_baseline_watch_later_24"
+        android:text="@string/reminder"
+        android:layout_gravity="center"
+        android:textAlignment="textStart"
+        tools:ignore="RtlCompat"/>
+    <Button
+        android:id="@+id/buttonDate"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/ic_baseline_calendar_today_24"
+        android:text="@string/addDate"
+        android:textAlignment="textStart"
+        android:layout_gravity="center"
+        tools:ignore="RtlCompat" />
+    <Button
+        android:id="@+id/buttonRepeat"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/replay"
+        android:text="@string/repeat"
+        android:layout_gravity="center"
+        android:textAlignment="textStart"
+        tools:ignore="RtlCompat" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/attach_file"
+        android:text="@string/attach"
+        android:layout_gravity="center"
+        android:textAlignment="textStart"
+        tools:ignore="RtlCompat" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="50dp">
 
         <Button
             android:id="@+id/saveButton"
