@@ -22,7 +22,9 @@
         android:layout_marginTop="40dp"
         android:background="@color/white"
         android:hint="@string/add_note"
+        android:textColorHint="@color/black"
         android:inputType="textMultiLine"
+        android:backgroundTint="@color/gray"
         />
 
     <Button
@@ -103,7 +105,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="10dp"
-            android:text="save" />
+            android:text="save"
+            android:background="@color/colorAccent"/>
 
         <ImageButton
             android:id="@+id/imageButton"
