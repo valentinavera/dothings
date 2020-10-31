@@ -23,4 +23,6 @@
     <string name="addDate">Add Date</string>
     <string name="repeat">Repeat</string>
     <string name="attach">Attach file</string>
+    <string name="ButtonSve">Save</string>
+    <string name="deleteButton">deleteButton</string>
 </resources>

@@ -22,4 +22,6 @@
     <string name="addDate">Fecha límite</string>
     <string name="repeat">Repetir</string>
     <string name="attach"> Adjuntar archivo</string>
+    <string name="ButtonSve">Guardar</string>
+    <string name="deleteButton">borrar</string>
 </resources>
