@@ -23,7 +23,7 @@ import static edu.unicauca.main.R.drawable.sunset;
 public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     private TaskModel objTask;
     private EditText editNameText;
-    private EditText dateTask;
+    private Button dateTask;
     private EditText taskNotes;
     private Button saveUpdate;
     private Button infoList;

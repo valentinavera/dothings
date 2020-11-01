@@ -61,7 +61,7 @@
         tools:ignore="RtlCompat"/>
 
 
-    <EditText
+    <Button
         android:id="@+id/EditDate"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
