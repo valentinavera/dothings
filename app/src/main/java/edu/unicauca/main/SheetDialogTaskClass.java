@@ -2,7 +2,6 @@ package edu.unicauca.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,6 +13,7 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import edu.unicauca.main.persistence.models.TaskModel;
+import static edu.unicauca.main.R.drawable.sunset;
 
 public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     private TaskModel objTask;
@@ -40,9 +40,10 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
 
         if(objTask.getState().equals("0")){
             infoList.setText(R.string.change_ToMyDayList);
-            //android:drawableStart="@drawable/sunset"
+            //infoList.setBackgroundResource(sunset);
         }else{
             infoList.setText(R.string.change_ToTasksLis);
+            //infoList.setBackgroundResource(R.drawable.tarea);
         }
 
         infoList.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +53,6 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
                 if(objTask.getState().equals("0")){
                     objTask.setState("1");
                     infoList.setText(R.string.change_ToTasksLis);
-                    //android:drawableStart="@drawable/sunset"
                 }else{
                     objTask.setState("0");
                     infoList.setText(R.string.change_ToMyDayList);
