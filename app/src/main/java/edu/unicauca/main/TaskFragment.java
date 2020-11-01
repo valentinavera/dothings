@@ -90,7 +90,6 @@ public class TaskFragment extends Fragment implements Observer {
             final View vista = inflater.inflate (R.layout.fragment_task, container, false);
 
             TextViewCreateTask = vista.findViewById (R.id.viewTask);
-            //mDataBase = FirebaseDatabase.getInstance ().getReference ().child ("ListaTareas");
             fabSendTask = vista.findViewById (R.id.floating_button_Dialog);
             mRecyclerView = (RecyclerView) vista.findViewById (R.id.recyclerViewTareas);
             mRecyclerView.setLayoutManager (new LinearLayoutManager (getActivity ()));

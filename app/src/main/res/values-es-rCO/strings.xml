@@ -24,4 +24,5 @@
     <string name="attach"> Adjuntar archivo</string>
     <string name="ButtonSve">Guardar</string>
     <string name="deleteButton">borrar</string>
+    <string name="Schedule">Calendario de Tareas</string>
 </resources>

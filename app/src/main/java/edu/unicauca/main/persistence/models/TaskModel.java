@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ public  class TaskModel extends Model<TaskModel> {
     private static  TaskModel taskModelObject;
     private  String name;
     private  String description;
+    private Date dateTask;
     public  TaskModel(){
         //db.linkModel(entityName,this);
         if(this.objects==null) {
@@ -51,13 +53,12 @@ public  class TaskModel extends Model<TaskModel> {
 
 
     }
-
-
-
     public String getName() {
         return this.name;
     }
-
+    public String getDescription() {
+        return description;
+    }
     @Override
     public String toString() {
         return "TaskModel{" +
@@ -65,9 +66,6 @@ public  class TaskModel extends Model<TaskModel> {
                 ", description='" + description + '\'' +
                 '}';
     }
-
-
-
     public boolean  save() {
         Map<String, Object> task = new HashMap<>();
         task.put("name",name);
@@ -84,8 +82,6 @@ public  class TaskModel extends Model<TaskModel> {
 
         return result;
     }
-
-
 /*
     @Override
     public Map<String, Class> getColumtypes() {
@@ -101,4 +97,10 @@ public  class TaskModel extends Model<TaskModel> {
         this.name = name;
     }
     public void setDescription(String des){ this.description = des;}
+    public Date getDateTask() {
+        return dateTask;
+    }
+    public void setDateTask(Date dateTask) {
+        this.dateTask = dateTask;
+    }
 }

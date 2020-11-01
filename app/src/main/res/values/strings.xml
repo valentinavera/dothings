@@ -25,4 +25,5 @@
     <string name="attach">Attach file</string>
     <string name="ButtonSve">Save</string>
     <string name="deleteButton">deleteButton</string>
+    <string name="Schedule">Schedule tasks</string>
 </resources>

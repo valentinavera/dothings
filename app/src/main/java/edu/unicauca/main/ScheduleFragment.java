@@ -1,18 +1,19 @@
 package edu.unicauca.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import android.widget.CalendarView;
 import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
@@ -25,9 +26,8 @@ import edu.unicauca.main.patterns.observer.Observer;
 public class ScheduleFragment extends Fragment implements Observer {
     private TaskModel taskModel ;
     //private DatabaseReference mDataBase;
-    private TaskAdapter mAdapter;
-    private RecyclerView mRecyclerView;
-    private List<TaskModel> mTaskList = new ArrayList<> ();
+    private CalendarView mCalendarView;
+    private static final String TAG = "CalendarActivity";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -74,6 +74,7 @@ public class ScheduleFragment extends Fragment implements Observer {
             mParam1 = getArguments ().getString (ARG_PARAM1);
             mParam2 = getArguments ().getString (ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -81,11 +82,15 @@ public class ScheduleFragment extends Fragment implements Observer {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View vista = inflater.inflate (R.layout.fragment_schedule, container, false);
-        mRecyclerView = (RecyclerView) vista.findViewById (R.id.vistaRecycler);
-        mRecyclerView.setLayoutManager (new LinearLayoutManager (getContext ()));
-        mRecyclerView.setHasFixedSize (true);
+        mCalendarView = vista.findViewById (R.id.calendar);
+        mCalendarView.setOnDateChangeListener (new CalendarView.OnDateChangeListener () {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String date = (year) + "/" + (month+1) +"/" + dayOfMonth;
+                Log.d(TAG, "onSelectedDayChange: date " +date);
+            }
+        });
         this.notify(null);
-
         return vista;
     }
 
@@ -93,9 +98,6 @@ public class ScheduleFragment extends Fragment implements Observer {
 
     @Override
     public void notify(Observed observed) {
-        mTaskList = taskModel.getManager().getAll();
 
-        mAdapter = new TaskAdapter (mTaskList, R.layout.tareas_view);
-        mRecyclerView.setAdapter (mAdapter);
     }
 }
