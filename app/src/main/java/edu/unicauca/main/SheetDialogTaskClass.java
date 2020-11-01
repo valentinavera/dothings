@@ -1,15 +1,12 @@
 package edu.unicauca.main;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +20,7 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     private EditText editNameText;
     private EditText taskNotes;
     private Button saveUpdate;
+    private Button infoList;
 
     public SheetDialogTaskClass(TaskModel objTaskModel) {
         this.objTask = objTaskModel;
@@ -35,9 +33,34 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
         editNameText = view.findViewById(R.id.editNameTask);
         taskNotes= view.findViewById(R.id.textNotes);
         saveUpdate = view.findViewById(R.id.saveButton);
+        infoList = view.findViewById(R.id.ListButton);
 
         editNameText.setText(objTask.getName());
         taskNotes.setText(objTask.getDescription());
+
+        if(objTask.getState().equals("0")){
+            infoList.setText(R.string.change_ToMyDayList);
+            //android:drawableStart="@drawable/sunset"
+        }else{
+            infoList.setText(R.string.change_ToTasksLis);
+        }
+
+        infoList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                objTask.getKey();
+                if(objTask.getState().equals("0")){
+                    objTask.setState("1");
+                    infoList.setText(R.string.change_ToTasksLis);
+                    //android:drawableStart="@drawable/sunset"
+                }else{
+                    objTask.setState("0");
+                    infoList.setText(R.string.change_ToMyDayList);
+                }
+                objTask.save();
+            }
+        });
+
         saveUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +71,7 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
                 dismiss();
             }
         });
+
         return view;
     }
 

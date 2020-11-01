@@ -17,7 +17,8 @@
     <string name="fab_content_desc" translatable="false">fab_content</string>
     <string name="addtask">Add Task</string>
     <string name="add_note">Add Notes</string>
-    <string name="change_list_task">Move to my day list</string>
+    <string name="change_ToTasksLis">Move to tasks list</string>
+    <string name="change_ToMyDayList">Move to my day list</string>
     <string name="addTag"> Add Tags</string>
     <string name="reminder">Add reminder</string>
     <string name="addDate">Add Date</string>
