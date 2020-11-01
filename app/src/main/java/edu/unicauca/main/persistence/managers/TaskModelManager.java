@@ -12,7 +12,9 @@ public class TaskModelManager extends  ModelManager<TaskModel>{
     }
     @Override
     public Model makeModel(Map<String, Object> data) {
-        TaskModel taskModel = new TaskModel((String) data.get("name"),(String) data.get("description"));
+        TaskModel taskModel = new TaskModel((String) data.get("name"),
+                (String) data.get("description"),
+                (String) data.get("state"));
         taskModel.setKey((String) data.get("_id"));
         return taskModel;
     }

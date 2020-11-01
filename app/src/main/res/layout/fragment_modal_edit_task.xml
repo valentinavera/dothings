@@ -15,7 +15,7 @@
         android:layout_gravity="center"/>
 
     <EditText
-        android:id="@+id/textView3"
+        android:id="@+id/textNotes"
         android:layout_width="330dp"
         android:layout_height="108dp"
         android:layout_gravity="center"
