@@ -16,7 +16,6 @@
     <string name="descriptionTask">Descripción de la tarea</string>
     <string name="addtask">Añadir tarea</string>
     <string name="add_note">Añadir nota</string>
-    <string name="change_list_task">Mover a mi día</string>
     <string name="addTag">Añadir etiquetas</string>
     <string name="reminder">Añadir recordatorio</string>
     <string name="addDate">Fecha límite</string>
@@ -24,5 +23,10 @@
     <string name="attach"> Adjuntar archivo</string>
     <string name="ButtonSve">Guardar</string>
     <string name="deleteButton">borrar</string>
+<<<<<<< HEAD
     <string name="Schedule">Calendario de Tareas</string>
+=======
+    <string name="change_ToTasksLis">Mover a tareas</string>
+    <string name="change_ToMyDayList">Mover a mi día</string>
+>>>>>>> c0340cdd2e65aea2185eb07a776cc6a52e2ab8b7
 </resources>

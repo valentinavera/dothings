@@ -19,6 +19,8 @@ public  class TaskModel extends Model<TaskModel> {
     private  String name;
     private  String description;
     private Date dateTask;
+    private String state;
+
     public  TaskModel(){
         //db.linkModel(entityName,this);
         if(this.objects==null) {
@@ -45,38 +47,38 @@ public  class TaskModel extends Model<TaskModel> {
 
         }
     }
-    public  TaskModel(String name, String description){
+    public  TaskModel(String name, String description, String state){
         //db.linkModel(entityName,this);
         this();
         this.name = name;
         this.description = description;
-
-
+        this.state = state;
     }
     public String getName() {
         return this.name;
     }
-    public String getDescription() {
-        return description;
-    }
+    public String getDescription() {return this.description; }
+    public String getState(){ return this.state; }
     @Override
     public String toString() {
         return "TaskModel{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", state='" + state + '\'' +
                 '}';
     }
     public boolean  save() {
         Map<String, Object> task = new HashMap<>();
         task.put("name",name);
         task.put("description", description);
+        task.put("state", state);
         boolean result;
         if(this.getKey() == null) {// save
-                result = objects.create( task);
+            result = objects.create( task);
         }
         else {
-                task.put("key", getKey ());
-                result = objects.update(task);
+            task.put("key", getKey ());
+            result = objects.update(task);
         }
 
 
@@ -103,4 +105,6 @@ public  class TaskModel extends Model<TaskModel> {
     public void setDateTask(Date dateTask) {
         this.dateTask = dateTask;
     }
+    public void setState(String state) { this.state = state; }
+
 }

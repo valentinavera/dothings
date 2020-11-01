@@ -16,7 +16,6 @@ public class MenuActivity extends AppCompatActivity {
     TaskFragment taskfrag;
     DayFragment dayfragment;
     ScheduleFragment scheduleFragment;
-    private TaskAdapter mAdapter;
 
 
     @Override

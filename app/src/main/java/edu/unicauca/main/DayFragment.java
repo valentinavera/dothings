@@ -102,7 +102,7 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
     public void onClick(View v) {
         String name = mEditTextName.getText().toString();
         String description = mEditTextDescription.getText().toString();
-        TaskModel t = new TaskModel(name,description);
+        TaskModel t = new TaskModel(name,description, "0");
         t.save();
     }
 

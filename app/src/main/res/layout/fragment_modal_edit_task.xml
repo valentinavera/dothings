@@ -15,7 +15,7 @@
         android:layout_gravity="center"/>
 
     <EditText
-        android:id="@+id/textView3"
+        android:id="@+id/textNotes"
         android:layout_width="330dp"
         android:layout_height="108dp"
         android:layout_gravity="center"
@@ -34,7 +34,7 @@
         android:layout_marginTop="30dp"
         android:background="@color/white"
         android:drawableStart="@drawable/sunset"
-        android:text="@string/change_list_task"
+        android:text="@string/change_ToMyDayList"
         android:layout_gravity="center"/>
 
     <Button
