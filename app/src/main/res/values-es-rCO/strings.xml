@@ -23,10 +23,7 @@
     <string name="attach"> Adjuntar archivo</string>
     <string name="ButtonSve">Guardar</string>
     <string name="deleteButton">borrar</string>
-<<<<<<< HEAD
     <string name="Schedule">Calendario de Tareas</string>
-=======
     <string name="change_ToTasksLis">Mover a tareas</string>
     <string name="change_ToMyDayList">Mover a mi día</string>
->>>>>>> c0340cdd2e65aea2185eb07a776cc6a52e2ab8b7
 </resources>
