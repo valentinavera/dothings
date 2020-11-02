@@ -21,7 +21,7 @@ public class DialogTaskClass extends DialogFragment {
 
     private EditText createTask;
     private TaskModel taskModel ;
-     public DialogTaskClass(){}
+    public DialogTaskClass(){}
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

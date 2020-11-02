@@ -2,6 +2,7 @@ package edu.unicauca.main;
 
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import edu.unicauca.main.persistence.models.TaskModel;
 import static edu.unicauca.main.R.drawable.sunset;
@@ -28,10 +31,13 @@ import static edu.unicauca.main.R.drawable.sunset;
 public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     private TaskModel objTask;
     private EditText editNameText;
-    private EditText dateTask;
+    private Button dateTask;
+    private Button hourTask;
     private EditText taskNotes;
     private Button saveUpdate;
     private Button infoList;
+    private long pDateTask;
+    private Date changeDate;
     Calendar calendar ;
     DatePickerDialog datePickerDialog ;
     int Year, Month, Day ;
@@ -47,20 +53,36 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
         editNameText = view.findViewById(R.id.editNameTask);
         taskNotes = view.findViewById (R.id.textNotes);
         dateTask= view.findViewById (R.id.EditDate);
+        hourTask= view.findViewById (R.id.buttonReminder);
         saveUpdate = view.findViewById(R.id.saveButton);
-        editNameText.setText(objTask.getName());
-
         //dateTask.setText (objTask.getDateTask ().toString ());
         dateTask.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog ();
+            public void onClick(View view) {
+                final Calendar calendar = Calendar.getInstance();
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity (), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int mes, int dia) {
+                        Calendar calendarResultado = Calendar.getInstance();
+                        calendarResultado.set(Calendar.YEAR,year);
+                        calendarResultado.set(Calendar.MONTH,mes+1);
+                        calendarResultado.set(Calendar.DAY_OF_MONTH,dia);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                        Date date = calendarResultado.getTime();
+                        changeDate=date;
+                        String fechaDeTarea= simpleDateFormat.format(date);
+                        pDateTask= date.getTime();
+                        dateTask.setText(fechaDeTarea);
+                    }
+                },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
             }
-        });
-        infoList = view.findViewById(R.id.ListButton);
 
+        });
+        
+        infoList = view.findViewById(R.id.ListButton);
         editNameText.setText(objTask.getName());
         taskNotes.setText(objTask.getDescription());
+
 
         if(objTask.getState().equals("0")){
             infoList.setText(R.string.change_ToMyDayList);
@@ -91,15 +113,7 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
                     objTask.getKey ();
                     objTask.setName(editNameText.getText().toString());
                     objTask.setDescription(taskNotes.getText ().toString ());
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
-                    String strDate = dateTask.getText ().toString ();
-                    Date date = null;
-                    try {
-                        date = new Date (sdf.parse(strDate).getTime());
-                    } catch (ParseException e) {
-                        e.printStackTrace ();
-                    }
-                objTask.setDateTask (date);// como enviarlo?
+                    objTask.setDateTask (changeDate);// como enviarlo?
                     objTask.save();
                     dismiss();
                 }
@@ -111,17 +125,4 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     }
 
 
-    public void showDatePickerDialog() {
-        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                // +1 because January is zero
-                final String selectedDate = day + " - " + (month+1) + " - " + year;
-                dateTask.setText(selectedDate);
-            }
-        });
-
-        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-    }
-
-}
+   }
