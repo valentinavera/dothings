@@ -1,20 +1,21 @@
 package edu.unicauca.main;
 
-import android.os.Bundle;
-import android.view.View;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.os.Bundle;
+import android.view.View;
 
 import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.persistence.models.UserModel;
 
 import static edu.unicauca.main.R.id.contentfragment;
 
-public class MenuActivity extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity {
     private TaskModel taskModel ;
     private UserModel userModel;
+    RegisterUserFragment registerUserFragment;
     TaskFragment taskfrag;
     DayFragment dayfragment;
     ScheduleFragment scheduleFragment;
@@ -29,11 +30,12 @@ public class MenuActivity extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.mipmap.ic_launcher);
 
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_user);
         taskModel = new TaskModel();//(getApplicationContext());
         userModel = new UserModel();
         taskfrag = TaskFragment.newInstance(taskModel);
-        getSupportFragmentManager().beginTransaction().add(contentfragment, taskfrag).commit();
+        registerUserFragment= RegisterUserFragment.newInstance(userModel);
+        getSupportFragmentManager().beginTransaction().add(contentfragment, registerUserFragment).commit();
 
     }
 

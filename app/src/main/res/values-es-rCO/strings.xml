@@ -26,4 +26,14 @@
     <string name="Schedule">Calendario de Tareas</string>
     <string name="change_ToTasksLis">Mover a tareas</string>
     <string name="change_ToMyDayList">Mover a mi día</string>
+    <string name="Settings">Configuración</string>
+    <string name="manage">Administrar Cuenta</string>
+    <string name="Synchronize">Sincronizar Cuenta</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="Help">Ayuda</string>
+    <string name="Your_profile">Tú Perfil</string>
+    <string name="Name">Nombre</string>
+    <string name="Lastname">Apellido</string>
+    <string name="UserName">Usuario</string>
+    <string name="Password">Contraseña</string>
 </resources>

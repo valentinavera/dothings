@@ -27,4 +27,16 @@
     <string name="ButtonSve">Save</string>
     <string name="deleteButton">deleteButton</string>
     <string name="Schedule">Schedule tasks</string>
+    <string name="Settings">Settings</string>
+    <string name="manage">Manage account</string>
+    <string name="Synchronize">Synchronize account</string>
+    <string name="notifications">Notifications</string>
+    <string name="Help">Help</string>
+    <string name="Your_profile">Your Profile</string>
+    <string name="Name">Name</string>
+    <string name="Lastname">Last name</string>
+    <string name="UserName">Username</string>
+    <string name="Password">Password</string>
+    <string name="Register">Register</string>
+
 </resources>
