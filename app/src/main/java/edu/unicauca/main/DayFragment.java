@@ -4,18 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DatabaseReference;
+import java.util.List;
 
-import java.util.ArrayList;
-import java.util.Date;
-
+import edu.unicauca.main.patterns.observer.Observed;
+import edu.unicauca.main.patterns.observer.Observer;
 import edu.unicauca.main.persistence.models.TaskModel;
 
 /**
@@ -23,7 +20,12 @@ import edu.unicauca.main.persistence.models.TaskModel;
  * Use the {@link DayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DayFragment extends Fragment  implements View.OnClickListener {
+public class DayFragment extends Fragment implements Observer {
+    private TaskModel taskModel ;
+    private TaskAdapter mAdapter;
+    private RecyclerView mRecyclerView;
+    private List<TaskModel> mTaskList;
+    private int position = 0;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,15 +35,6 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    View rootView ;
-    private TaskModel taskModel;
-    DatabaseReference db;
-    EditText mEditTextName,mEditTextDescription;
-    ListView lista;
-    Button btnSubmit;
-    final ArrayList<String> todoItems = new ArrayList<String>();
-    private ArrayAdapter<String> adapter;
-    private ArrayList<String> arrayList =new ArrayList<>();
 
     public DayFragment() {
         // Required empty public constructor
@@ -68,6 +61,7 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
     public static  DayFragment newInstance(TaskModel tm){
         DayFragment fragment = new DayFragment();
         fragment.taskModel  =tm;
+        tm.getManager().addObserver(fragment);
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
@@ -80,36 +74,46 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        this.rootView =  inflater.inflate(R.layout.fragment_day, container, false);
-        btnSubmit =rootView.findViewById(R.id.btnSubmitUser);
-        btnSubmit.setOnClickListener(this);
-        mEditTextName = rootView.findViewById(R.id.etNameTask);
-        mEditTextDescription = rootView.findViewById(R.id.etDescriptionTask);
+        View rootView =  inflater.inflate(R.layout.fragment_day, container, false);
+        mRecyclerView = (RecyclerView) rootView.findViewById (R.id.vistaRecycler);
+        mRecyclerView.setLayoutManager (new LinearLayoutManager(getContext ()));
+        mRecyclerView.setHasFixedSize (true);
+        this.notify(null);
 
-       // loadTasks();
-        return this.rootView;
+        return rootView;
     }
 
     @Override
-    public void onClick(View v) {
-        String name = mEditTextName.getText().toString();
-        String description = mEditTextDescription.getText().toString();
-        Date d = new Date();
-        TaskModel t = new TaskModel(name,description,d, "0");
-        t.save();
+    public void notify(Observed observed) {
+        mTaskList = taskModel.getManager().getAll();
+        mAdapter = new TaskAdapter (mTaskList, R.layout.tareas_view);
+        /*mAdapter.setOnClickListen(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                position = mRecyclerView.getChildAdapterPosition(v);
+                openModalEdit();
+            }
+        });*/
+        try {
+            mRecyclerView.setAdapter (mAdapter);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
-
-
-
+    private void openModalEdit() {
+        TaskModel objTaskModel = null;
+        if(position != -1){
+            objTaskModel = this.mTaskList.get(position);
+        }
+        SheetDialogTaskClass sheetDialogTaskClass = new SheetDialogTaskClass(objTaskModel);
+        sheetDialogTaskClass.show(getActivity().getSupportFragmentManager(),"task modal");
+    }
 }
 
