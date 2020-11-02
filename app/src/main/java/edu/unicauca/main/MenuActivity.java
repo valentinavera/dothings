@@ -30,8 +30,8 @@ public class MenuActivity extends AppCompatActivity {
         actionBar.setIcon(R.mipmap.ic_launcher);
 
         setContentView(R.layout.activity_menu);
-        taskModel = new TaskModel();//(getApplicationContext());
-        userModel = new UserModel();
+        taskModel = new TaskModel(getApplicationContext());//(getApplicationContext());
+        userModel = new UserModel(getApplicationContext());
         taskfrag = TaskFragment.newInstance(taskModel);
         getSupportFragmentManager().beginTransaction().add(contentfragment, taskfrag).commit();
 

@@ -31,8 +31,8 @@ public class UserActivity extends AppCompatActivity {
         actionBar.setIcon(R.mipmap.ic_launcher);
 
         setContentView(R.layout.activity_user);
-        taskModel = new TaskModel();//(getApplicationContext());
-        userModel = new UserModel();
+        taskModel = new TaskModel(getApplicationContext());//(getApplicationContext());
+        userModel = new UserModel(getApplicationContext());
         taskfrag = TaskFragment.newInstance(taskModel);
         registerUserFragment= RegisterUserFragment.newInstance(userModel);
         getSupportFragmentManager().beginTransaction().add(contentfragment, registerUserFragment).commit();
