@@ -22,7 +22,7 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        taskModel = new TaskModel(getApplicationContext());//(getApplicationContext());
+        taskModel = new TaskModel();//(getApplicationContext());//(getApplicationContext());
         taskfrag = TaskFragment.newInstance(taskModel);
         getSupportFragmentManager().beginTransaction().add(contentfragment, taskfrag).commit();
 

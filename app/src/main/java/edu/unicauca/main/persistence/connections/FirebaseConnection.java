@@ -31,7 +31,7 @@ import edu.unicauca.main.persistence.models.Model;
     public    boolean create
             (ModelManager manager, Map<String, Object> data){
         connect();
-        String entity = manager.getModel().getEntityName();
+        String entity = manager.getEntityName();
         try {
             db.child(entity).push().setValue(data);
             return true;
@@ -44,7 +44,7 @@ import edu.unicauca.main.persistence.models.Model;
     @Override
     public boolean update(ModelManager manager, Map<String, Object> data) {
         connect();
-        String entity = manager.getModel().getEntityName();
+        String entity = manager.getEntityName();
         try {
             String key = (String) data.remove("key");
             db.child(entity).child (key).updateChildren (data);
@@ -58,7 +58,7 @@ import edu.unicauca.main.persistence.models.Model;
     @Override
     public void linkModelManager(  final ModelManager manager) {
         connect();
-        String entity = manager.getModel().getEntityName();
+        String entity = manager.getEntityName();
         db.child(entity).addValueEventListener (new ValueEventListener () {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

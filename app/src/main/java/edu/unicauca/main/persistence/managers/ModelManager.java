@@ -1,26 +1,47 @@
 package edu.unicauca.main.persistence.managers;
 
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 import edu.unicauca.main.patterns.observer.Observed;
+import edu.unicauca.main.persistence.connections.FirebaseConnection;
 import edu.unicauca.main.persistence.connections.IConnection;
+import edu.unicauca.main.persistence.connections.SqliteConnection;
 import edu.unicauca.main.persistence.models.Model;
 
 public  abstract class ModelManager<T> extends Observed {
     private List<T> cacheList;
     protected   static IConnection db ;
     private  Model model;
+    private String entityName;
 
 
-    public ModelManager(Model m, IConnection db){
+    public ModelManager(Model m){
 
-        this.db = db;
         cacheList = new ArrayList<>();
         model = m;
       //  db.linkModelManager(this);
+    }
+    public boolean createConnectionWithDB(){
+        boolean result = false;
+        if(db == null){
+            result = true;
+            db = new FirebaseConnection();
+        }
+        return result;
+    }
+    public boolean createConnectionWithDB(Context c){
+        boolean result = false;
+        if(db == null){
+            result = true;
+            db = new SqliteConnection(c);
+        }
+        return  result;
     }
     //public abstract boolean create();
     public   void addToCache(T e){
@@ -54,4 +75,14 @@ public  abstract class ModelManager<T> extends Observed {
     public  boolean create(Map<String, Object> data){
         return db.create(this, data);
     }
+
+
+    public String getEntityName() {
+        return entityName;
+    }
+
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
+    }
+    public abstract Map<String, Class> getColumnTypes();
 }

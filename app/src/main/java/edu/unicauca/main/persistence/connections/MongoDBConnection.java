@@ -35,7 +35,7 @@ public  class MongoDBConnection implements IConnection{
     @Override
     public boolean create(ModelManager m, Map<String, Object> data) {
         connect();
-        String entity = m.getModel().getEntityName();
+        String entity = m.getEntityName();
         try {
             DBObject document = new BasicDBObject(data) ;
             if (!db.collectionExists(entity)){
@@ -60,7 +60,7 @@ public  class MongoDBConnection implements IConnection{
     @Override
     public void linkModelManager( ModelManager model) {
         connect();
-        String entity = model.getModel().getEntityName();
+        String entity = model.getEntityName();
         if(!db.collectionExists(entity)){
             model.notify_observers();
             return;
