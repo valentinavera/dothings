@@ -17,16 +17,24 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import edu.unicauca.main.persistence.models.TaskModel;
 import static edu.unicauca.main.R.drawable.sunset;
 
 public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     private TaskModel objTask;
     private EditText editNameText;
-    private Button dateTask;
+    private EditText dateTask;
     private EditText taskNotes;
     private Button saveUpdate;
     private Button infoList;
+    Calendar calendar ;
+    DatePickerDialog datePickerDialog ;
+    int Year, Month, Day ;
 
     public SheetDialogTaskClass(TaskModel objTaskModel) {
         this.objTask = objTaskModel;
@@ -41,6 +49,7 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
         dateTask= view.findViewById (R.id.EditDate);
         saveUpdate = view.findViewById(R.id.saveButton);
         editNameText.setText(objTask.getName());
+
         //dateTask.setText (objTask.getDateTask ().toString ());
         dateTask.setOnClickListener (new View.OnClickListener () {
             @Override
@@ -82,7 +91,15 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
                     objTask.getKey ();
                     objTask.setName(editNameText.getText().toString());
                     objTask.setDescription(taskNotes.getText ().toString ());
-                    // objTask.setDateTask (dateTask.getText ());// como enviarlo?
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+                    String strDate = dateTask.getText ().toString ();
+                    Date date = null;
+                    try {
+                        date = new Date (sdf.parse(strDate).getTime());
+                    } catch (ParseException e) {
+                        e.printStackTrace ();
+                    }
+                objTask.setDateTask (date);// como enviarlo?
                     objTask.save();
                     dismiss();
                 }
@@ -99,7 +116,7 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
-                final String selectedDate = day + " / " + (month+1) + " / " + year;
+                final String selectedDate = day + " - " + (month+1) + " - " + year;
                 dateTask.setText(selectedDate);
             }
         });

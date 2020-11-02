@@ -8,11 +8,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import edu.unicauca.main.persistence.managers.ModelManager;
 import edu.unicauca.main.persistence.models.Model;
+
 
 class  SqliteConnectionHelper extends SQLiteOpenHelper {
 
@@ -24,7 +28,7 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //create database
         //tasks
-        String ddlTask = "create table if not EXISTS Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100), state integer)";
+        String ddlTask = "create table if not EXISTS Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100),date varchar(50) )";
         //String ddlTask = "create table Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100))";
         db.execSQL(ddlTask);
     }
@@ -61,6 +65,7 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
     }
     public Cursor getAllData(String entity){
 
+
         SQLiteDatabase rdb = getReadableDatabase();
         Cursor cursor = rdb.rawQuery("SELECT * FROM " + entity, null);
         //rdb.close();
@@ -73,6 +78,7 @@ public  class SqliteConnection implements IConnection {
 
     //private   SQLiteDatabase db;
     private  SqliteConnectionHelper db;
+    private SimpleDateFormat dateFormatter=new SimpleDateFormat("E, MMM dd yyyy HH:mm:ss");
     private  Context context;
     public SqliteConnection(Context c) {
         this.context = c;
@@ -83,7 +89,7 @@ public  class SqliteConnection implements IConnection {
             try {
                 db = new SqliteConnectionHelper(this.context,"dothings",null,1);
 
-               // db = SQLiteDatabase.openOrCreateDatabase("dothings.db", null);
+                // db = SQLiteDatabase.openOrCreateDatabase("dothings.db", null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -94,10 +100,10 @@ public  class SqliteConnection implements IConnection {
     @Override
     public boolean create(ModelManager manager, Map<String, Object> data) {
         connect();
-        String entity = manager.getModel().getEntityName();
+        String entity = manager.getEntityName();
         ContentValues values = new ContentValues( );
         for (Map.Entry<String,Object> i:data.entrySet()) {
-            values.put(i.getKey(),i.getValue().toString());
+            values.put(i.getKey(),objectToString(i.getValue()));
 
         }
         int id = db.insert(entity, values);
@@ -112,11 +118,11 @@ public  class SqliteConnection implements IConnection {
     @Override
     public boolean update(ModelManager manager, Map<String, Object> data) {
         connect();
-        String entity = manager.getModel().getEntityName();
+        String entity = manager.getEntityName();
         String key = (String) data.remove("key");
         ContentValues values = new ContentValues( );
         for (Map.Entry<String,Object> i:data.entrySet()) {
-            values.put(i.getKey(),i.getValue().toString());
+            values.put(i.getKey(),objectToString(i.getValue()));
 
         }
         db.update(entity,key,values);
@@ -129,8 +135,9 @@ public  class SqliteConnection implements IConnection {
     public void linkModelManager( ModelManager manager) {
         connect();
         manager.clearCache();
-        String entity = manager.getModel().getEntityName();
+        String entity = manager.getEntityName();
         Cursor cursor = db.getAllData(entity);
+        Map columnTypes = manager.getColumnTypes();
         Map<String, Object> data = new HashMap<>();
         cursor.moveToFirst();
         if(cursor.getCount() == 0){
@@ -142,7 +149,9 @@ public  class SqliteConnection implements IConnection {
             String[] columnNames = cursor.getColumnNames();
             for(String column: columnNames) {
                 String field = cursor.getString(i);
-                data.put(column,field);
+                Class classField = (Class) columnTypes.get(column);
+
+                data.put(column,parseString(field,classField));
                 i++;
             }
             manager.addToCache(manager.makeModel(data));
@@ -151,5 +160,27 @@ public  class SqliteConnection implements IConnection {
 
 
         manager.notify_observers();
+    }
+
+    private Object parseString(String field, Class classField) {
+        if(classField == Date.class){
+            try {
+                return dateFormatter.parse(field);
+            } catch (ParseException e) {
+                e.printStackTrace();
+
+            }
+        }else   if(classField == int.class){
+            return Integer.parseInt(field);
+        }
+        return field;
+
+
+    }
+    private String objectToString(Object o){
+        if(o.getClass() == Date.class){
+            return dateFormatter.format(o);
+        }
+        return String.valueOf(o);
     }
 }

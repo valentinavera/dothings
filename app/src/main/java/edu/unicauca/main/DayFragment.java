@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import edu.unicauca.main.persistence.models.TaskModel;
 
@@ -102,7 +103,8 @@ public class DayFragment extends Fragment  implements View.OnClickListener {
     public void onClick(View v) {
         String name = mEditTextName.getText().toString();
         String description = mEditTextDescription.getText().toString();
-        TaskModel t = new TaskModel(name,description, "0");
+        Date d = new Date();
+        TaskModel t = new TaskModel(name,description,d, "0");
         t.save();
     }
 

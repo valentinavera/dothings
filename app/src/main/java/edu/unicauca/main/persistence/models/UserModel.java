@@ -8,11 +8,12 @@ import java.util.Map;
 import edu.unicauca.main.persistence.connections.FirebaseConnection;
 import edu.unicauca.main.persistence.connections.IConnection;
 import edu.unicauca.main.persistence.connections.SqliteConnection;
+import edu.unicauca.main.persistence.managers.ModelManager;
 import edu.unicauca.main.persistence.managers.TaskModelManager;
 import edu.unicauca.main.persistence.managers.UserModelManager;
 
 public class UserModel extends Model<UserModel> {
-    private static  UserModel userModelObject;
+    private   static ModelManager objects ;
     private String name;
     private String lastname;
     private String username;
@@ -20,11 +21,12 @@ public class UserModel extends Model<UserModel> {
     public  UserModel(){
         //db.linkModel(entityName,this);
         if(this.objects==null) {
-            this.setEntityName("User");
+
             // taskModelObject.db  = new SqliteConnection(context);
-            IConnection c = new FirebaseConnection ();
+            //IConnection c = new FirebaseConnection ();
             //IConnection c = new SqliteConnection(context);
-            objects = new UserModelManager (this,c);
+            objects = new UserModelManager (this);
+            objects.createConnectionWithDB();
             objects.link();
             //taskModelObject.db  = new MongoDBConnection();
 
@@ -32,12 +34,12 @@ public class UserModel extends Model<UserModel> {
     }
     public  UserModel(Context context){
         //db.linkModel(entityName,this);
-        this.setEntityName("User");
+
         if(this.objects==null) {
             // taskModelObject.db  = new SqliteConnection(context);
             //IConnection c = new FirebaseConnection();
-            IConnection c = new SqliteConnection (context);
-            objects = new UserModelManager (this,c);
+            objects = new UserModelManager(this);
+            objects.createConnectionWithDB(context);
             objects.link();
             //taskModelObject.db  = new MongoDBConnection();
 
@@ -109,5 +111,8 @@ public class UserModel extends Model<UserModel> {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public ModelManager getManager(){
+        return objects;
     }
 }

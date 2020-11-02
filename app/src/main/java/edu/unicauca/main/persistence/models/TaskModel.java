@@ -11,11 +11,12 @@ import java.util.Map;
 import edu.unicauca.main.persistence.connections.FirebaseConnection;
 import edu.unicauca.main.persistence.connections.IConnection;
 import edu.unicauca.main.persistence.connections.SqliteConnection;
+import edu.unicauca.main.persistence.managers.ModelManager;
 import edu.unicauca.main.persistence.managers.TaskModelManager;
 
 @IgnoreExtraProperties
 public  class TaskModel extends Model<TaskModel> {
-    private static  TaskModel taskModelObject;
+    private   static ModelManager objects ;
     private  String name;
     private  String description;
     private Date dateTask;
@@ -24,11 +25,11 @@ public  class TaskModel extends Model<TaskModel> {
     public  TaskModel(){
         //db.linkModel(entityName,this);
         if(this.objects==null) {
-            this.setEntityName("Task");
             // taskModelObject.db  = new SqliteConnection(context);
-            IConnection c = new FirebaseConnection();
+
             //IConnection c = new SqliteConnection(context);
-            objects = new TaskModelManager(this,c);
+            objects = new TaskModelManager(this);
+            objects.createConnectionWithDB();
             objects.link();
             //taskModelObject.db  = new MongoDBConnection();
 
@@ -36,22 +37,22 @@ public  class TaskModel extends Model<TaskModel> {
     }
     public  TaskModel(Context context){
         //db.linkModel(entityName,this);
-        this.setEntityName("Task");
         if(this.objects==null) {
             // taskModelObject.db  = new SqliteConnection(context);
             //IConnection c = new FirebaseConnection();
-            IConnection c = new SqliteConnection(context);
-            objects = new TaskModelManager(this,c);
+            objects = new TaskModelManager(this);
+            objects.createConnectionWithDB(context);
             objects.link();
             //taskModelObject.db  = new MongoDBConnection();
 
         }
     }
-    public  TaskModel(String name, String description, String state){
+    public  TaskModel(String name, String description, Date date, String state){
         //db.linkModel(entityName,this);
         this();
         this.name = name;
         this.description = description;
+        this.dateTask = date;
         this.state = state;
     }
     public String getName() {
@@ -65,12 +66,15 @@ public  class TaskModel extends Model<TaskModel> {
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", state='" + state + '\'' +
+                ", date='" + dateTask + '\'' +
+
                 '}';
     }
     public boolean  save() {
         Map<String, Object> task = new HashMap<>();
         task.put("name",name);
         task.put("description", description);
+        task.put ("date",dateTask);
         task.put("state", state);
         boolean result;
         if(this.getKey() == null) {// save
@@ -106,5 +110,8 @@ public  class TaskModel extends Model<TaskModel> {
         this.dateTask = dateTask;
     }
     public void setState(String state) { this.state = state; }
+    public ModelManager getManager(){
+        return objects;
+    }
 
 }

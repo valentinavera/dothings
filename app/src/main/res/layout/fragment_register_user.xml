@@ -39,13 +39,14 @@
         android:layout_height="54dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/name"
+        android:hint="@string/name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.379" />
+        app:layout_constraintVertical_bias="0.379"
+        android:autofillHints=""/>
 
     <EditText
         android:id="@+id/editTextLastname"
@@ -53,13 +54,14 @@
         android:layout_height="54dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/Lastname"
+        android:hint="@string/Lastname"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.483" />
+        app:layout_constraintVertical_bias="0.483"
+        android:autofillHints=""/>
 
     <EditText
         android:id="@+id/editTextUsername"
@@ -67,13 +69,14 @@
         android:layout_height="54dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/username"
+        android:hint="@string/username"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.587" />
+        app:layout_constraintVertical_bias="0.587"
+        android:autofillHints=""/>
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -81,13 +84,14 @@
         android:layout_height="54dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="@string/password"
+        android:hint="@string/password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.686" />
+        app:layout_constraintVertical_bias="0.686"
+        android:autofillHints=""/>
 
     <Button
         android:id="@+id/buttonRegister"

@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.Date;
+
 import edu.unicauca.main.persistence.models.TaskModel;
 
 public class DialogTaskClass extends DialogFragment {
@@ -39,8 +41,9 @@ public class DialogTaskClass extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String task=  createTask.getText().toString();
+                Date d = new Date();
                 taskModel = new TaskModel(task,
-                        "",
+                        "",d,
                         "0");
                 taskModel.save();
             }
