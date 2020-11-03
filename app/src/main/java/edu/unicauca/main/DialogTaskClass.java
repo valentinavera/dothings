@@ -43,7 +43,7 @@ public class DialogTaskClass extends DialogFragment {
                 String task=  createTask.getText().toString();
                 Date d = new Date();
                 taskModel = new TaskModel(task,
-                        "",d,
+                        "",d,d,
                         "0");
                 taskModel.save();
             }

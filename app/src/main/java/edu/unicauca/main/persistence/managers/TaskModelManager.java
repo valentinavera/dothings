@@ -16,7 +16,7 @@ public class TaskModelManager extends  ModelManager<TaskModel>{
     }
     @Override
     public Model makeModel(Map<String, Object> data) {
-        TaskModel taskModel = new TaskModel((String) data.get("name"),(String) data.get("description"),(Date)data.get("date"),(String)data.get("state"));
+        TaskModel taskModel = new TaskModel((String) data.get("name"),(String) data.get("description"),(Date)data.get("time"),(Date)data.get("date"),(String)data.get("state"));
         taskModel.setKey((String) data.get("_id"));
         return taskModel;
     }
@@ -28,8 +28,9 @@ public class TaskModelManager extends  ModelManager<TaskModel>{
         task.put("description",String.class);
         task.put("name",String.class);
         task.put("key", String.class);
+        task.put("time", Date.class);
         task.put("date", Date.class);
-        task.put("status", Date.class);
+        task.put("state", Date.class);
         return  task;
     }
 }
