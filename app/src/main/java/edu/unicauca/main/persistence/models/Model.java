@@ -11,13 +11,12 @@ import edu.unicauca.main.persistence.managers.ModelManager;
 
 
 public abstract  class Model<T>  {
-    private List<T> cacheList;
     private String key;
 
 
 
     public Model(){
-        cacheList = new ArrayList<>();
+
     }
 
 

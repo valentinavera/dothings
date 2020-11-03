@@ -27,7 +27,7 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //create database
         //tasks
-        String ddlTask = "create table if not EXISTS Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100),date varchar(50) )";
+        String ddlTask = "create table if not EXISTS Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100),time integer )";
         //String ddlTask = "create table Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100))";
         db.execSQL(ddlTask);
     }
@@ -66,7 +66,12 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
 
 
         SQLiteDatabase rdb = getReadableDatabase();
-        Cursor cursor = rdb.rawQuery("SELECT * FROM " + entity, null);
+        Cursor cursor = null;
+        try {
+             cursor = rdb.rawQuery("SELECT * FROM " + entity, null);
+        }catch (Exception e){
+            e.printStackTrace();;
+        }
         //rdb.close();
 
         return cursor;
@@ -169,8 +174,10 @@ public  class SqliteConnection implements IConnection {
                 e.printStackTrace();
 
             }
-        }else   if(classField == int.class){
+        }else   if(classField == int.class ){
             return Integer.parseInt(field);
+        }else if( classField == long.class){
+            return Long.parseLong(field);
         }
         return field;
 

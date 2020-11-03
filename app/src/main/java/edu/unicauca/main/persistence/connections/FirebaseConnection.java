@@ -59,20 +59,23 @@ import edu.unicauca.main.persistence.models.Model;
     public void linkModelManager(  final ModelManager manager) {
         connect();
         String entity = manager.getEntityName();
-        db.child(entity).addValueEventListener (new ValueEventListener () {
+        db.child(entity).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 manager.clearCache();
-                for (DataSnapshot ds : snapshot.getChildren ()) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
                     //Object o = snapshot.getValue(T);
 
-                    Model o  =ds.getValue(manager.getModel().getClass());
+                  Map<String,Object>  data= (Map<String, Object>) ds.getValue();
+
+                    Model o = manager.makeModel(data);
                     o.setKey(ds.getKey());
                     manager.addToCache(o);
 
                 }
                 manager.notify_observers();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

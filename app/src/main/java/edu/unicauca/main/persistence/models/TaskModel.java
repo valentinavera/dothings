@@ -19,7 +19,7 @@ public  class TaskModel extends Model<TaskModel> {
 
     private  String name;
     private  String description;
-    private Date date;
+    private long time;
     private   static ModelManager objects ;
     public  TaskModel(){
         //db.linkModel(entityName,this);
@@ -27,7 +27,7 @@ public  class TaskModel extends Model<TaskModel> {
             // taskModelObject.db  = new SqliteConnection(context);
 
             //IConnection c = new SqliteConnection(context);
-            objects = new TaskModelManager(this);
+            objects = new TaskModelManager(TaskModel.class);
             objects.createConnectionWithDB();
             objects.link();
             //taskModelObject.db  = new MongoDBConnection();
@@ -39,24 +39,22 @@ public  class TaskModel extends Model<TaskModel> {
         if(this.objects==null) {
             // taskModelObject.db  = new SqliteConnection(context);
             //IConnection c = new FirebaseConnection();
-            objects = new TaskModelManager(this);
+            objects = new TaskModelManager(TaskModel.class);
             objects.createConnectionWithDB(context);
             objects.link();
             //taskModelObject.db  = new MongoDBConnection();
 
         }
     }
-    public  TaskModel(String name, String description,Date date){
+    public  TaskModel(String name, String description,long date){
         //db.linkModel(entityName,this);
         //this();
         this.name = name;
         this.description = description;
-        this.date = date;
+        this.time = date;
 
 
     }
-
-
 
     public String getName() {
         return this.name;
@@ -76,7 +74,7 @@ public  class TaskModel extends Model<TaskModel> {
         Map<String, Object> task = new HashMap<>();
         task.put("name",name);
         task.put("description", description);
-        task.put("date", date);
+        if(time != 0)task.put("time",time);
         boolean result;
         if(this.getKey() == null) {// save
                 result = objects.create( task);
@@ -94,6 +92,12 @@ public  class TaskModel extends Model<TaskModel> {
         this.name = name;
     }
     public void setDescription(String des){ this.description = des;}
+
+    public Date getDate() {
+            return new Date(time);
+
+    }
+
 
     public ModelManager getManager(){
         return objects;

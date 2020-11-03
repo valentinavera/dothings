@@ -17,14 +17,14 @@ import edu.unicauca.main.persistence.models.Model;
 public  abstract class ModelManager<T> extends Observed {
     private List<T> cacheList;
     protected   static IConnection db ;
-    private  Model model;
+    private  Class modelClass;
     private String entityName;
 
 
-    public ModelManager(Model m){
+    public ModelManager(Class modelClass){
 
         cacheList = new ArrayList<>();
-        model = m;
+        this.modelClass = modelClass;
       //  db.linkModelManager(this);
     }
     public boolean createConnectionWithDB(){
@@ -64,8 +64,8 @@ public  abstract class ModelManager<T> extends Observed {
     public  IConnection setDb(){return db;}
     public abstract Model makeModel(Map<String, Object> data);
 
-    public  Model getModel(){
-        return model;
+    public  Class getModelClass(){
+        return modelClass;
     }
 
     public  boolean update(Map<String, Object> data){
