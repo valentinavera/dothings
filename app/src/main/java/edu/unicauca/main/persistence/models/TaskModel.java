@@ -19,7 +19,7 @@ public  class TaskModel extends Model<TaskModel> {
 
     private  String name;
     private  String description;
-    private long time;
+    private long timeDate;
     private   static ModelManager objects ;
     private String state;
     public  TaskModel(){
@@ -52,7 +52,7 @@ public  class TaskModel extends Model<TaskModel> {
         //this();
         this.name = name;
         this.description = description;
-        this.time = date;
+        this.timeDate = date;
         this.state = state;
     }
 
@@ -66,7 +66,7 @@ public  class TaskModel extends Model<TaskModel> {
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", state='" + state + '\'' +
-                ", date='" + time + '\'' +
+                ", date='" + timeDate + '\'' +
                 '}';
     }
 
@@ -77,7 +77,7 @@ public  class TaskModel extends Model<TaskModel> {
         task.put("name",name);
         task.put("description", description);
         task.put("state",state);
-        if(time != 0)task.put("time",time);
+        if(timeDate != 0)task.put("time",timeDate);
         boolean result;
         if(this.getKey() == null) {// save
                 result = objects.create( task);
@@ -102,7 +102,7 @@ public  class TaskModel extends Model<TaskModel> {
     public void setDescription(String des){ this.description = des;}
 
     public Date getDate() {
-            return new Date(time);
+            return new Date(timeDate);
 
     }
 
@@ -114,12 +114,12 @@ public  class TaskModel extends Model<TaskModel> {
         this.state = state;
     }
 
-    public long getTime() {
-        return time;
+    public long getTimeDate() {
+        return timeDate;
     }
 
-    public void setTime(long time) {
-        this.time = time;
+    public void setTime(long timeDate) {
+        this.timeDate = timeDate;
     }
 
     public ModelManager getManager(){
