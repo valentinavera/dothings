@@ -25,6 +25,7 @@ import edu.unicauca.main.persistence.models.Model;
     public   void connect(){
         if(db == null){
             db =  FirebaseDatabase.getInstance().getReference();
+            db.keepSynced(true);
         }
     }
     @Override
