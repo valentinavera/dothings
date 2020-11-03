@@ -25,7 +25,7 @@ public class UserModel extends Model<UserModel> {
             // taskModelObject.db  = new SqliteConnection(context);
             //IConnection c = new FirebaseConnection ();
             //IConnection c = new SqliteConnection(context);
-            objects = new UserModelManager (this);
+            objects = new UserModelManager (TaskModel.class);
             objects.createConnectionWithDB();
             objects.link();
             //taskModelObject.db  = new MongoDBConnection();
@@ -38,7 +38,7 @@ public class UserModel extends Model<UserModel> {
         if(this.objects==null) {
             // taskModelObject.db  = new SqliteConnection(context);
             //IConnection c = new FirebaseConnection();
-            objects = new UserModelManager(this);
+            objects = new UserModelManager(UserModel.class);
             objects.createConnectionWithDB(context);
             objects.link();
             //taskModelObject.db  = new MongoDBConnection();

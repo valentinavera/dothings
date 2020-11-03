@@ -3,7 +3,7 @@ package edu.unicauca.main.patterns.observer;
 import java.util.ArrayList;
 
 
-public abstract class Observed {
+ public abstract class Observed {
     private ArrayList<Observer> observers=new ArrayList<Observer>();
     /**
      * Notifica a todos sus observadores mandandoles una referencia de si mismo
