@@ -1,9 +1,15 @@
 package edu.unicauca.main;
 
+import android.app.usage.UsageEvents;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,9 +20,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+
+import com.google.firebase.database.core.view.Event;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Stream;
+
 import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
+import sun.bob.mcalendarview.MCalendarView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +41,9 @@ import edu.unicauca.main.patterns.observer.Observer;
  */
 public class ScheduleFragment extends Fragment implements Observer {
     private TaskModel taskModel ;
-    //private DatabaseReference mDataBase;
+    private long date;
+    private Context mContext;
+      //private DatabaseReference mDataBase;
     private CalendarView mCalendarView;
     private static final String TAG = "CalendarActivity";
 
@@ -76,16 +94,28 @@ public class ScheduleFragment extends Fragment implements Observer {
         }
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.N)
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View vista = inflater.inflate (R.layout.fragment_schedule, container, false);
-        mCalendarView = vista.findViewById (R.id.calendar);
+        Calendar calendar = Calendar.getInstance();
+        Calendar calendar1 = Calendar.getInstance();
+        List<Calendar> calendars = new ArrayList<>();
+        calendars.add (calendar);
+        calendars.add (calendar1);
+        calendar.set(2020, 10, 5);
+        calendar1.set(2020, 10, 26);
+        mCalendarView = (CalendarView) vista.findViewById (R.id.calendar);
+        date = calendar.getTimeInMillis ();
+        mCalendarView.setDate(calendar.getTimeInMillis ());
+        mCalendarView.setDate(calendar1.getTimeInMillis ());
         mCalendarView.setOnDateChangeListener (new CalendarView.OnDateChangeListener () {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+
                 String date = (year) + "/" + (month+1) +"/" + dayOfMonth;
                 Log.d(TAG, "onSelectedDayChange: date " +date);
             }

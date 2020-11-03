@@ -42,7 +42,7 @@ public class DialogTaskClass extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 String task=  createTask.getText().toString();
                 Date d = new Date();
-                taskModel = new TaskModel(task,"",d.getTime(),"0");
+                taskModel = new TaskModel(task,"",d.getTime(),d.getTime(),"0");
                 taskModel.save();
             }
         });

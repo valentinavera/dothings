@@ -16,9 +16,10 @@ public class TaskModelManager extends  ModelManager<TaskModel>{
     }
     @Override
     public Model makeModel(Map<String, Object> data) {
-        TaskModel taskModel = new TaskModel((String) data.get("name"),(String) data.get("description"),(long)data.get("time"),(String)data.get("state"));
+        TaskModel taskModel = new TaskModel((String) data.get("name"),(String) data.get("description"),(long)data.get("time"),(long)data.get("hour"),(String)data.get("state"));
         if(data.containsKey("key"))  taskModel.setKey((String) data.get("key"));
         else if(data.containsKey("_id")) taskModel.setKey((String) data.get("_id"));
+
         return taskModel;
     }
 
@@ -30,6 +31,7 @@ public class TaskModelManager extends  ModelManager<TaskModel>{
         task.put("name",String.class);
         task.put("key", String.class);
         task.put("time", long.class);
+        task.put("hour", long.class);
         task.put("state", String.class);
         return  task;
     }

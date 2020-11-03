@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,8 +22,11 @@ public  class TaskModel extends Model<TaskModel> {
     private  String name;
     private  String description;
     private long timeDate;
-    private   static ModelManager objects ;
+    private static ModelManager objects ;
     private String state;
+    private long hour;
+    private ArrayList<String> dates = new ArrayList();
+
     public  TaskModel(){
         //db.linkModel(entityName,this);
         if(this.objects==null) {
@@ -47,12 +52,14 @@ public  class TaskModel extends Model<TaskModel> {
 
         }
     }
-    public  TaskModel(String name, String description,long date, String state){
+
+    public  TaskModel(String name, String description, long timeTask, long date, String state){
         //db.linkModel(entityName,this);
         //this();
         this.name = name;
         this.description = description;
         this.timeDate = date;
+        this.hour= timeTask;
         this.state = state;
     }
 
@@ -65,12 +72,11 @@ public  class TaskModel extends Model<TaskModel> {
         return "TaskModel{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", time='" + timeDate + '\'' +
+                ", hour='" + hour + '\'' +
                 ", state='" + state + '\'' +
-                ", date='" + timeDate + '\'' +
                 '}';
     }
-
-
 
     public boolean  save() {
         Map<String, Object> task = new HashMap<>();
@@ -78,6 +84,13 @@ public  class TaskModel extends Model<TaskModel> {
         task.put("description", description);
         task.put("state",state);
         if(timeDate != 0)task.put("time",timeDate);
+        if(hour != 0)task.put ("hour",hour);
+        //añadir a arrayList
+        long pDateTask;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        //pDateTask = dateTask.getTime ();
+        String dateString = sdf.format(timeDate);
+        dates.add (dateString);
         boolean result;
         if(this.getKey() == null) {// save
                 result = objects.create( task);
@@ -110,19 +123,31 @@ public  class TaskModel extends Model<TaskModel> {
         return state;
     }
 
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public long getTimeDate() {
+     public long getTimeDate() {
         return timeDate;
     }
 
-    public void setTime(long timeDate) {
+    public void setTimeDate(long timeDate) {
         this.timeDate = timeDate;
     }
 
+    public void setState(String state) {
+        this.state = state;
+    }
+    public long getHour() {
+        return this.hour;
+    }
+    public void setHour(long timeTask) {
+        this.hour = timeTask;
+    }
+    public ArrayList<String> getDates() {
+        return dates;
+    }
+    public void setDates(ArrayList<String> dates) {
+        this.dates = dates;
+    }
     public ModelManager getManager(){
         return objects;
     }
+
 }

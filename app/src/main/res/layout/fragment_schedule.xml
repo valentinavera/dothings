@@ -23,6 +23,11 @@
             android:id="@+id/calendar"
             android:layout_width="match_parent"
             android:layout_height="403dp" />
+        <sun.bob.mcalendarview.MCalendarView
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            tools:context=".ScheduleFragment"
+            />
     </LinearLayout>
 
 </FrameLayout>
