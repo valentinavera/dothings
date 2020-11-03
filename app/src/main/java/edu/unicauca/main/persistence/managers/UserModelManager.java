@@ -10,7 +10,7 @@ import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.persistence.models.UserModel;
 
 public class UserModelManager extends  ModelManager<UserModel>{
-    public UserModelManager(Model m ) {
+    public UserModelManager(Class m ) {
         super(m);
         setEntityName("User");
 

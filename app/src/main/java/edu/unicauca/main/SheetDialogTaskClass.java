@@ -114,9 +114,10 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
                     objTask.setName(editNameText.getText().toString());
                     objTask.setDescription(taskNotes.getText ().toString ());
                     if(changeDate == null){
-                        objTask.setDateTask(new Date());
+                        Date d = new Date();
+                        objTask.setTime(d.getTime());
                     }else{
-                        objTask.setDateTask (changeDate);
+                        objTask.setTime(changeDate.getTime());
                     }
                     objTask.save();
                     dismiss();

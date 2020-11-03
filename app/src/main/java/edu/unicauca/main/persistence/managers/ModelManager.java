@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.persistence.connections.FirebaseConnection;
 import edu.unicauca.main.persistence.connections.IConnection;
@@ -17,21 +18,21 @@ import edu.unicauca.main.persistence.models.TaskModel;
 public  abstract class ModelManager<T> extends Observed {
     private List<T> cacheList;
     protected   static IConnection db ;
-    private  Model model;
+    private  Class modelClass;
     private String entityName;
 
 
-    public ModelManager(Model m){
+    public ModelManager(Class modelClass){
 
         cacheList = new ArrayList<>();
-        model = m;
-        //  db.linkModelManager(this);
+        this.modelClass = modelClass;
+      //  db.linkModelManager(this);
     }
     public boolean createConnectionWithDB(){
         boolean result = false;
         if(db == null){
             result = true;
-            db = new FirebaseConnection ();
+            db = new FirebaseConnection();
         }
         return result;
     }
@@ -39,7 +40,7 @@ public  abstract class ModelManager<T> extends Observed {
         boolean result = false;
         if(db == null){
             result = true;
-            db = new SqliteConnection (c);
+            db = new SqliteConnection(c);
         }
         return  result;
     }
@@ -64,8 +65,8 @@ public  abstract class ModelManager<T> extends Observed {
     public  IConnection setDb(){return db;}
     public abstract Model makeModel(Map<String, Object> data);
 
-    public  Model getModel(){
-        return model;
+    public  Class getModelClass(){
+        return modelClass;
     }
 
     public  boolean update(Map<String, Object> data){

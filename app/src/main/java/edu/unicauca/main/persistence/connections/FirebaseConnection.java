@@ -17,7 +17,7 @@ import java.util.Map;
 import edu.unicauca.main.persistence.managers.ModelManager;
 import edu.unicauca.main.persistence.models.Model;
 
-public class FirebaseConnection implements  IConnection{
+ public class FirebaseConnection implements  IConnection{
     private static DatabaseReference db;
     public FirebaseConnection(){
         connect();
@@ -25,6 +25,7 @@ public class FirebaseConnection implements  IConnection{
     public   void connect(){
         if(db == null){
             db =  FirebaseDatabase.getInstance().getReference();
+            db.keepSynced(true);
         }
     }
     @Override
@@ -59,20 +60,23 @@ public class FirebaseConnection implements  IConnection{
     public void linkModelManager(  final ModelManager manager) {
         connect();
         String entity = manager.getEntityName();
-        db.child(entity).addValueEventListener (new ValueEventListener () {
+        db.child(entity).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 manager.clearCache();
-                for (DataSnapshot ds : snapshot.getChildren ()) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
                     //Object o = snapshot.getValue(T);
 
-                    Model o  =ds.getValue(manager.getModel().getClass());
+                  Map<String,Object>  data= (Map<String, Object>) ds.getValue();
+
+                    Model o = manager.makeModel(data);
                     o.setKey(ds.getKey());
                     manager.addToCache(o);
 
                 }
                 manager.notify_observers();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

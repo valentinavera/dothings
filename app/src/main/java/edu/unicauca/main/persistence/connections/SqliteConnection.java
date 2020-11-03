@@ -17,7 +17,6 @@ import java.util.Map;
 import edu.unicauca.main.persistence.managers.ModelManager;
 import edu.unicauca.main.persistence.models.Model;
 
-
 class  SqliteConnectionHelper extends SQLiteOpenHelper {
 
     public SqliteConnectionHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -28,8 +27,8 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //create database
         //tasks
-        String ddlTask = "create table if not EXISTS Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100),date varchar(50),state varchar(1) )";
-        String ddlUser = "create table if not EXISTS User ( _id integer primary key autoincrement, name varchar(20),lastname varchar(20), username varchar(20), password varchar(10) )";
+        String ddlTask = "create table if not EXISTS Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100),time integer )";
+          String ddlUser = "create table if not EXISTS User ( _id integer primary key autoincrement, name varchar(20),lastname varchar(20), username varchar(20), password varchar(10) )";
 
         //String ddlTask = "create table Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100))";
         db.execSQL(ddlTask);
@@ -70,7 +69,12 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
 
 
         SQLiteDatabase rdb = getReadableDatabase();
-        Cursor cursor = rdb.rawQuery("SELECT * FROM " + entity, null);
+        Cursor cursor = null;
+        try {
+             cursor = rdb.rawQuery("SELECT * FROM " + entity, null);
+        }catch (Exception e){
+            e.printStackTrace();;
+        }
         //rdb.close();
 
         return cursor;
@@ -92,7 +96,7 @@ public  class SqliteConnection implements IConnection {
             try {
                 db = new SqliteConnectionHelper(this.context,"dothings",null,1);
 
-                // db = SQLiteDatabase.openOrCreateDatabase("dothings.db", null);
+               // db = SQLiteDatabase.openOrCreateDatabase("dothings.db", null);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -173,8 +177,10 @@ public  class SqliteConnection implements IConnection {
                 e.printStackTrace();
 
             }
-        }else   if(classField == int.class){
+        }else   if(classField == int.class ){
             return Integer.parseInt(field);
+        }else if( classField == long.class){
+            return Long.parseLong(field);
         }
         return field;
 
