@@ -47,14 +47,13 @@ public  class TaskModel extends Model<TaskModel> {
 
         }
     }
-    public  TaskModel(String name, String description,long date){
+    public  TaskModel(String name, String description,long date, String state){
         //db.linkModel(entityName,this);
         //this();
         this.name = name;
         this.description = description;
         this.time = date;
-
-
+        this.state = state;
     }
 
     public String getName() {
@@ -66,6 +65,8 @@ public  class TaskModel extends Model<TaskModel> {
         return "TaskModel{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", state='" + state + '\'' +
+                ", date='" + time + '\'' +
                 '}';
     }
 
@@ -75,6 +76,7 @@ public  class TaskModel extends Model<TaskModel> {
         Map<String, Object> task = new HashMap<>();
         task.put("name",name);
         task.put("description", description);
+        task.put("state",state);
         if(time != 0)task.put("time",time);
         boolean result;
         if(this.getKey() == null) {// save
