@@ -8,6 +8,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import edu.unicauca.main.persistence.managers.ModelManager;
@@ -82,5 +83,10 @@ public  class MongoDBConnection implements IConnection{
 
         model.notify_observers();
 
+    }
+
+    @Override
+    public List<Model> filter(ModelManager m, Map<String, Object> fitlerFields) {
+        return null;
     }
 }

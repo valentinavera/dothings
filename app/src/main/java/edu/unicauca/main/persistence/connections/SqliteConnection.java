@@ -10,8 +10,10 @@ import androidx.annotation.Nullable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import edu.unicauca.main.persistence.managers.ModelManager;
@@ -27,8 +29,9 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //create database
         //tasks
-        String ddlTask = "create table if not EXISTS Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100),time integer, hour integer, state varchar(1) )";
-        String ddlUser = "create table if not EXISTS User ( _id integer primary key autoincrement, name varchar(20),lastname varchar(20), username varchar(20), password varchar(10) )";
+        String ddlTask = "create table if not EXISTS Task ( key integer primary key autoincrement, name varchar(20),description varchar(100),time integer, hour integer, state varchar(1),sync int default 2 )";
+        String ddlUser = "create table if not EXISTS User ( key integer primary key autoincrement, name varchar(20),lastname varchar(20), email varchar(20), password varchar(10), isAuthenticated varchar(10) , uuid varchar(40) )";
+        //sync 1 =true 2 = false
 
         //String ddlTask = "create table Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100))";
         db.execSQL(ddlTask);
@@ -56,7 +59,7 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
     }
     public  void update(String entity, String key,ContentValues values){
         try {
-            String whereClausule = "_id = ?";
+            String whereClausule = "key = ?";
             SQLiteDatabase wdb = this.getWritableDatabase();
             wdb.update(entity,values,whereClausule,new String[]{key});
             wdb.close();
@@ -137,9 +140,7 @@ public  class SqliteConnection implements IConnection {
         return true;
 
     }
-
-    @Override
-    public void linkModelManager( ModelManager manager) {
+    private  void linkModelManager(ModelManager manager, boolean notify){
         connect();
         manager.clearCache();
         String entity = manager.getEntityName();
@@ -148,7 +149,7 @@ public  class SqliteConnection implements IConnection {
         Map<String, Object> data = new HashMap<>();
         cursor.moveToFirst();
         if(cursor.getCount() == 0){
-            manager.notify_observers();
+            if(notify)manager.notify_observers();
             return;
         }
         do {
@@ -166,8 +167,27 @@ public  class SqliteConnection implements IConnection {
 
 
 
-        manager.notify_observers();
+        if(notify)manager.notify_observers();
     }
+    @Override
+    public void linkModelManager( ModelManager manager) {
+       linkModelManager(manager,true);
+    }
+
+    @Override
+    public List<Model> filter(ModelManager manager, Map<String, Object> fitlerFields) {
+        linkModelManager(manager,false);
+        List<Model> filters = new ArrayList<>();
+        List<Model> all = manager.getAll();
+        for(Model m : all){
+            if(m.validate(fitlerFields))
+                filters.add(m);
+
+        }
+        return filters;
+    }
+
+
 
     private Object parseString(String field, Class classField) {
         if(classField == Date.class){
@@ -187,6 +207,7 @@ public  class SqliteConnection implements IConnection {
 
     }
     private String objectToString(Object o){
+
         if(o.getClass() == Date.class){
             return dateFormatter.format(o);
         }

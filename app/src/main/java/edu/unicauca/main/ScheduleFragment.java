@@ -127,7 +127,7 @@ public class ScheduleFragment extends Fragment implements Observer {
 
 
     @Override
-    public void notify(Observed observed) {
+    public void notify(Object observed) {
 
     }
 }

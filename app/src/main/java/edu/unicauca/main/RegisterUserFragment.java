@@ -15,6 +15,7 @@ import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
 import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.persistence.models.UserModel;
+import edu.unicauca.main.session.SimpleSessionManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -96,13 +97,25 @@ public class RegisterUserFragment extends Fragment implements Observer {
                 userModel = new UserModel(name,lastname,username,password);
                 userModel.save();
                 Toast.makeText (getContext (),"Registro exitoso",Toast.LENGTH_LONG).show ();
+
+
+                SimpleSessionManager.createUser(name, lastname,username,password, new Observer() {
+                    @Override
+                    public void notify(Object succesfull) {
+                        if((boolean)succesfull){
+                            Toast.makeText(getActivity().getApplicationContext(),"Usuario registrado",Toast.LENGTH_LONG);
+                        }
+                    }
+                });
+                //Cerrar Sesion
+                //SimpleSessionManager.logout();
             }
         });
         return  vista;
     }
 
     @Override
-    public void notify(Observed observed) {
+    public void notify(Object observed) {
 
     }
 }

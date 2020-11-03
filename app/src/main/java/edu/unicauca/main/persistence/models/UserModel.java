@@ -2,6 +2,8 @@ package edu.unicauca.main.persistence.models;
 
 import android.content.Context;
 
+import com.google.gson.internal.bind.DateTypeAdapter;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,29 +18,18 @@ public class UserModel extends Model<UserModel> {
     private   static ModelManager objects ;
     private String name;
     private String lastname;
-    private String username;
+    private String email;
     private String password;
-    public  UserModel(){
-        //db.linkModel(entityName,this);
-        if(this.objects==null) {
+    private String uuid;
+    private int isAuthenticated;//1= true, 2= false
 
-            // taskModelObject.db  = new SqliteConnection(context);
-            //IConnection c = new FirebaseConnection ();
-            //IConnection c = new SqliteConnection(context);
-            objects = new UserModelManager (TaskModel.class);
-            objects.createConnectionWithDB();
-            objects.link();
-            //taskModelObject.db  = new MongoDBConnection();
-
-        }
-    }
     public  UserModel(Context context){
         //db.linkModel(entityName,this);
 
         if(this.objects==null) {
             // taskModelObject.db  = new SqliteConnection(context);
             //IConnection c = new FirebaseConnection();
-            objects = new UserModelManager(UserModel.class);
+            objects = new UserModelManager();
             objects.createConnectionWithDB(context);
             objects.link();
             //taskModelObject.db  = new MongoDBConnection();
@@ -49,7 +40,13 @@ public class UserModel extends Model<UserModel> {
     public UserModel(String name, String lastname, String username, String password) {
         this.name = name;
         this.lastname = lastname;
-        this.username = username;
+        this.email = username;
+        this.password = password;
+    }
+
+    public UserModel(String username, String password) {
+
+        this.email = username;
         this.password = password;
     }
 
@@ -58,23 +55,59 @@ public class UserModel extends Model<UserModel> {
         return "UserModel{" +
                 "name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", username='" + username + '\'' +
+                ", username='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
-    public boolean  save() {
+    public  String getUuid(){
+        return uuid;
+    }
+    public  void setUuid(String d){
+        uuid = d;
+    }
+    private boolean save(int DATABAS_MODE){
         Map<String, Object> user= new HashMap<> ();
-        user.put("name",name);
-        user.put("lastname", lastname);
-        user.put("username", username);
-        user.put("password", password);
+        if(name != null)user.put("name",name);
+        if(lastname != null)user.put("lastname", lastname);
+        if(email != null)user.put("email", email);
+        if(password != null)user.put("password", password);
+        if(uuid!=null) user.put("uuid", uuid);
+        if(isAuthenticated==1) user.put("isAuthenticated", 1); else user.put("isAuthenticated", 2);
+
         boolean result;
         if(this.getKey() == null) {// save
-            result = objects.create( user);
+            result = objects.create( user, DATABAS_MODE);
         }
         else {
             user.put("key", getKey ());
-            result = objects.update(user);
+            result = objects.update(user,DATABAS_MODE);
+        }
+
+
+        return result;
+    }
+    public boolean  save() {
+
+       return save(ModelManager.REMOTE_MODE);
+    }
+
+    public boolean saveLocal(boolean update) {
+        Map<String, Object> user= new HashMap<> ();
+        user.put("name",name);
+        user.put("lastname", lastname);
+        user.put("email", email);
+        user.put("password", password);
+        user.put("isAuthenticated", 1);
+        user.put("uuid", uuid);
+
+
+        boolean result;
+        if(!update) {// save
+            result = objects.create( user, ModelManager.LOCAL_MODE);
+        }
+        else {
+            user.put("key", getKey ());
+            result = objects.update(user,ModelManager.LOCAL_MODE);
         }
 
 
@@ -97,12 +130,12 @@ public class UserModel extends Model<UserModel> {
         this.lastname = lastname;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String username) {
+        this.email = username;
     }
 
     public String getPassword() {
@@ -115,4 +148,58 @@ public class UserModel extends Model<UserModel> {
     public ModelManager getManager(){
         return objects;
     }
+    public  boolean isAuthenticated(){
+        return isAuthenticated==1;
+
+    }
+    public  void  authenticate(){
+        isAuthenticated= 1;
+    }
+
+
+    public void unauthenticate() {
+        isAuthenticated= 2;
+        Map<String, Object> user= new HashMap<> ();
+        user.put("isAuthenticated", 2);
+        user.put("key", getKey());
+        objects.update(user,ModelManager.LOCAL_MODE);
+    }
+
+    @Override
+    public boolean validate(Map<String, Object> fitlerFields) {
+        for(Map.Entry<String,Object> filter: fitlerFields.entrySet()){
+            Object value = filter.getValue();
+            switch (filter.getKey()){
+                case "name":
+                    if(!value.equals(name))
+                        return false;
+                    break;
+                case "lastname":
+                    if(!value.equals(lastname))
+                        return false;
+                    break;
+                case "email":
+                    if(!value.equals(email))
+                        return false;
+                    break;
+                case "password":
+                    if(!value.equals(password))
+                        return false;
+                    break;
+                case "isAuthenticated":
+                    if(!value.equals(isAuthenticated))
+                        return false;
+                    break;
+                case "uuid":
+                    if(!value.equals(uuid))
+                        return false;
+                default:
+                    break;
+            }
+
+        }
+        return  true;
+    }
+
+
 }

@@ -90,7 +90,7 @@ public class DayFragment extends Fragment implements Observer {
     }
 
     @Override
-    public void notify(Observed observed) {
+    public void notify(Object observed) {
         //mTaskList = taskModel.getManager().getAll();
         mTaskList = taskModel.getManager().getDataState("1");
         mAdapter = new TaskAdapter (mTaskList, R.layout.tareas_view);

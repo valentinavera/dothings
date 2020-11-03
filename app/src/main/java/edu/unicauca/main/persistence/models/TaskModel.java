@@ -10,11 +10,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.unicauca.main.persistence.connections.FirebaseConnection;
-import edu.unicauca.main.persistence.connections.IConnection;
-import edu.unicauca.main.persistence.connections.SqliteConnection;
 import edu.unicauca.main.persistence.managers.ModelManager;
 import edu.unicauca.main.persistence.managers.TaskModelManager;
+import edu.unicauca.main.session.SimpleSessionManager;
 
 @IgnoreExtraProperties
 public  class TaskModel extends Model<TaskModel> {
@@ -26,10 +24,11 @@ public  class TaskModel extends Model<TaskModel> {
     private String state;
     private long hour;
     private ArrayList<String> dates = new ArrayList();
+    private int sync=2;
 
-    public  TaskModel(){
+   /* public  TaskModel() {
         //db.linkModel(entityName,this);
-        if(this.objects==null) {
+        if (this.objects == null) {
             // taskModelObject.db  = new SqliteConnection(context);
 
             //IConnection c = new SqliteConnection(context);
@@ -37,19 +36,16 @@ public  class TaskModel extends Model<TaskModel> {
             objects.createConnectionWithDB();
             objects.link();
             //taskModelObject.db  = new MongoDBConnection();
-
         }
-    }
+    }*/
+
     public  TaskModel(Context context){
         //db.linkModel(entityName,this);
         if(this.objects==null) {
-            // taskModelObject.db  = new SqliteConnection(context);
-            //IConnection c = new FirebaseConnection();
-            objects = new TaskModelManager(TaskModel.class);
+
+            objects = new TaskModelManager();
             objects.createConnectionWithDB(context);
             objects.link();
-            //taskModelObject.db  = new MongoDBConnection();
-
         }
     }
 
@@ -80,6 +76,18 @@ public  class TaskModel extends Model<TaskModel> {
 
     public boolean  save() {
         Map<String, Object> task = new HashMap<>();
+        int DATA_BASE_MODE ;
+        UserModel u = SimpleSessionManager.getLoginUser();
+        if(u.isAuthenticated()) {//seleccionar base
+            DATA_BASE_MODE = ModelManager.REMOTE_MODE;
+            task.put("userid", u.getUuid());
+
+        }
+        else{
+            DATA_BASE_MODE = ModelManager.LOCAL_MODE;
+
+        }
+
         task.put("name",name);
         task.put("description", description);
         task.put("state",state);
@@ -93,12 +101,59 @@ public  class TaskModel extends Model<TaskModel> {
         dates.add (dateString);
         boolean result;
         if(this.getKey() == null) {// save
-                result = objects.create( task);
+                result = objects.create( task,DATA_BASE_MODE);
         }
         else {
                 task.put("key", getKey ());
-                result = objects.update(task);
+                result = objects.update(task,DATA_BASE_MODE);
         }
+
+
+        return result;
+    }
+    public boolean saveLocal() {
+        Map<String, Object> task = new HashMap<>();
+        int DATA_BASE_MODE= ModelManager.LOCAL_MODE ;
+
+        task.put("name",name);
+        task.put("description", description);
+        task.put("state",state);
+        task.put("sync",sync);
+        if(timeDate != 0)task.put("time",timeDate);
+        if(hour != 0) task.put("hour", hour);
+        boolean result;
+        if(this.getKey() == null) {// save
+            result = objects.create( task,DATA_BASE_MODE);
+        }
+        else {
+            task.put("key", getKey ());
+            result = objects.update(task,DATA_BASE_MODE);
+        }
+
+
+        return result;
+    }
+    public boolean saveRemote(String uid) {
+        Map<String, Object> task = new HashMap<>();
+        int DATA_BASE_MODE ;
+        UserModel u = SimpleSessionManager.getLoginUser();
+        task.put("userid", uid);
+        if(u.isAuthenticated()) {//seleccionar base
+            DATA_BASE_MODE = ModelManager.REMOTE_MODE;
+        }
+        else{
+            DATA_BASE_MODE = ModelManager.LOCAL_MODE;
+        }
+
+        task.put("name",name);
+        task.put("description", description);
+        task.put("state",state);
+        if(timeDate != 0)task.put("time",timeDate);
+        boolean result;
+
+        //task.put("key", getKey ());
+        result = objects.create(task,DATA_BASE_MODE);
+
 
 
         return result;
@@ -148,6 +203,18 @@ public  class TaskModel extends Model<TaskModel> {
     }
     public ModelManager getManager(){
         return objects;
+    }
+
+    @Override
+    public boolean validate(Map<String, Object> fitlerFields) {
+        return false;
+    }
+    public void setSync(int sync) {
+        this.sync = sync;
+
+    }
+    public  boolean isSynchronized(){
+        return sync ==1;
     }
 
 }

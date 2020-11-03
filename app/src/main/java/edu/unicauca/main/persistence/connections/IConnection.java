@@ -1,5 +1,6 @@
 package edu.unicauca.main.persistence.connections;
 
+import java.util.List;
 import java.util.Map;
 
 import edu.unicauca.main.persistence.managers.ModelManager;
@@ -13,4 +14,5 @@ public interface  IConnection{
     void linkModelManager(  final ModelManager m);
 
 
+    List<Model> filter(ModelManager manager,Map<String, Object> fitlerFields);
 }

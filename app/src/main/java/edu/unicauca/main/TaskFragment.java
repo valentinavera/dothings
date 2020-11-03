@@ -112,7 +112,7 @@ public class TaskFragment extends Fragment implements Observer {
     }
 
     @Override
-    public void notify(Observed observed) {
+    public void notify(Object observed) {
 
         tasks = taskModel.getManager().getDataState("0");
         mAdapter = new TaskAdapter (tasks, R.layout.tareas_view);

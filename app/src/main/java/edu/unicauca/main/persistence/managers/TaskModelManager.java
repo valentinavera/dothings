@@ -9,8 +9,8 @@ import edu.unicauca.main.persistence.models.Model;
 import edu.unicauca.main.persistence.models.TaskModel;
 
 public class TaskModelManager extends  ModelManager<TaskModel>{
-    public TaskModelManager(Class m ) {
-        super(m);
+    public TaskModelManager( ) {
+        super(TaskModel.class);
         setEntityName("Task");
 
     }
@@ -19,7 +19,7 @@ public class TaskModelManager extends  ModelManager<TaskModel>{
         TaskModel taskModel = new TaskModel((String) data.get("name"),(String) data.get("description"),(long)data.get("time"),(long)data.get("hour"),(String)data.get("state"));
         if(data.containsKey("key"))  taskModel.setKey((String) data.get("key"));
         else if(data.containsKey("_id")) taskModel.setKey((String) data.get("_id"));
-
+        if(data.containsKey("sync"))  taskModel.setSync((int) data.get("sync"));
         return taskModel;
     }
 
@@ -33,6 +33,7 @@ public class TaskModelManager extends  ModelManager<TaskModel>{
         task.put("time", long.class);
         task.put("hour", long.class);
         task.put("state", String.class);
+        task.put("sync", int.class);
         return  task;
     }
 }

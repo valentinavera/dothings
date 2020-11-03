@@ -27,4 +27,8 @@ public abstract  class Model<T>  {
         this.key = key;
     }
 
+
+    public abstract boolean validate(Map<String, Object> fitlerFields);
+
+
 }
