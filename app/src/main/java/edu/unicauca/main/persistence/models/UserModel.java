@@ -2,6 +2,8 @@ package edu.unicauca.main.persistence.models;
 
 import android.content.Context;
 
+import com.google.gson.internal.bind.DateTypeAdapter;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,27 +20,15 @@ public class UserModel extends Model<UserModel> {
     private String lastname;
     private String username;
     private String password;
-    public  UserModel(){
-        //db.linkModel(entityName,this);
-        if(this.objects==null) {
+    private boolean isAuthenticated;
 
-            // taskModelObject.db  = new SqliteConnection(context);
-            //IConnection c = new FirebaseConnection ();
-            //IConnection c = new SqliteConnection(context);
-            objects = new UserModelManager (TaskModel.class);
-            objects.createConnectionWithDB();
-            objects.link();
-            //taskModelObject.db  = new MongoDBConnection();
-
-        }
-    }
     public  UserModel(Context context){
         //db.linkModel(entityName,this);
 
         if(this.objects==null) {
             // taskModelObject.db  = new SqliteConnection(context);
             //IConnection c = new FirebaseConnection();
-            objects = new UserModelManager(UserModel.class);
+            objects = new UserModelManager();
             objects.createConnectionWithDB(context);
             objects.link();
             //taskModelObject.db  = new MongoDBConnection();
@@ -53,6 +43,12 @@ public class UserModel extends Model<UserModel> {
         this.password = password;
     }
 
+    public UserModel(String username, String password) {
+
+        this.username = username;
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "UserModel{" +
@@ -62,7 +58,7 @@ public class UserModel extends Model<UserModel> {
                 ", password='" + password + '\'' +
                 '}';
     }
-    public boolean  save() {
+    private boolean save(int DATABAS_MODE){
         Map<String, Object> user= new HashMap<> ();
         user.put("name",name);
         user.put("lastname", lastname);
@@ -70,15 +66,22 @@ public class UserModel extends Model<UserModel> {
         user.put("password", password);
         boolean result;
         if(this.getKey() == null) {// save
-            result = objects.create( user);
+            result = objects.create( user, DATABAS_MODE);
         }
         else {
             user.put("key", getKey ());
-            result = objects.update(user);
+            result = objects.update(user,DATABAS_MODE);
         }
 
 
         return result;
+    }
+    public boolean  save() {
+      return save(ModelManager.REMOTE_MODE);
+    }
+
+    public boolean saveLocal() {
+        return save(ModelManager.LOCAL_MODE);
     }
 
     public String getName() {
@@ -114,5 +117,17 @@ public class UserModel extends Model<UserModel> {
     }
     public ModelManager getManager(){
         return objects;
+    }
+    public  boolean isAuthenticated(){
+        return isAuthenticated;
+
+    }
+    public  void  authenticate(){
+        isAuthenticated= true;
+    }
+
+
+    public void unauthenticate() {
+        isAuthenticated= false;
     }
 }

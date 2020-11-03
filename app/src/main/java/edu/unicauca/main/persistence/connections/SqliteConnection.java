@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import edu.unicauca.main.persistence.managers.ModelManager;
@@ -167,6 +168,12 @@ public  class SqliteConnection implements IConnection {
 
 
         manager.notify_observers();
+    }
+
+    @Override
+    public List<Model> filter(Map<String, Object> fitlerFields) {
+        //TOOD  implementar
+        return null;
     }
 
     private Object parseString(String field, Class classField) {

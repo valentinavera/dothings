@@ -10,8 +10,9 @@ import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.persistence.models.UserModel;
 
 public class UserModelManager extends  ModelManager<UserModel>{
-    public UserModelManager(Class m ) {
-        super(m);
+
+    public UserModelManager( ) {
+        super(UserModel.class);
         setEntityName("User");
 
     }
@@ -31,5 +32,12 @@ public class UserModelManager extends  ModelManager<UserModel>{
         task.put("key", String.class);
         task.put("date", Date.class);
         return  task;
+    }
+    public static UserModel getLoginUser(){
+        //TODO implement
+        UserModel userModel = new UserModel("dasdasd", "adasdas", "sfsdf", "dsfsdfs");
+        userModel.setKey("01");
+        return  userModel;
+
     }
 }

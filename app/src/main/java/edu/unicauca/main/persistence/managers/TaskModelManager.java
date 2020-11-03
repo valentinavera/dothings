@@ -9,8 +9,8 @@ import edu.unicauca.main.persistence.models.Model;
 import edu.unicauca.main.persistence.models.TaskModel;
 
 public class TaskModelManager extends  ModelManager<TaskModel>{
-    public TaskModelManager(Class m ) {
-        super(m);
+    public TaskModelManager( ) {
+        super(TaskModel.class);
         setEntityName("Task");
 
     }

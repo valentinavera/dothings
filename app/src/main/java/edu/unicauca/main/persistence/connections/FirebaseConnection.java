@@ -5,13 +5,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
 import java.util.Map;
 
 import edu.unicauca.main.persistence.managers.ModelManager;
@@ -85,4 +85,10 @@ import edu.unicauca.main.persistence.models.Model;
         });
     }
 
-}
+     @Override
+     public List<Model> filter(Map<String, Object> fitlerFields) {
+        //TODO Implementar
+         return null;
+     }
+
+ }

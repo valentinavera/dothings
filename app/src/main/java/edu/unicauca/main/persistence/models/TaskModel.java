@@ -8,11 +8,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.unicauca.main.persistence.connections.FirebaseConnection;
-import edu.unicauca.main.persistence.connections.IConnection;
-import edu.unicauca.main.persistence.connections.SqliteConnection;
 import edu.unicauca.main.persistence.managers.ModelManager;
 import edu.unicauca.main.persistence.managers.TaskModelManager;
+import edu.unicauca.main.session.SimpleSessionManager;
 
 @IgnoreExtraProperties
 public  class TaskModel extends Model<TaskModel> {
@@ -20,30 +18,17 @@ public  class TaskModel extends Model<TaskModel> {
     private  String name;
     private  String description;
     private long time;
-    private   static ModelManager objects ;
+    private   static ModelManager objects;
     private String state;
-    public  TaskModel(){
-        //db.linkModel(entityName,this);
-        if(this.objects==null) {
-            // taskModelObject.db  = new SqliteConnection(context);
 
-            //IConnection c = new SqliteConnection(context);
-            objects = new TaskModelManager(TaskModel.class);
-            objects.createConnectionWithDB();
-            objects.link();
-            //taskModelObject.db  = new MongoDBConnection();
-
-        }
-    }
     public  TaskModel(Context context){
         //db.linkModel(entityName,this);
         if(this.objects==null) {
-            // taskModelObject.db  = new SqliteConnection(context);
-            //IConnection c = new FirebaseConnection();
-            objects = new TaskModelManager(TaskModel.class);
+
+            objects = new TaskModelManager();
             objects.createConnectionWithDB(context);
             objects.link();
-            //taskModelObject.db  = new MongoDBConnection();
+
 
         }
     }
@@ -73,16 +58,25 @@ public  class TaskModel extends Model<TaskModel> {
 
     public boolean  save() {
         Map<String, Object> task = new HashMap<>();
+        int DATA_BASE_MODE ;
+        UserModel u = SimpleSessionManager.getLoginUser();
+        if(u.isAuthenticated())//seleccionar base
+            DATA_BASE_MODE = ModelManager.REMOTE_MODE;
+        else{
+            DATA_BASE_MODE = ModelManager.LOCAL_MODE;
+            task.put("userid",u.getKey());
+        }
+
         task.put("name",name);
         task.put("description", description);
         if(time != 0)task.put("time",time);
         boolean result;
         if(this.getKey() == null) {// save
-                result = objects.create( task);
+                result = objects.create( task,DATA_BASE_MODE);
         }
         else {
                 task.put("key", getKey ());
-                result = objects.update(task);
+                result = objects.update(task,DATA_BASE_MODE);
         }
 
 
