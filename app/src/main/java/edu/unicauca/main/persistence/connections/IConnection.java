@@ -14,5 +14,5 @@ public interface  IConnection{
     void linkModelManager(  final ModelManager m);
 
 
-    List<Model> filter(Map<String, Object> fitlerFields);
+    List<Model> filter(ModelManager manager,Map<String, Object> fitlerFields);
 }

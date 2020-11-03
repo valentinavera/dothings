@@ -33,8 +33,10 @@ public  class SimpleSessionManager {
         user = new UserModel(null);
         List<UserModel> users  =user.getManager().filter(fitlerFields, ModelManager.LOCAL_MODE);
 
-        if(!users.isEmpty())
+        if(!users.isEmpty()) {
+            user = users.get(0);
             user.authenticate();//si el usuario no esta autenticado devuelve un usario on el atributo is_authenticated = false;
+        }
     }
 
     public static  UserModel getLoginUser() {
@@ -49,24 +51,32 @@ public  class SimpleSessionManager {
                 boolean successfull = task.isSuccessful();
                 if(successfull) {
                     UserModel user = new UserModel(name, lastname, email, password);
-                    user.save();
-                    login(email,password);
+                    user.saveLocal();
+                    login(email,password,false,observer);
+                }else {
+                    observer.notify(successfull);
                 }
-                observer.notify(successfull);
             }
         });
     }
-    public  static  boolean login(String email,String password){
-        boolean result = firebaseAuth.signInWithEmailAndPassword(email,password).isSuccessful();
-        if(result){
-            user = new UserModel(email,password,firebaseAuth.getCurrentUser().getUid());
-            user.saveLocal();
-            user.authenticate();
-        }
-        return result;
+    public  static  void login(final String email, final String password, final boolean save,final Observer o){
+        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    user = new UserModel(email,password);
+                    if(save) user.saveLocal();
+                    user.authenticate();
+                }
+                o.notify(task.isSuccessful());
+            }
+        });
+
     }
     public  static  void logout(){
-        if(user != null)
+        if(user != null) {
             user.unauthenticate();
+            firebaseAuth.signOut();
+        }
     }
 }

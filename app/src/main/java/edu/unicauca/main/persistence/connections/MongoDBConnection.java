@@ -86,7 +86,7 @@ public  class MongoDBConnection implements IConnection{
     }
 
     @Override
-    public List<Model> filter(Map<String, Object> fitlerFields) {
+    public List<Model> filter(ModelManager m, Map<String, Object> fitlerFields) {
         return null;
     }
 }

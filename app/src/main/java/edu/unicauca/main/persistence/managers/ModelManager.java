@@ -114,6 +114,6 @@ public  abstract class ModelManager<T> extends Observed {
 
     public List<Model> filter(Map<String, Object> fitlerFields,int database_option) {
         IConnection db = selectDatabase(database_option);
-        return db.filter(fitlerFields);
+        return db.filter(this,fitlerFields);
     }
 }

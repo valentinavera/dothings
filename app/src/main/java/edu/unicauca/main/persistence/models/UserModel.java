@@ -18,7 +18,7 @@ public class UserModel extends Model<UserModel> {
     private   static ModelManager objects ;
     private String name;
     private String lastname;
-    private String username;
+    private String email;
     private String password;
     private boolean isAuthenticated;
 
@@ -39,13 +39,13 @@ public class UserModel extends Model<UserModel> {
     public UserModel(String name, String lastname, String username, String password) {
         this.name = name;
         this.lastname = lastname;
-        this.username = username;
+        this.email = username;
         this.password = password;
     }
 
     public UserModel(String username, String password) {
 
-        this.username = username;
+        this.email = username;
         this.password = password;
     }
 
@@ -54,7 +54,7 @@ public class UserModel extends Model<UserModel> {
         return "UserModel{" +
                 "name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", username='" + username + '\'' +
+                ", username='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
@@ -62,7 +62,7 @@ public class UserModel extends Model<UserModel> {
         Map<String, Object> user= new HashMap<> ();
         user.put("name",name);
         user.put("lastname", lastname);
-        user.put("username", username);
+        user.put("email", email);
         user.put("password", password);
         boolean result;
         if(this.getKey() == null) {// save
@@ -100,12 +100,12 @@ public class UserModel extends Model<UserModel> {
         this.lastname = lastname;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String username) {
+        this.email = username;
     }
 
     public String getPassword() {
@@ -129,5 +129,34 @@ public class UserModel extends Model<UserModel> {
 
     public void unauthenticate() {
         isAuthenticated= false;
+    }
+
+    @Override
+    public boolean validate(Map<String, Object> fitlerFields) {
+        for(Map.Entry<String,Object> filter: fitlerFields.entrySet()){
+            Object value = filter.getValue();
+            switch (filter.getKey()){
+                case "name":
+                    if(value.equals(name))
+                        return false;
+                    break;
+                case "lastname":
+                    if(value.equals(lastname))
+                        return false;
+                    break;
+                case "email":
+                    if(value.equals(email))
+                        return false;
+                    break;
+                case "password":
+                    if(value.equals(password))
+                        return false;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        return  true;
     }
 }

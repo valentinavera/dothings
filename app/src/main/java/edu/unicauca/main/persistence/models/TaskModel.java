@@ -117,4 +117,9 @@ public  class TaskModel extends Model<TaskModel> {
     public ModelManager getManager(){
         return objects;
     }
+
+    @Override
+    public boolean validate(Map<String, Object> fitlerFields) {
+        return false;
+    }
 }
