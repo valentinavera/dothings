@@ -89,9 +89,12 @@ public  abstract class ModelManager<T> extends Observed {
 
     public List<T> getDataState(String state){
         List<T> List = new ArrayList<>();
-
-
-
+        for(int i = 0; i<this.cacheList.size();i++){
+            TaskModel var = (TaskModel) this.cacheList.get(i);
+            if(var.getState().equals(state)){
+                List.add(this.cacheList.get(i));
+            }
+        }
         return List;
     }
 }
