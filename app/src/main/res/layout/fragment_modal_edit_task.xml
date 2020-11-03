@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@color/white"
-        android:drawableStart="@drawable/sunset"
+        android:drawableStart="@drawable/baseline_list"
         android:text="@string/change_ToMyDayList"
         android:layout_gravity="center"/>
 

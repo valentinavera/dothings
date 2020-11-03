@@ -1,5 +1,6 @@
 package edu.unicauca.main;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -28,6 +29,8 @@ public class MenuActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.mipmap.ic_launcher);
+        //actionBar.setHomeAsUpIndicator(arrow);
+
 
         setContentView(R.layout.activity_menu);
         taskModel = new TaskModel(getApplicationContext());//(getApplicationContext());
