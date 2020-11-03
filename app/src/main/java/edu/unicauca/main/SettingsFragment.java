@@ -9,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
 import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.persistence.models.UserModel;
+import edu.unicauca.main.session.SimpleSessionManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +29,7 @@ public class SettingsFragment extends Fragment implements Observer {
     private Button btnSychonize;
     private Button btnNotifications;
     private Button btnHelp;
+    private TextView infouser;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -95,6 +98,12 @@ public class SettingsFragment extends Fragment implements Observer {
                 startActivity (manage);
             }
         });
+        infouser = vista.findViewById(R.id.usuarioNombre);
+        userModel = SimpleSessionManager.getLoginUser();
+        if(userModel.isAuthenticated()){
+            userModel.getName();
+        }
+
         return vista;
     }
 

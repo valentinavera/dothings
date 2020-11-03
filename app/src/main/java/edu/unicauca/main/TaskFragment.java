@@ -115,6 +115,7 @@ public class TaskFragment extends Fragment implements Observer {
     public void notify(Object observed) {
 
         tasks = taskModel.getManager().getDataState("0");
+        //tasks = taskModel.getManager().getAll();
         mAdapter = new TaskAdapter (tasks, R.layout.tareas_view);
         mAdapter.setOnClickListen(new View.OnClickListener() {
             @Override
