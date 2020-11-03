@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -85,10 +86,44 @@ import edu.unicauca.main.persistence.models.Model;
         });
     }
 
+     private void linkModelManager(final ModelManager manager, final boolean notify) {
+         connect();
+         String entity = manager.getEntityName();
+         db.child(entity).addValueEventListener(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                 manager.clearCache();
+                 for (DataSnapshot ds : snapshot.getChildren()) {
+                     //Object o = snapshot.getValue(T);
+
+                     Map<String,Object>  data= (Map<String, Object>) ds.getValue();
+
+                     Model o = manager.makeModel(data);
+                     o.setKey(ds.getKey());
+                     manager.addToCache(o);
+
+                 }
+                 if(notify) manager.notify_observers();
+             }
+
+             @Override
+             public void onCancelled(@NonNull DatabaseError error) {
+
+             }
+
+         });
+     }
      @Override
      public List<Model> filter(ModelManager manager, Map<String, Object> fitlerFields) {
-        //TODO
-         return null;
+        // linkModelManager(manager,false);
+         List<Model> filters = new ArrayList<>();
+         List<Model> all = manager.getAll();
+         for(Model m : all){
+             if(m.validate(fitlerFields))
+                 filters.add(m);
+
+         }
+         return filters;
      }
 
 

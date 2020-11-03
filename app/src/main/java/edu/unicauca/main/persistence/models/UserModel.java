@@ -20,7 +20,8 @@ public class UserModel extends Model<UserModel> {
     private String lastname;
     private String email;
     private String password;
-    private boolean isAuthenticated;
+    private String uuid;
+    private int isAuthenticated;//1= true, 2= false
 
     public  UserModel(Context context){
         //db.linkModel(entityName,this);
@@ -58,12 +59,21 @@ public class UserModel extends Model<UserModel> {
                 ", password='" + password + '\'' +
                 '}';
     }
+    public  String getUuid(){
+        return uuid;
+    }
+    public  void setUuid(String d){
+        uuid = d;
+    }
     private boolean save(int DATABAS_MODE){
         Map<String, Object> user= new HashMap<> ();
-        user.put("name",name);
-        user.put("lastname", lastname);
-        user.put("email", email);
-        user.put("password", password);
+        if(name != null)user.put("name",name);
+        if(lastname != null)user.put("lastname", lastname);
+        if(email != null)user.put("email", email);
+        if(password != null)user.put("password", password);
+        if(uuid!=null) user.put("uuid", uuid);
+        if(isAuthenticated==1) user.put("isAuthenticated", 1); else user.put("isAuthenticated", 2);
+
         boolean result;
         if(this.getKey() == null) {// save
             result = objects.create( user, DATABAS_MODE);
@@ -77,11 +87,31 @@ public class UserModel extends Model<UserModel> {
         return result;
     }
     public boolean  save() {
-      return save(ModelManager.REMOTE_MODE);
+
+       return save(ModelManager.REMOTE_MODE);
     }
 
-    public boolean saveLocal() {
-        return save(ModelManager.LOCAL_MODE);
+    public boolean saveLocal(boolean update) {
+        Map<String, Object> user= new HashMap<> ();
+        user.put("name",name);
+        user.put("lastname", lastname);
+        user.put("email", email);
+        user.put("password", password);
+        user.put("isAuthenticated", 1);
+        user.put("uuid", uuid);
+
+
+        boolean result;
+        if(!update) {// save
+            result = objects.create( user, ModelManager.LOCAL_MODE);
+        }
+        else {
+            user.put("key", getKey ());
+            result = objects.update(user,ModelManager.LOCAL_MODE);
+        }
+
+
+        return result;
     }
 
     public String getName() {
@@ -119,16 +149,20 @@ public class UserModel extends Model<UserModel> {
         return objects;
     }
     public  boolean isAuthenticated(){
-        return isAuthenticated;
+        return isAuthenticated==1;
 
     }
     public  void  authenticate(){
-        isAuthenticated= true;
+        isAuthenticated= 1;
     }
 
 
     public void unauthenticate() {
-        isAuthenticated= false;
+        isAuthenticated= 2;
+        Map<String, Object> user= new HashMap<> ();
+        user.put("isAuthenticated", 2);
+        user.put("key", getKey());
+        objects.update(user,ModelManager.LOCAL_MODE);
     }
 
     @Override
@@ -137,21 +171,28 @@ public class UserModel extends Model<UserModel> {
             Object value = filter.getValue();
             switch (filter.getKey()){
                 case "name":
-                    if(value.equals(name))
+                    if(!value.equals(name))
                         return false;
                     break;
                 case "lastname":
-                    if(value.equals(lastname))
+                    if(!value.equals(lastname))
                         return false;
                     break;
                 case "email":
-                    if(value.equals(email))
+                    if(!value.equals(email))
                         return false;
                     break;
                 case "password":
-                    if(value.equals(password))
+                    if(!value.equals(password))
                         return false;
                     break;
+                case "isAuthenticated":
+                    if(!value.equals(isAuthenticated))
+                        return false;
+                    break;
+                case "uuid":
+                    if(!value.equals(uuid))
+                        return false;
                 default:
                     break;
             }

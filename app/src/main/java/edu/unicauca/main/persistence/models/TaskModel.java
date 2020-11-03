@@ -60,11 +60,13 @@ public  class TaskModel extends Model<TaskModel> {
         Map<String, Object> task = new HashMap<>();
         int DATA_BASE_MODE ;
         UserModel u = SimpleSessionManager.getLoginUser();
-        if(u.isAuthenticated())//seleccionar base
+        if(u.isAuthenticated()) {//seleccionar base
             DATA_BASE_MODE = ModelManager.REMOTE_MODE;
+            task.put("userid", u.getUuid());
+        }
         else{
             DATA_BASE_MODE = ModelManager.LOCAL_MODE;
-            task.put("userid",u.getKey());
+
         }
 
         task.put("name",name);

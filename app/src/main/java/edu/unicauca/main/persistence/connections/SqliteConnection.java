@@ -29,8 +29,8 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //create database
         //tasks
-        String ddlTask = "create table if not EXISTS Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100),time integer )";
-          String ddlUser = "create table if not EXISTS User ( _id integer primary key autoincrement, name varchar(20),lastname varchar(20), email varchar(20), password varchar(10) )";
+        String ddlTask = "create table if not EXISTS Task ( key integer primary key autoincrement, name varchar(20),description varchar(100),time integer )";
+          String ddlUser = "create table if not EXISTS User ( key integer primary key autoincrement, name varchar(20),lastname varchar(20), email varchar(20), password varchar(10), isAuthenticated varchar(10) , uuid varchar(40) )";
 
         //String ddlTask = "create table Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100))";
         db.execSQL(ddlTask);
@@ -58,7 +58,7 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
     }
     public  void update(String entity, String key,ContentValues values){
         try {
-            String whereClausule = "_id = ?";
+            String whereClausule = "key = ?";
             SQLiteDatabase wdb = this.getWritableDatabase();
             wdb.update(entity,values,whereClausule,new String[]{key});
             wdb.close();
@@ -206,6 +206,7 @@ public  class SqliteConnection implements IConnection {
 
     }
     private String objectToString(Object o){
+
         if(o.getClass() == Date.class){
             return dateFormatter.format(o);
         }
