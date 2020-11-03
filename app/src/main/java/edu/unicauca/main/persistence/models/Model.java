@@ -29,4 +29,6 @@ public abstract  class Model<T>  {
 
 
     public abstract boolean validate(Map<String, Object> fitlerFields);
+
+
 }

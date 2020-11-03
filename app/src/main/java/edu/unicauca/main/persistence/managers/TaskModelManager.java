@@ -19,6 +19,7 @@ public class TaskModelManager extends  ModelManager<TaskModel>{
         TaskModel taskModel = new TaskModel((String) data.get("name"),(String) data.get("description"),(long)data.get("time"));
         if(data.containsKey("key"))  taskModel.setKey((String) data.get("key"));
         else if(data.containsKey("_id")) taskModel.setKey((String) data.get("_id"));
+        if(data.containsKey("sync"))  taskModel.setSync((int) data.get("sync"));
         return taskModel;
     }
 
@@ -30,6 +31,7 @@ public class TaskModelManager extends  ModelManager<TaskModel>{
         task.put("name",String.class);
         task.put("key", String.class);
         task.put("time", long.class);
+        task.put("sync", int.class);
         return  task;
     }
 }

@@ -29,7 +29,8 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //create database
         //tasks
-        String ddlTask = "create table if not EXISTS Task ( key integer primary key autoincrement, name varchar(20),description varchar(100),time integer )";
+        //sync 1 =true 2 = false
+        String ddlTask = "create table if not EXISTS Task ( key integer primary key autoincrement, name varchar(20),description varchar(100),time integer,sync int default 2 )";
           String ddlUser = "create table if not EXISTS User ( key integer primary key autoincrement, name varchar(20),lastname varchar(20), email varchar(20), password varchar(10), isAuthenticated varchar(10) , uuid varchar(40) )";
 
         //String ddlTask = "create table Task ( _id integer primary key autoincrement, name varchar(20),description varchar(100))";

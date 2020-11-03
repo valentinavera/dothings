@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.auth.User;
 import com.mongodb.client.result.DeleteResult;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.Set;
 import edu.unicauca.main.patterns.observer.Observer;
 import edu.unicauca.main.persistence.managers.ModelManager;
 import edu.unicauca.main.persistence.models.Model;
+import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.persistence.models.UserModel;
 
 public  class SimpleSessionManager {
@@ -28,7 +30,9 @@ public  class SimpleSessionManager {
     private static UserModel user;
     private static FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private static String email,password;
-    public static void init(Context c){
+    private  static  Context  c;
+    public static void init(Context pc){
+        c = pc;
         if(user==null) user = new UserModel(c);
         loadUser();
        login();
@@ -55,6 +59,13 @@ public  class SimpleSessionManager {
                     user.setUuid(user.getKey());
                     user.authenticate();
                     user.saveLocal(false);
+
+                    try{
+                        sync();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -117,6 +128,7 @@ public  class SimpleSessionManager {
                         user.save();
                         //user.saveLocal(false);
                     }
+
                 }
                 o.notify(task.isSuccessful());
             }
@@ -129,5 +141,20 @@ public  class SimpleSessionManager {
             firebaseAuth.signOut();
 
         }
+    }
+    private static void sync(){
+        //enviar la info de la base local a la remota
+
+        TaskModel t = new TaskModel(c);
+        t.getManager().link(ModelManager.LOCAL_MODE);
+        List<TaskModel> all =new ArrayList<>( t.getManager().getAll());
+        for(TaskModel task : all){
+            if(!task.isSynchronized()) {
+                task.setSync(1);
+                task.saveLocal();
+                task.saveRemote(firebaseAuth.getCurrentUser().getUid());
+            }
+        }
+
     }
 }

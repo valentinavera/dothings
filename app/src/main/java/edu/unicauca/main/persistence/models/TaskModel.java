@@ -20,6 +20,7 @@ public  class TaskModel extends Model<TaskModel> {
     private long time;
     private   static ModelManager objects;
     private String state;
+    private int sync=2;
 
     public  TaskModel(Context context){
         //db.linkModel(entityName,this);
@@ -63,6 +64,7 @@ public  class TaskModel extends Model<TaskModel> {
         if(u.isAuthenticated()) {//seleccionar base
             DATA_BASE_MODE = ModelManager.REMOTE_MODE;
             task.put("userid", u.getUuid());
+
         }
         else{
             DATA_BASE_MODE = ModelManager.LOCAL_MODE;
@@ -80,6 +82,50 @@ public  class TaskModel extends Model<TaskModel> {
                 task.put("key", getKey ());
                 result = objects.update(task,DATA_BASE_MODE);
         }
+
+
+        return result;
+    }
+    public boolean saveLocal() {
+        Map<String, Object> task = new HashMap<>();
+        int DATA_BASE_MODE= ModelManager.LOCAL_MODE ;
+
+        task.put("name",name);
+        task.put("description", description);
+        task.put("sync",sync);
+        if(time != 0)task.put("time",time);
+        boolean result;
+        if(this.getKey() == null) {// save
+            result = objects.create( task,DATA_BASE_MODE);
+        }
+        else {
+            task.put("key", getKey ());
+            result = objects.update(task,DATA_BASE_MODE);
+        }
+
+
+        return result;
+    }
+    public boolean saveRemote(String uid) {
+        Map<String, Object> task = new HashMap<>();
+        int DATA_BASE_MODE ;
+        UserModel u = SimpleSessionManager.getLoginUser();
+        task.put("userid", uid);
+        if(u.isAuthenticated()) {//seleccionar base
+            DATA_BASE_MODE = ModelManager.REMOTE_MODE;
+        }
+        else{
+            DATA_BASE_MODE = ModelManager.LOCAL_MODE;
+        }
+
+        task.put("name",name);
+        task.put("description", description);
+        if(time != 0)task.put("time",time);
+        boolean result;
+
+        //task.put("key", getKey ());
+        result = objects.create(task,DATA_BASE_MODE);
+
 
 
         return result;
@@ -124,4 +170,13 @@ public  class TaskModel extends Model<TaskModel> {
     public boolean validate(Map<String, Object> fitlerFields) {
         return false;
     }
+    public void setSync(int sync) {
+        this.sync = sync;
+
+    }
+    public  boolean isSynchronized(){
+        return sync ==1;
+    }
+
+
 }

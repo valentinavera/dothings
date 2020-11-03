@@ -24,6 +24,8 @@ public class UserModelManager extends  ModelManager<UserModel>{
         if(data.containsKey("_id"))  userModel.setKey((String) data.get("_id"));
         else if(data.containsKey("key"))  userModel.setKey((String) data.get("key"));
         if(data.containsKey("uuid"))  userModel.setUuid((String) data.get("uuid"));
+
+
         if(data.containsKey("isAuthenticated")){
             try {
                 isAutheticated = (int) data.get("isAuthenticated");
@@ -52,6 +54,7 @@ public class UserModelManager extends  ModelManager<UserModel>{
         task.put("key", String.class);
         task.put("isAuthenticated", int.class);
         task.put("uuid", String.class);
+
         return  task;
     }
 
