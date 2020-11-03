@@ -12,6 +12,7 @@ import edu.unicauca.main.persistence.connections.FirebaseConnection;
 import edu.unicauca.main.persistence.connections.IConnection;
 import edu.unicauca.main.persistence.connections.SqliteConnection;
 import edu.unicauca.main.persistence.models.Model;
+import edu.unicauca.main.persistence.models.TaskModel;
 
 public  abstract class ModelManager<T> extends Observed {
     private List<T> cacheList;
@@ -84,4 +85,12 @@ public  abstract class ModelManager<T> extends Observed {
         this.entityName = entityName;
     }
     public abstract Map<String, Class> getColumnTypes();
+
+    public List<T> getDataState(String state){
+        List<T> List = new ArrayList<>();
+
+
+
+        return List;
+    }
 }
