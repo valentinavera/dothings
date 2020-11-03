@@ -86,7 +86,7 @@ import edu.unicauca.main.persistence.models.Model;
     }
 
      @Override
-     public List<Model> filter(Map<String, Object> fitlerFields) {
+     public List<Model> filter(String entity, Map<String, Object> fitlerFields) {
         //TODO Implementar
          return null;
      }
