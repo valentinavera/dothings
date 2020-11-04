@@ -114,18 +114,13 @@ public  abstract class ModelManager<T> extends Observed {
     public abstract Map<String, Class> getColumnTypes();
 
 
-    public List<T> getDataState(String state) {
-        List<T> List = new ArrayList<>();
-        for (int i = 0; i < this.cacheList.size(); i++) {
-            TaskModel var = (TaskModel) this.cacheList.get(i);
-            if (var.getState().equals(state)) {
-                List.add(this.cacheList.get(i));
-            }
-        }
-        return List;
-    }
+
     public List<Model> filter(Map<String, Object> fitlerFields,int database_option) {
         IConnection db = selectDatabase(database_option);
+        return db.filter(this,fitlerFields);
+    }
+    public List<Model> filter(Map<String, Object> fitlerFields) {
+        IConnection db = selectDatabase();
         return db.filter(this,fitlerFields);
     }
 }

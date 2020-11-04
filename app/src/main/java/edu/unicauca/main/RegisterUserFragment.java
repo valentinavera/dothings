@@ -103,7 +103,7 @@ public class RegisterUserFragment extends Fragment implements Observer {
                     @Override
                     public void notify(Object succesfull) {
                         if((boolean)succesfull){
-                            Toast.makeText(getActivity().getApplicationContext(),"Usuario registrado",Toast.LENGTH_LONG);
+
                         }
                     }
                 });

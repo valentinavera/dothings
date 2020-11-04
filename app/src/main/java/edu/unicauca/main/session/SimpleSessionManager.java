@@ -155,6 +155,7 @@ public  class SimpleSessionManager {
                 task.saveRemote(firebaseAuth.getCurrentUser().getUid());
             }
         }
+        t.getManager().link(ModelManager.REMOTE_MODE);
 
     }
 }

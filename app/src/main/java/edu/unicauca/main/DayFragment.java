@@ -9,11 +9,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
 import edu.unicauca.main.persistence.models.TaskModel;
+import edu.unicauca.main.persistence.models.UserModel;
+import edu.unicauca.main.session.SimpleSessionManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -92,7 +96,13 @@ public class DayFragment extends Fragment implements Observer {
     @Override
     public void notify(Object observed) {
         //mTaskList = taskModel.getManager().getAll();
-        mTaskList = taskModel.getManager().getDataState("1");
+        Map<String,Object> fitlerFields = new HashMap<>();
+        fitlerFields.put("state","1");
+        UserModel u = SimpleSessionManager.getLoginUser();
+        if(u.isAuthenticated()) {
+            fitlerFields.put("userid", u.getUuid());
+        }
+        mTaskList = taskModel.getManager().filter(fitlerFields);
         mAdapter = new TaskAdapter (mTaskList, R.layout.tareas_view);
         mAdapter.setOnClickListen(new View.OnClickListener() {
             @Override

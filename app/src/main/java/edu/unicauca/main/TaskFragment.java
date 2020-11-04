@@ -16,11 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
+import edu.unicauca.main.persistence.models.UserModel;
+import edu.unicauca.main.session.SimpleSessionManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -113,9 +117,15 @@ public class TaskFragment extends Fragment implements Observer {
 
     @Override
     public void notify(Object observed) {
+        Map<String,Object> fitlerFields = new HashMap<>();
+        UserModel u = SimpleSessionManager.getLoginUser();
+        if(u.isAuthenticated()) {
+            fitlerFields.put("userid", u.getUuid());
+            tasks = taskModel.getManager().filter(fitlerFields);
+        }else{
+            tasks = taskModel.getManager().getAll();
+        }
 
-        tasks = taskModel.getManager().getDataState("0");
-        //tasks = taskModel.getManager().getAll();
         mAdapter = new TaskAdapter (tasks, R.layout.tareas_view);
         mAdapter.setOnClickListen(new View.OnClickListener() {
             @Override

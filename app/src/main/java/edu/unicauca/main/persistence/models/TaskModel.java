@@ -49,13 +49,13 @@ public  class TaskModel extends Model<TaskModel> {
         }
     }
 
-    public  TaskModel(String name, String description, long timeTask, long date, String state){
+    public  TaskModel(String name, String description, String state){
         //db.linkModel(entityName,this);
         //this();
         this.name = name;
         this.description = description;
-        this.timeDate = date;
-        this.hour= timeTask;
+
+
         this.state = state;
     }
 
@@ -91,8 +91,8 @@ public  class TaskModel extends Model<TaskModel> {
         task.put("name",name);
         task.put("description", description);
         task.put("state",state);
-        if(timeDate != 0)task.put("time",timeDate);
-        if(hour != 0)task.put ("hour",hour);
+        task.put("time",timeDate);
+        task.put ("hour",hour);
         //añadir a arrayList
         long pDateTask;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -207,7 +207,35 @@ public  class TaskModel extends Model<TaskModel> {
 
     @Override
     public boolean validate(Map<String, Object> fitlerFields) {
-        return false;
+        for (Map.Entry<String, Object> filter : fitlerFields.entrySet()) {
+            Object value = filter.getValue();
+            switch (filter.getKey()) {
+                case "name":
+                    if (!value.equals(name))
+                        return false;
+                    break;
+                case "description":
+                    if (!value.equals(description))
+                        return false;
+                    break;
+                case "state":
+                    if (!value.equals(state))
+                        return false;
+                    break;
+                case "timeDate":
+                    if (!value.equals(timeDate))
+                        return false;
+                    break;
+                case "hour":
+                    if (!value.equals(hour))
+                        return false;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        return true;
     }
     public void setSync(int sync) {
         this.sync = sync;

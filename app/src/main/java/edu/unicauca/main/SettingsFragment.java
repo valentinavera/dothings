@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
@@ -94,8 +95,14 @@ public class SettingsFragment extends Fragment implements Observer {
         btnManage.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
-                Intent manage = new Intent(getActivity (), UserActivity.class);
-                startActivity (manage);
+                userModel = SimpleSessionManager.getLoginUser();
+                if(userModel.isAuthenticated()){
+                    SimpleSessionManager.logout();
+
+                }else {
+                    Intent manage = new Intent(getActivity(), UserActivity.class);
+                    startActivity(manage);
+                }
             }
         });
         infouser = vista.findViewById(R.id.usuarioNombre);
