@@ -162,7 +162,7 @@ public class UserModel extends Model<UserModel> {
         Map<String, Object> user= new HashMap<> ();
         user.put("isAuthenticated", 2);
         user.put("key", getKey());
-        objects.update(user,ModelManager.LOCAL_MODE);
+        objects.delete(getKey(),ModelManager.LOCAL_MODE);
     }
 
     @Override
