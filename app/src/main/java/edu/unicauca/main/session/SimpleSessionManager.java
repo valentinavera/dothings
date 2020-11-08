@@ -57,9 +57,9 @@ public  class SimpleSessionManager {
                     user = users.get(0);
                     user.authenticate();//si el usuario no esta autenticado devuelve un usario on el atributo is_authenticated = false;
                     user.setUuid(user.getKey());
-                    user.authenticate();
                     user.saveLocal(false);
-
+                    email = null;
+                    password= null;
                     try{
                         sync();
                     }
@@ -139,6 +139,7 @@ public  class SimpleSessionManager {
         if(user != null) {
             user.unauthenticate();
             firebaseAuth.signOut();
+
 
         }
     }

@@ -25,6 +25,7 @@ public  class TaskModel extends Model<TaskModel> {
     private long hour;
     private ArrayList<String> dates = new ArrayList();
     private int sync=2;
+    private  String userid;
 
    /* public  TaskModel() {
         //db.linkModel(entityName,this);
@@ -230,6 +231,10 @@ public  class TaskModel extends Model<TaskModel> {
                     if (!value.equals(hour))
                         return false;
                     break;
+                case "userid":
+                    if (!value.equals(userid))
+                        return false;
+                    break;
                 default:
                     break;
             }
@@ -245,4 +250,17 @@ public  class TaskModel extends Model<TaskModel> {
         return sync ==1;
     }
 
+    public boolean isFromUser() {
+        try {
+            return this.userid.equals(SimpleSessionManager.getLoginUser().getUuid());
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public void setUser(String userid) {
+        this.userid=  userid;
+    }
 }

@@ -30,6 +30,7 @@ public class TaskModelManager extends  ModelManager<TaskModel>{
             if (data.containsKey("sync")) taskModel.setSync((int) data.get("sync"));
             if(data.containsKey("hour")) taskModel.setHour((long) data.get("hour"));
             if(data.containsKey("time")) taskModel.setTimeDate((long) data.get("time"));
+            if(data.containsKey("userid")) taskModel.setUser((String) data.get("userid"));
             return taskModel;
         }catch (Exception e){
             e.printStackTrace();
@@ -48,9 +49,10 @@ public class TaskModelManager extends  ModelManager<TaskModel>{
         task.put("hour", long.class);
         task.put("state", String.class);
         task.put("sync", int.class);
+        task.put("userid", String.class);
         return  task;
     }
-    /*
+/*
     @Override
     public List<TaskModel> getAll(){
         Map<String,Object> fitlerFields = new HashMap<>();
@@ -59,13 +61,15 @@ public class TaskModelManager extends  ModelManager<TaskModel>{
             fitlerFields.put("userid", u.getUuid());
 
             List<TaskModel> result =new ArrayList<>();
-            for(Model m :filter(fitlerFields, ModelManager.REMOTE_MODE) ){
-                result.add((TaskModel)m);
+            for(TaskModel m :super.getAll() ){
+                if(m.isFromUser()) {
+                    result.add((TaskModel) m);
+                }
             }
             return result;
         }
         return super.getAll();
     }
 
-     */
+*/
 }
