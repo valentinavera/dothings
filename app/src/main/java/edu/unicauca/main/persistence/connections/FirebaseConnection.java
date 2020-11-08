@@ -43,7 +43,22 @@ import edu.unicauca.main.persistence.models.Model;
         }
     }
 
-    @Override
+     @Override
+     public boolean delete(ModelManager manager, String key) {
+         connect();
+         String entity = manager.getEntityName();
+         try {
+
+             db.child(entity).child(key).removeValue();
+
+             return true;
+         }catch (Exception e){
+             Log.e("Push "+entity+": ",e.toString());
+             return false;
+         }
+     }
+
+     @Override
     public boolean update(ModelManager manager, Map<String, Object> data) {
         connect();
         String entity = manager.getEntityName();

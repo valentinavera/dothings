@@ -123,13 +123,10 @@ public  class TaskModel extends Model<TaskModel> {
         if(timeDate != 0)task.put("time",timeDate);
         if(hour != 0) task.put("hour", hour);
         boolean result;
-        if(this.getKey() == null) {// save
-            result = objects.create( task,DATA_BASE_MODE);
-        }
-        else {
-            task.put("key", getKey ());
-            result = objects.update(task,DATA_BASE_MODE);
-        }
+
+       // task.put("key", getKey ());
+        result = objects.create(task,DATA_BASE_MODE);
+
 
 
         return result;
@@ -199,10 +196,12 @@ public  class TaskModel extends Model<TaskModel> {
     public ArrayList<String> getDates() {
         return dates;
     }
+
     public void setDates(ArrayList<String> dates) {
         this.dates = dates;
     }
-    public ModelManager getManager(){
+    @Override
+    public ModelManager<TaskModel> getManager(){
         return objects;
     }
 

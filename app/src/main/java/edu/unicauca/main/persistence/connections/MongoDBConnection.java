@@ -54,6 +54,11 @@ public  class MongoDBConnection implements IConnection{
     }
 
     @Override
+    public boolean delete(ModelManager manager, String key) {
+        return false;
+    }
+
+    @Override
     public boolean update(ModelManager m, Map<String, Object> data) {
         return false;
     }

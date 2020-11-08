@@ -104,6 +104,11 @@ public  abstract class ModelManager<T> extends Observed {
         return db.create(this, data);
     }
 
+    public  boolean delete(String key,int database_mode){
+        IConnection db = selectDatabase(database_mode);
+        return db.delete(this, key);
+    }
+
     public String getEntityName() {
         return entityName;
     }
@@ -115,12 +120,12 @@ public  abstract class ModelManager<T> extends Observed {
 
 
 
-    public List<Model> filter(Map<String, Object> fitlerFields,int database_option) {
+    public List<T> filter(Map<String, Object> fitlerFields,int database_option) {
         IConnection db = selectDatabase(database_option);
-        return db.filter(this,fitlerFields);
+        return (List<T>) db.filter(this,fitlerFields);
     }
-    public List<Model> filter(Map<String, Object> fitlerFields) {
+    public List<T> filter(Map<String, Object> fitlerFields) {
         IConnection db = selectDatabase();
-        return db.filter(this,fitlerFields);
+        return (List<T>) db.filter(this,fitlerFields);
     }
 }

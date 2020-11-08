@@ -61,7 +61,7 @@ public  class SimpleSessionManager {
                     email = null;
                     password= null;
                     try{
-                        sync();
+                        syncRemote();
                     }
                     catch (Exception e) {
                         e.printStackTrace();
@@ -137,26 +137,40 @@ public  class SimpleSessionManager {
     }
     public  static  void logout(){
         if(user != null) {
+            syncLocal();
             user.unauthenticate();
             firebaseAuth.signOut();
 
 
         }
     }
-    private static void sync(){
+    private static void syncRemote(){
         //enviar la info de la base local a la remota
 
         TaskModel t = new TaskModel(c);
         t.getManager().link(ModelManager.LOCAL_MODE);
         List<TaskModel> all =new ArrayList<>( t.getManager().getAll());
         for(TaskModel task : all){
-            if(!task.isSynchronized()) {
-                task.setSync(1);
-                task.saveLocal();
-                task.saveRemote(firebaseAuth.getCurrentUser().getUid());
-            }
+            task.delete(ModelManager.LOCAL_MODE);
+            task.saveRemote(firebaseAuth.getCurrentUser().getUid());
         }
         t.getManager().link(ModelManager.REMOTE_MODE);
+
+    }
+    private static void syncLocal(){
+        //enviar la info de la base local a la remota
+
+        TaskModel t = new TaskModel(c);
+        t.getManager().link(ModelManager.REMOTE_MODE);
+        Map<String,Object> fitlerFields = new HashMap<>();
+        fitlerFields.put("userid", user.getUuid());
+        List<TaskModel> userTasks = t.getManager().filter(fitlerFields);
+        List<TaskModel> all =new ArrayList<>(userTasks);
+        for(TaskModel task : all){
+            task.delete(ModelManager.REMOTE_MODE);
+            task.saveLocal();
+        }
+        t.getManager().link(ModelManager.LOCAL_MODE);
 
     }
 }

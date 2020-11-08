@@ -30,5 +30,11 @@ public abstract  class Model<T>  {
 
     public abstract boolean validate(Map<String, Object> fitlerFields);
 
-
+    public boolean delete(int database){
+        if(key != null){
+            return getManager().delete(key,database);
+        }
+        return false;
+    }
+    public abstract ModelManager<T> getManager();
 }

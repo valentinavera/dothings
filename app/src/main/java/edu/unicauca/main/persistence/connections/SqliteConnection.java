@@ -68,6 +68,13 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
         }
 
     }
+    public boolean delete(String entity, String key)
+    {
+        SQLiteDatabase wdb = this.getWritableDatabase();
+         boolean delete = wdb.delete(entity, "key" + "=" + key, null) > 0;
+         wdb.close();
+         return delete;
+    }
     public Cursor getAllData(String entity){
 
 
@@ -140,6 +147,16 @@ public  class SqliteConnection implements IConnection {
         return true;
 
     }
+    @Override
+    public boolean delete(ModelManager manager, String key) {
+        connect();
+        String entity = manager.getEntityName();
+
+        db.delete(entity,key);
+        this.linkModelManager(manager);
+        return true;
+
+    }
     private  void linkModelManager(ModelManager manager, boolean notify){
         connect();
         manager.clearCache();
@@ -158,9 +175,12 @@ public  class SqliteConnection implements IConnection {
             for(String column: columnNames) {
                 String field = cursor.getString(i);
                 Class classField = (Class) columnTypes.get(column);
-
-                data.put(column,parseString(field,classField));
-                i++;
+                try {
+                    i++;
+                    data.put(column, parseString(field, classField));
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
             manager.addToCache(manager.makeModel(data));
         } while (cursor.moveToNext());

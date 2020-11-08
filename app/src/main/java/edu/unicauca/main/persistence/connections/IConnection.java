@@ -11,7 +11,10 @@ public interface  IConnection{
    // boolean push(ModelManager manager, Map<String, Object> data);
     boolean update(ModelManager manager, Map<String, Object> data);
     boolean create(ModelManager manager, Map<String, Object> data);
-    void linkModelManager(  final ModelManager m);
+
+    boolean delete(ModelManager manager, String key);
+
+    void linkModelManager(final ModelManager m);
 
 
     List<Model> filter(ModelManager manager,Map<String, Object> fitlerFields);
