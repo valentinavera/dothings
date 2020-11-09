@@ -118,6 +118,7 @@ public class TaskFragment extends Fragment implements Observer {
     @Override
     public void notify(Object observed) {
         Map<String,Object> fitlerFields = new HashMap<>();
+        fitlerFields.put("state","0");
         UserModel u = SimpleSessionManager.getLoginUser();
         if(u.isAuthenticated()) {
             fitlerFields.put("userid", u.getUuid());

@@ -1,5 +1,6 @@
 package edu.unicauca.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -100,6 +101,8 @@ public class RegisterUserFragment extends Fragment implements Observer {
                     public void notify(Object succesfull) {
                         if((boolean)succesfull){
                             Toast.makeText (getContext (),"Registro exitoso",Toast.LENGTH_LONG).show ();
+                            Intent menu = new Intent(getActivity(), MenuActivity.class);
+                            startActivity(menu);
                         }
                     }
                 });
