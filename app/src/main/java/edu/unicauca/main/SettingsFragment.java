@@ -109,7 +109,7 @@ public class SettingsFragment extends Fragment implements Observer {
         infouser = vista.findViewById(R.id.usuarioNombre);
         userModel = SimpleSessionManager.getLoginUser();
         if(userModel.isAuthenticated()){
-            userModel.getName();
+            infouser.setText(userModel.getName());
         }
 
         return vista;
