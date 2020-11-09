@@ -93,12 +93,12 @@ public class UserModel extends Model<UserModel> {
 
     public boolean saveLocal(boolean update) {
         Map<String, Object> user= new HashMap<> ();
-        user.put("name",name);
-        user.put("lastname", lastname);
-        user.put("email", email);
-        user.put("password", password);
-        user.put("isAuthenticated", 1);
-        user.put("uuid", uuid);
+        if(name!=null)user.put("name",name);
+        if(lastname!=null)user.put("lastname", lastname);
+        if(email!=null)user.put("email", email);
+        if(password!=null)user.put("password", password);
+        if(isAuthenticated!=-1)user.put("isAuthenticated", 1);
+        if(uuid!=null)user.put("uuid", uuid);
 
 
         boolean result;

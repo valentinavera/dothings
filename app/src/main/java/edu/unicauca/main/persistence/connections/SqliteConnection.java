@@ -71,7 +71,13 @@ class  SqliteConnectionHelper extends SQLiteOpenHelper {
     public boolean delete(String entity, String key)
     {
         SQLiteDatabase wdb = this.getWritableDatabase();
-         boolean delete = wdb.delete(entity, "key" + "=" + key, null) > 0;
+         boolean delete= false;
+         try {
+            delete=  wdb.delete(entity, "key" + "=" + key, null) >0;
+
+         }catch (Exception e){
+             delete=  wdb.delete(entity, "key != -1", null) >0;
+         }
          wdb.close();
          return delete;
     }
