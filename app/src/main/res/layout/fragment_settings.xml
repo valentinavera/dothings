@@ -14,10 +14,10 @@
         android:src="@drawable/user"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonManage"
-        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintHorizontal_bias="0.313"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.185" />
+        app:layout_constraintVertical_bias="0.175" />
 
     <TextView
         android:id="@+id/textViewSettings"
@@ -96,15 +96,34 @@
         app:layout_constraintVertical_bias="0.683"
         tools:ignore="RtlCompat" />
 
-    <TextView
-        android:id="@+id/usuarioNombre"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/buttonLogout"
+        android:layout_width="345dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/buttonManage"
+        android:background="@color/white"
+        android:drawableStart="@drawable/ic__logout"
+        android:text="@string/Logout"
+        android:textAlignment="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSettings" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.79"
+        tools:ignore="RtlCompat" />
+
+    <TextView
+        android:id="@+id/usuarioNombre"
+        android:layout_width="115dp"
+        android:layout_height="32dp"
+        android:text="@string/UserName"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.166"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSettings"
+        app:layout_constraintVertical_bias="0.258" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

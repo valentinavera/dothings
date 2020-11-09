@@ -29,6 +29,7 @@ public class SettingsFragment extends Fragment implements Observer {
     private Button btnManage;
     private Button btnSychonize;
     private Button btnNotifications;
+    private Button btnLogout;
     private Button btnHelp;
     private TextView infouser;
 
@@ -91,25 +92,33 @@ public class SettingsFragment extends Fragment implements Observer {
         btnManage = vista.findViewById (R.id.buttonManage);
         btnSychonize = vista.findViewById (R.id.buttonSynchronize);
         btnNotifications = vista.findViewById (R.id.buttonNotify);
+        btnLogout= vista.findViewById (R.id.buttonLogout);
         btnHelp = vista.findViewById (R.id.buttonHelp);
-        btnManage.setOnClickListener (new View.OnClickListener () {
+        btnLogout.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
                 userModel = SimpleSessionManager.getLoginUser();
                 if(userModel.isAuthenticated()){
                     SimpleSessionManager.logout();
-                    Toast.makeText (getContext (),"Cerro sesion exitosamente." ,Toast.LENGTH_LONG).show ();
-
-                }else {
+                    Toast.makeText (getContext (),"Cerró sesión exitosamente." ,Toast.LENGTH_LONG).show ();
+                }
+            }
+        });
+        btnManage.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick(View v) {
+                userModel = SimpleSessionManager.getLoginUser();
+                if(!userModel.isAuthenticated()){
                     Intent manage = new Intent(getActivity(), UserActivity.class);
                     startActivity(manage);
+
                 }
             }
         });
         infouser = vista.findViewById(R.id.usuarioNombre);
         userModel = SimpleSessionManager.getLoginUser();
         if(userModel.isAuthenticated()){
-            userModel.getName();
+           infouser.setText (userModel.getName());
         }
 
         return vista;

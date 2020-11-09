@@ -38,4 +38,5 @@
     <string name="Password">Contraseña</string>
     <string name="Register">Registrarme</string>
     <string name="Scheduled_tasks">Tareas programadas</string>
+    <string name="Logout">Cerrar Sesión</string>
 </resources>
