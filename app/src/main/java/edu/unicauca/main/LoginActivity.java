@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements Observer {
                     @Override
                     public void notify(Object succesfull) {
                         if((boolean)succesfull){
-                            final Toast tag = Toast.makeText(getApplicationContext (),"Ejecutando OnCreate()",Toast.LENGTH_SHORT);
+                            final Toast tag = Toast.makeText(getApplicationContext (),"Inicio de sesión exitosa",Toast.LENGTH_SHORT);
                             tag.show();
 
                         }
