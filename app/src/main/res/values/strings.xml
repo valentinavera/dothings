@@ -39,5 +39,9 @@
     <string name="Password">Password</string>
     <string name="Register">Register</string>
     <string name="Scheduled_tasks">Scheduled tasks</string>
+    <string name="Logout">Logout</string>
+    <string name="Email">Email</string>
+    <string name="Login">Login</string>
+
 
 </resources>

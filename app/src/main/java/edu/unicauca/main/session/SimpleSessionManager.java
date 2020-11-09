@@ -122,10 +122,10 @@ public  class SimpleSessionManager {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     if(save) {
-                        user.setKey(firebaseAuth.getCurrentUser().getUid());
+                      //  user.setKey(firebaseAuth.getCurrentUser().getUid());
                         user.setUuid(firebaseAuth.getCurrentUser().getUid());
 
-                        user.save();
+                        user.getManager().notify_observers();
                         //user.saveLocal(false);
                     }
 

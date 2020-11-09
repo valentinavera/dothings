@@ -95,9 +95,6 @@ public class RegisterUserFragment extends Fragment implements Observer {
                 String username = etUsername.getText ().toString ();
                 String password = etPassword.getText ().toString ();
 
-
-
-
                 SimpleSessionManager.createUser(name, lastname,username,password, new Observer() {
                     @Override
                     public void notify(Object succesfull) {
@@ -106,8 +103,7 @@ public class RegisterUserFragment extends Fragment implements Observer {
                         }
                     }
                 });
-                //Cerrar Sesion
-                //SimpleSessionManager.logout();
+
             }
         });
         return  vista;
