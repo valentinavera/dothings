@@ -101,9 +101,10 @@ public class SettingsFragment extends Fragment implements Observer {
                 if(userModel.isAuthenticated()){
                     SimpleSessionManager.logout();
                     Toast.makeText (getContext (),"Cerró sesión exitosamente." ,Toast.LENGTH_LONG).show ();
+                    Intent login = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(login);
                 }
-                Intent login = new Intent(getActivity(), LoginActivity.class);
-                startActivity(login);
+
             }
         });
         btnManage.setOnClickListener (new View.OnClickListener () {
