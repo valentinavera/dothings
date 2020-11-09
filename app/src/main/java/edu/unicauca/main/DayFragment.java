@@ -15,6 +15,7 @@ import java.util.Map;
 
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
+import edu.unicauca.main.persistence.models.Model;
 import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.persistence.models.UserModel;
 import edu.unicauca.main.session.SimpleSessionManager;

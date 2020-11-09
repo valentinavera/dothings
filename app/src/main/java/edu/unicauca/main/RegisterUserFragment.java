@@ -94,16 +94,15 @@ public class RegisterUserFragment extends Fragment implements Observer {
                 String lastname = etLastname.getText ().toString ();
                 String username = etUsername.getText ().toString ();
                 String password = etPassword.getText ().toString ();
-                userModel = new UserModel(name,lastname,username,password);
-                userModel.save();
-                Toast.makeText (getContext (),"Registro exitoso",Toast.LENGTH_LONG).show ();
+
+
 
 
                 SimpleSessionManager.createUser(name, lastname,username,password, new Observer() {
                     @Override
                     public void notify(Object succesfull) {
                         if((boolean)succesfull){
-
+                            Toast.makeText (getContext (),"Registro exitoso",Toast.LENGTH_LONG).show ();
                         }
                     }
                 });

@@ -98,6 +98,7 @@ public class SettingsFragment extends Fragment implements Observer {
                 userModel = SimpleSessionManager.getLoginUser();
                 if(userModel.isAuthenticated()){
                     SimpleSessionManager.logout();
+                    Toast.makeText (getContext (),"Cerro sesion exitosamente." ,Toast.LENGTH_LONG).show ();
 
                 }else {
                     Intent manage = new Intent(getActivity(), UserActivity.class);
