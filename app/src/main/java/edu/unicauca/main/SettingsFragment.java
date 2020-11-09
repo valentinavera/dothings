@@ -103,6 +103,9 @@ public class SettingsFragment extends Fragment implements Observer {
                     Toast.makeText (getContext (),"Cerró sesión exitosamente." ,Toast.LENGTH_LONG).show ();
                     Intent login = new Intent(getActivity(), LoginActivity.class);
                     startActivity(login);
+                }else{
+                    Intent login = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(login);
                 }
 
             }
