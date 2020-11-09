@@ -38,5 +38,6 @@
     <string name="UserName">Username</string>
     <string name="Password">Password</string>
     <string name="Register">Register</string>
+    <string name="Scheduled_tasks">Scheduled tasks</string>
 
 </resources>

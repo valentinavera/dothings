@@ -37,10 +37,10 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     private EditText taskNotes;
     private Button saveUpdate;
     private Button infoList;
-    private long pDateTask;
-    private long pTimeTask;
-    private Date changeDate;
-    private Date changeTime;
+    private long pDateTask=0;
+    private long pTimeTask=0;
+    private long changeDate=0;
+    private long changeTime=0;
     Calendar calendarResult = Calendar.getInstance();
 
     public SheetDialogTaskClass(TaskModel objTaskModel) {
@@ -90,7 +90,8 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
                         SimpleDateFormat timeformat=new SimpleDateFormat("HH:mm a");
                         String formatedDate = timeformat.format(calendarResult.getTime());
                         hourTask.setText(formatedDate);
-                        changeTime= calendarResult.getTime ();
+                        Date time= calendarResult.getTime ();
+                        changeTime= time.getTime ();
                     }
                 }, calendarResult.get(Calendar.HOUR_OF_DAY), calendarResult.get(Calendar.MINUTE), false);
                 timePickerDialog.show();
@@ -127,21 +128,25 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
         saveUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    objTask.getKey ();
-                    objTask.setName(editNameText.getText().toString());
-                    objTask.setDescription(taskNotes.getText ().toString ());
+                objTask.getKey ();
+                objTask.setName(editNameText.getText().toString());
+                objTask.setDescription(taskNotes.getText ().toString ());
 
-                if((changeDate==null)||(changeTime==null)){
-                        Date d = new Date();
-                        objTask.setTimeDate(d.getTime());
-                        objTask.setHour(d.getTime());
-                    }else{
-                        objTask.setTimeDate(changeDate.getTime());
-                        objTask.setHour(changeTime.getTime());
-                    }
-                    objTask.save();
-                    dismiss();
+                if((changeDate==0)){
+                    objTask.setTimeDate(pDateTask);
+
+                }else{
+                    objTask.setTimeDate(changeDate);
+
                 }
+                if((changeTime==0)){
+                    objTask.setHour(pTimeTask);
+                }else{
+                    objTask.setHour(changeTime);
+                }
+                objTask.save();
+                dismiss();
+            }
 
         });
 
@@ -152,13 +157,14 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     public void dateTaskDatePicker(DatePicker datePicker, int year, int mes, int dia){
 
         calendarResult.set(Calendar.YEAR,year);
-        calendarResult.set(Calendar.MONTH,mes+1);
+        calendarResult.set(Calendar.MONTH,mes);
         calendarResult.set(Calendar.DAY_OF_MONTH,dia);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date date = calendarResult.getTime();
-        changeDate=date;
+        changeDate=date.getTime ();
         String fechaDeTarea= simpleDateFormat.format(date);
         dateTask.setText(fechaDeTarea);
     }
 
-   }
+}
+

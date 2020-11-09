@@ -19,15 +19,31 @@
             android:textAlignment="center"
             android:textSize="24sp" />
 
-        <CalendarView
+
+        <sun.bob.mcalendarview.MCalendarView
             android:id="@+id/calendar"
             android:layout_width="match_parent"
-            android:layout_height="403dp" />
-        <sun.bob.mcalendarview.MCalendarView
-            android:layout_width="400dp"
-            android:layout_height="400dp"
-            tools:context=".ScheduleFragment"
-            />
+            android:layout_height="361dp" />
+
+        <TextView
+            android:id="@+id/textST"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Scheduled_tasks"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/textViewTks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"/>
+
     </LinearLayout>
 
 </FrameLayout>

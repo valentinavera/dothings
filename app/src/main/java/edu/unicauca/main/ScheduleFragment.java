@@ -20,19 +20,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.core.view.Event;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
 import sun.bob.mcalendarview.MCalendarView;
+import sun.bob.mcalendarview.listeners.OnDateClickListener;
+import sun.bob.mcalendarview.vo.DateData;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,9 +48,12 @@ import sun.bob.mcalendarview.MCalendarView;
 public class ScheduleFragment extends Fragment implements Observer {
     private TaskModel taskModel ;
     private long date;
+    private TextView mTask;
+    private TextView mDescription;
     private Context mContext;
-      //private DatabaseReference mDataBase;
-    private CalendarView mCalendarView;
+    private List<TaskModel> tasks;
+    //private DatabaseReference mDataBase;
+    //private CalendarView mCalendarView;
     private static final String TAG = "CalendarActivity";
 
     // TODO: Rename parameter arguments, choose names that match
@@ -101,30 +110,47 @@ public class ScheduleFragment extends Fragment implements Observer {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View vista = inflater.inflate (R.layout.fragment_schedule, container, false);
-        Calendar calendar = Calendar.getInstance();
-        Calendar calendar1 = Calendar.getInstance();
-        List<Calendar> calendars = new ArrayList<>();
-        calendars.add (calendar);
-        calendars.add (calendar1);
-        calendar.set(2020, 10, 5);
-        calendar1.set(2020, 10, 26);
-        mCalendarView = (CalendarView) vista.findViewById (R.id.calendar);
-        date = calendar.getTimeInMillis ();
-        mCalendarView.setDate(calendar.getTimeInMillis ());
-        mCalendarView.setDate(calendar1.getTimeInMillis ());
-        mCalendarView.setOnDateChangeListener (new CalendarView.OnDateChangeListener () {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
-                String date = (year) + "/" + (month+1) +"/" + dayOfMonth;
-                Log.d(TAG, "onSelectedDayChange: date " +date);
+        MCalendarView calendarView = (MCalendarView) vista.findViewById (R.id.calendar);
+        mTask= vista.findViewById (R.id.textViewTks);
+        mDescription= vista.findViewById (R.id.textView);
+        Calendar calendar = Calendar.getInstance ();
+        tasks = taskModel.getManager().getAll();
+        for(int i=0; i<tasks.size ();i++){
+
+            calendar.setTimeInMillis (tasks.get(i).getTimeDate ());
+            int year = calendar.get (Calendar.YEAR);
+            int mes = calendar.get (Calendar.MONTH);
+            int dia = calendar.get (Calendar.DAY_OF_MONTH);
+            calendarView.markDate (year,mes+1,dia);
+        }
+
+
+        calendarView.setOnDateClickListener (new OnDateClickListener () {
+            @Override
+            public void onDateClick(View view, DateData date) {
+
+                for(int i=0; i<tasks.size ();i++){
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    String fechaDeTarea= simpleDateFormat.format(tasks.get (i).getTimeDate ());
+                    String p = date.getDayString ()+"/"+date.getMonthString ()+"/"+date.getYear ();
+
+
+                    if(fechaDeTarea.compareTo (p)==0){
+                        Toast.makeText(getActivity (), "TAREA : " + tasks.get (i).getName (), Toast.LENGTH_LONG).show();
+                        mTask.setText (tasks.get (i).getName ());
+                        mDescription.setText (tasks.get (i).getDescription ());
+                    }
+
+                }
+
             }
         });
+
+
         this.notify(null);
         return vista;
     }
-
-
 
     @Override
     public void notify(Object observed) {

@@ -36,4 +36,6 @@
     <string name="Lastname">Apellido</string>
     <string name="UserName">Usuario</string>
     <string name="Password">Contraseña</string>
+    <string name="Register">Registrarme</string>
+    <string name="Scheduled_tasks">Tareas programadas</string>
 </resources>
