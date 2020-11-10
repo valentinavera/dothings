@@ -32,7 +32,7 @@ public class RegisterUserFragment extends Fragment implements Observer {
     private EditText etPassword;
     private TextView tvState;
     private Button btnRegister;
-    public String state = "false";
+    
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -92,7 +92,7 @@ public class RegisterUserFragment extends Fragment implements Observer {
         etUsername= vista.findViewById (R.id.editTextUsername);
         etPassword= vista.findViewById (R.id.editTextPassword);
         btnRegister= vista.findViewById (R.id.buttonRegister);
-        tvState = vista.findViewById (R.id.textState);
+        
         btnRegister.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
@@ -105,7 +105,7 @@ public class RegisterUserFragment extends Fragment implements Observer {
                     @Override
                     public void notify(Object succesfull) {
                         if((boolean)succesfull){
-                            state = "true";
+                           
                             Toast.makeText (getContext (),"Registro exitoso",Toast.LENGTH_LONG).show ();
                             Intent menu = new Intent(getActivity(), MenuActivity.class);
                             startActivity(menu);
