@@ -1,5 +1,6 @@
 package edu.unicauca.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.unicauca.main.patterns.observer.Observed;
@@ -28,7 +30,10 @@ public class RegisterUserFragment extends Fragment implements Observer {
     private EditText etLastname;
     private EditText etUsername;
     private EditText etPassword;
+    private TextView tvState;
     private Button btnRegister;
+    public String state = "false";
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -87,6 +92,7 @@ public class RegisterUserFragment extends Fragment implements Observer {
         etUsername= vista.findViewById (R.id.editTextUsername);
         etPassword= vista.findViewById (R.id.editTextPassword);
         btnRegister= vista.findViewById (R.id.buttonRegister);
+        tvState = vista.findViewById (R.id.textState);
         btnRegister.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
@@ -94,12 +100,19 @@ public class RegisterUserFragment extends Fragment implements Observer {
                 String lastname = etLastname.getText ().toString ();
                 String username = etUsername.getText ().toString ();
                 String password = etPassword.getText ().toString ();
-
                 SimpleSessionManager.createUser(name, lastname,username,password, new Observer() {
+
                     @Override
                     public void notify(Object succesfull) {
                         if((boolean)succesfull){
+                            state = "true";
                             Toast.makeText (getContext (),"Registro exitoso",Toast.LENGTH_LONG).show ();
+                            Intent menu = new Intent(getActivity(), MenuActivity.class);
+                            startActivity(menu);
+                        }else{
+                            Toast.makeText (getContext (),"No es posible realizar el registro, intente más tarde",Toast.LENGTH_LONG).show ();
+                            Intent menu = new Intent(getActivity(), MenuActivity.class);
+                            startActivity(menu);
                         }
                     }
                 });

@@ -15,7 +15,7 @@ import edu.unicauca.main.persistence.managers.TaskModelManager;
 import edu.unicauca.main.persistence.managers.UserModelManager;
 
 public class UserModel extends Model<UserModel> {
-    private   static ModelManager objects ;
+    private  static ModelManager objects ;
     private String name;
     private String lastname;
     private String email;
@@ -145,9 +145,11 @@ public class UserModel extends Model<UserModel> {
     public void setPassword(String password) {
         this.password = password;
     }
+
     public ModelManager getManager(){
         return objects;
     }
+
     public  boolean isAuthenticated(){
         return isAuthenticated==1;
 

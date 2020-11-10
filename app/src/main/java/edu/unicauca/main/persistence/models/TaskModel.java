@@ -193,13 +193,6 @@ public  class TaskModel extends Model<TaskModel> {
     public void setHour(long timeTask) {
         this.hour = timeTask;
     }
-    public ArrayList<String> getDates() {
-        return dates;
-    }
-
-    public void setDates(ArrayList<String> dates) {
-        this.dates = dates;
-    }
     @Override
     public ModelManager<TaskModel> getManager(){
         return objects;

@@ -44,6 +44,7 @@ dependencies {
     implementation 'org.mongodb:mongo-java-driver:3.12.7'
     compile 'sun.bob:mcalendarview:1.0.0'
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+    implementation "com.android.support:support-compat:28.0.0"
 
 
 

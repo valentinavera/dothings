@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import edu.unicauca.main.persistence.models.TaskModel;
@@ -14,6 +15,7 @@ import edu.unicauca.main.persistence.models.UserModel;
 import static edu.unicauca.main.R.id.contentfragment;
 
 public class MenuActivity extends AppCompatActivity {
+
     private TaskModel taskModel ;
     private UserModel userModel;
     TaskFragment taskfrag;
@@ -37,6 +39,8 @@ public class MenuActivity extends AppCompatActivity {
         userModel = new UserModel(getApplicationContext());
         taskfrag = TaskFragment.newInstance(taskModel);
         getSupportFragmentManager().beginTransaction().add(contentfragment, taskfrag).commit();
+
+
 
     }
 

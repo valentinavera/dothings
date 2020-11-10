@@ -35,9 +35,14 @@ public class LoginActivity extends AppCompatActivity implements Observer {
                     @Override
                     public void notify(Object succesfull) {
                         if((boolean)succesfull){
-                            final Toast tag = Toast.makeText(getApplicationContext (),"Ejecutando OnCreate()",Toast.LENGTH_SHORT);
+                            final Toast tag = Toast.makeText(getApplicationContext (),"Sincronización exitosa",Toast.LENGTH_SHORT);
                             tag.show();
 
+                        }else{
+                            final Toast tag = Toast.makeText(getApplicationContext (),"Error al sincronizar datos, verifique los datos",Toast.LENGTH_SHORT);
+                            tag.show();
+                            Intent login = new Intent (getApplicationContext (), LoginActivity.class);
+                            startActivity (login);
                         }
                     }
 

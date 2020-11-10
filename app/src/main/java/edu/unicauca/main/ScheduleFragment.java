@@ -110,7 +110,6 @@ public class ScheduleFragment extends Fragment implements Observer {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View vista = inflater.inflate (R.layout.fragment_schedule, container, false);
-
         MCalendarView calendarView = (MCalendarView) vista.findViewById (R.id.calendar);
         mTask= vista.findViewById (R.id.textViewTks);
         mDescription= vista.findViewById (R.id.textView);

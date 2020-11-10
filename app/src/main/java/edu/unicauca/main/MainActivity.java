@@ -7,10 +7,14 @@ import android.view.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
+
+import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.persistence.models.UserModel;
 import edu.unicauca.main.session.SimpleSessionManager;
 
 public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +26,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+
+
     public void nextView(View view){
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
+
+            Intent intent = new Intent (this, MenuActivity.class);
+            startActivity (intent);
+
+
+
     }
 }

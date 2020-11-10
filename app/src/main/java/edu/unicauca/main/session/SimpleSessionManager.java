@@ -35,7 +35,7 @@ public  class SimpleSessionManager {
         c = pc;
         if(user==null) user = new UserModel(c);
         loadUser();
-       login();
+        login();
 
     }
     private static void login(){
