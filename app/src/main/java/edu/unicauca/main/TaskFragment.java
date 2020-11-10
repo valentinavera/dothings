@@ -118,12 +118,14 @@ public class TaskFragment extends Fragment implements Observer {
     @Override
     public void notify(Object observed) {
         Map<String,Object> fitlerFields = new HashMap<>();
+        fitlerFields.put("state","0");
         UserModel u = SimpleSessionManager.getLoginUser();
         if(u.isAuthenticated()) {
             fitlerFields.put("userid", u.getUuid());
             tasks = taskModel.getManager().filter(fitlerFields);
         }else{
-            tasks = taskModel.getManager().getAll();
+            //tasks = taskModel.getManager().getAll();
+            tasks = taskModel.getManager().filter(fitlerFields);
         }
 
         mAdapter = new TaskAdapter (tasks, R.layout.tareas_view);
