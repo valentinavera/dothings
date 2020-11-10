@@ -41,4 +41,6 @@
     <string name="Logout">Cerrar Sesión</string>
     <string name="Email">Correo</string>
     <string name="Login">Iniciar Sesión</string>
+    <string name="experience">Tarea Completada, experiencia +2</string>
+
 </resources>
