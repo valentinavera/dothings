@@ -47,7 +47,6 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     private long changeTime=0;
     private ImageButton trashButton;
     Calendar calendarResult = Calendar.getInstance();
-    private ImageButton trashButton;
 
     public SheetDialogTaskClass(TaskModel objTaskModel) {
         this.objTask = objTaskModel;

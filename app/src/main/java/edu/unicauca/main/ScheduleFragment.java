@@ -120,6 +120,8 @@ public class ScheduleFragment extends Fragment implements Observer {
         tasks = taskModel.getManager().getAll ();
         userModel = SimpleSessionManager.getLoginUser();
         for(int i=0; i<tasks.size ();i++){
+
+            if(tasks.get (i).getState ().compareTo ("3")!=0){
             if(userModel.isAuthenticated ()) {
                 if(userModel.getUuid ().compareTo (tasks.get (i).getUserid ())==0){
                 calendar.setTimeInMillis (tasks.get (i).getTimeDate ());
@@ -133,6 +135,7 @@ public class ScheduleFragment extends Fragment implements Observer {
             int mes = calendar.get (Calendar.MONTH);
             int dia = calendar.get (Calendar.DAY_OF_MONTH);
             calendarView.markDate (year, mes + 1, dia);
+            }
             }
         }
 
