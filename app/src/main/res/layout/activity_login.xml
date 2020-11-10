@@ -51,11 +51,12 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="109dp"
-        android:layout_height="40dp"
+        android:layout_width="247dp"
+        android:layout_height="37dp"
         android:text="@string/Login"
         android:textColor="@color/black"
         android:textSize="24sp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.556"
