@@ -136,7 +136,7 @@ public class SettingsFragment extends Fragment implements Observer {
                 if(userModel.isAuthenticated()){
                     SimpleSessionManager.logout();
                     Toast.makeText (getContext (),"Sincronización local." ,Toast.LENGTH_LONG).show ();
-                    Intent userMenu = new Intent(getActivity(), UserActivity.class);
+                    Intent userMenu = new Intent(getActivity(), MenuActivity.class);
                     startActivity(userMenu);
 
                 }

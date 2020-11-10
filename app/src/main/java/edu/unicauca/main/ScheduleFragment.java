@@ -36,6 +36,8 @@ import java.util.stream.Stream;
 import edu.unicauca.main.persistence.models.TaskModel;
 import edu.unicauca.main.patterns.observer.Observed;
 import edu.unicauca.main.patterns.observer.Observer;
+import edu.unicauca.main.persistence.models.UserModel;
+import edu.unicauca.main.session.SimpleSessionManager;
 import sun.bob.mcalendarview.MCalendarView;
 import sun.bob.mcalendarview.listeners.OnDateClickListener;
 import sun.bob.mcalendarview.vo.DateData;
@@ -52,6 +54,7 @@ public class ScheduleFragment extends Fragment implements Observer {
     private TextView mDescription;
     private Context mContext;
     private List<TaskModel> tasks;
+    private UserModel userModel;
     //private DatabaseReference mDataBase;
     //private CalendarView mCalendarView;
     private static final String TAG = "CalendarActivity";
@@ -114,14 +117,23 @@ public class ScheduleFragment extends Fragment implements Observer {
         mTask= vista.findViewById (R.id.textViewTks);
         mDescription= vista.findViewById (R.id.textView);
         Calendar calendar = Calendar.getInstance ();
-        tasks = taskModel.getManager().getAll();
+        tasks = taskModel.getManager().getAll ();
+        userModel = SimpleSessionManager.getLoginUser();
         for(int i=0; i<tasks.size ();i++){
-
-            calendar.setTimeInMillis (tasks.get(i).getTimeDate ());
+            if(userModel.isAuthenticated ()) {
+                if(userModel.getUuid ().compareTo (tasks.get (i).getUserid ())==0){
+                calendar.setTimeInMillis (tasks.get (i).getTimeDate ());
+                int year = calendar.get (Calendar.YEAR);
+                int mes = calendar.get (Calendar.MONTH);
+                int dia = calendar.get (Calendar.DAY_OF_MONTH);
+                calendarView.markDate (year, mes + 1, dia);}
+            }else{
+            calendar.setTimeInMillis (tasks.get (i).getTimeDate ());
             int year = calendar.get (Calendar.YEAR);
             int mes = calendar.get (Calendar.MONTH);
             int dia = calendar.get (Calendar.DAY_OF_MONTH);
-            calendarView.markDate (year,mes+1,dia);
+            calendarView.markDate (year, mes + 1, dia);
+            }
         }
 
 
@@ -135,7 +147,7 @@ public class ScheduleFragment extends Fragment implements Observer {
                     String p = date.getDayString ()+"/"+date.getMonthString ()+"/"+date.getYear ();
 
 
-                    if(fechaDeTarea.compareTo (p)==0){
+                    if((fechaDeTarea.compareTo (p)==0)){
                         Toast.makeText(getActivity (), "TAREA : " + tasks.get (i).getName (), Toast.LENGTH_LONG).show();
                         mTask.setText (tasks.get (i).getName ());
                         mDescription.setText (tasks.get (i).getDescription ());

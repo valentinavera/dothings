@@ -113,7 +113,7 @@
             android:text="@string/ButtonSve" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/imageTrashButton"
             android:layout_width="43dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
