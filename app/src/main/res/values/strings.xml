@@ -42,6 +42,7 @@
     <string name="Logout">Logout</string>
     <string name="Email">Email</string>
     <string name="Login">Login</string>
-    <string name="experience">Task Completed, experience +2</string>
+    <string name="experience">Tarea Completada, experiencia +2</string>
+
 
 </resources>

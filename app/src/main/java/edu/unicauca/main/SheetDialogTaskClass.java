@@ -3,6 +3,7 @@ package edu.unicauca.main;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,6 +47,7 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     private long changeTime=0;
     private ImageButton trashButton;
     Calendar calendarResult = Calendar.getInstance();
+    private ImageButton trashButton;
 
     public SheetDialogTaskClass(TaskModel objTaskModel) {
         this.objTask = objTaskModel;
@@ -53,13 +56,14 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_modal_edit_task,container,false);
+        final View view = inflater.inflate(R.layout.fragment_modal_edit_task,container,false);
         editNameText = view.findViewById(R.id.editNameTask);
         taskNotes = view.findViewById (R.id.textNotes);
         dateTask= view.findViewById (R.id.EditDate);
         trashButton = view.findViewById(R.id.imageTrashButton);
         hourTask= view.findViewById (R.id.buttonReminder);
         saveUpdate = view.findViewById(R.id.saveButton);
+        trashButton = view.findViewById(R.id.imageTrashButton);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         pDateTask = objTask.getTimeDate();
         String dateString = sdf.format(pDateTask);
@@ -129,6 +133,18 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
             }
         });
 
+        trashButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                objTask.getKey();
+                objTask.setState("3");
+                objTask.save();
+                View aux = getActivity().findViewById(R.id.contentfragment);
+                Snackbar.make(aux,R.string.experience,Snackbar.LENGTH_SHORT).show();
+                dismiss();
+            }
+        });
+
         saveUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,4 +199,3 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     }
 
 }
-

@@ -252,6 +252,10 @@ public  class TaskModel extends Model<TaskModel> {
 
     }
 
+    public String getUserid() {
+        return userid;
+    }
+
     public void setUser(String userid) {
         this.userid=  userid;
     }
