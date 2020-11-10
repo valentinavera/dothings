@@ -3,6 +3,7 @@ package edu.unicauca.main;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,13 +12,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -42,6 +46,7 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     private long changeDate=0;
     private long changeTime=0;
     Calendar calendarResult = Calendar.getInstance();
+    private ImageButton trashButton;
 
     public SheetDialogTaskClass(TaskModel objTaskModel) {
         this.objTask = objTaskModel;
@@ -50,12 +55,13 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_modal_edit_task,container,false);
+        final View view = inflater.inflate(R.layout.fragment_modal_edit_task,container,false);
         editNameText = view.findViewById(R.id.editNameTask);
         taskNotes = view.findViewById (R.id.textNotes);
         dateTask= view.findViewById (R.id.EditDate);
         hourTask= view.findViewById (R.id.buttonReminder);
         saveUpdate = view.findViewById(R.id.saveButton);
+        trashButton = view.findViewById(R.id.imageTrashButton);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         pDateTask = objTask.getTimeDate();
         String dateString = sdf.format(pDateTask);
@@ -122,6 +128,18 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
                     infoList.setText(R.string.change_ToMyDayList);
                 }
                 objTask.save();
+            }
+        });
+
+        trashButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                objTask.getKey();
+                objTask.setState("3");
+                objTask.save();
+                View aux = getActivity().findViewById(R.id.contentfragment);
+                Snackbar.make(aux,R.string.experience,Snackbar.LENGTH_SHORT).show();
+                dismiss();
             }
         });
 

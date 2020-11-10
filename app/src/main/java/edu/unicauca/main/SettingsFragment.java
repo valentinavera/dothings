@@ -94,6 +94,15 @@ public class SettingsFragment extends Fragment implements Observer {
         btnNotifications = vista.findViewById (R.id.buttonNotify);
         btnLogout= vista.findViewById (R.id.buttonLogout);
         btnHelp = vista.findViewById (R.id.buttonHelp);
+        infouser = vista.findViewById(R.id.usuarioNombre);
+
+        userModel = SimpleSessionManager.getLoginUser();
+        if(userModel.isAuthenticated()){
+            infouser.setText (userModel.getName());
+        }
+        //else{ btnLogout.setVisibility(vista.GONE); }
+
+
         btnLogout.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
@@ -107,25 +116,19 @@ public class SettingsFragment extends Fragment implements Observer {
                     Intent login = new Intent(getActivity(), LoginActivity.class);
                     startActivity(login);
                 }
-
             }
         });
         btnManage.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
-                userModel = SimpleSessionManager.getLoginUser();
                 if(!userModel.isAuthenticated()){
                     Intent manage = new Intent(getActivity(), UserActivity.class);
+                    //btnLogout.setVisibility(vista.VISIBLE);
                     startActivity(manage);
-
                 }
             }
         });
-        infouser = vista.findViewById(R.id.usuarioNombre);
-        userModel = SimpleSessionManager.getLoginUser();
-        if(userModel.isAuthenticated()){
-           infouser.setText (userModel.getName());
-        }
+
 
         return vista;
     }

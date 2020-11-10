@@ -17,11 +17,10 @@ public class LoginActivity extends AppCompatActivity implements Observer {
     private EditText etEmail;
     private EditText etPassword;
     private Button btLogin;
-    private UserModel userModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
-        SimpleSessionManager.init(this);
+       // SimpleSessionManager.init(this);
         setContentView (R.layout.activity_login);
         etEmail = findViewById (R.id.editTextTextEmailAddress);
         etPassword = findViewById (R.id.editTextTextPassword);

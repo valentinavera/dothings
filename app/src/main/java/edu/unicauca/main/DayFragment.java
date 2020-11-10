@@ -103,7 +103,9 @@ public class DayFragment extends Fragment implements Observer {
         if(u.isAuthenticated()) {
             fitlerFields.put("userid", u.getUuid());
         }
-        mTaskList = taskModel.getManager().filter(fitlerFields);
+        else {
+            mTaskList = taskModel.getManager().filter(fitlerFields);
+        }
         mAdapter = new TaskAdapter (mTaskList, R.layout.tareas_view);
         mAdapter.setOnClickListen(new View.OnClickListener() {
             @Override

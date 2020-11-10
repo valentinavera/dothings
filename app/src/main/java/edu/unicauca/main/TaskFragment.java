@@ -124,7 +124,8 @@ public class TaskFragment extends Fragment implements Observer {
             fitlerFields.put("userid", u.getUuid());
             tasks = taskModel.getManager().filter(fitlerFields);
         }else{
-            tasks = taskModel.getManager().getAll();
+            tasks = taskModel.getManager().filter(fitlerFields);
+            //tasks = taskModel.getManager().getAll();
         }
 
         mAdapter = new TaskAdapter (tasks, R.layout.tareas_view);
