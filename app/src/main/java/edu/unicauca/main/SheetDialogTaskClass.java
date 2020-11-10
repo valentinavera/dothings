@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -41,6 +43,7 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
     private long pTimeTask=0;
     private long changeDate=0;
     private long changeTime=0;
+    private ImageButton trashButton;
     Calendar calendarResult = Calendar.getInstance();
 
     public SheetDialogTaskClass(TaskModel objTaskModel) {
@@ -54,6 +57,7 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
         editNameText = view.findViewById(R.id.editNameTask);
         taskNotes = view.findViewById (R.id.textNotes);
         dateTask= view.findViewById (R.id.EditDate);
+        trashButton = view.findViewById(R.id.imageTrashButton);
         hourTask= view.findViewById (R.id.buttonReminder);
         saveUpdate = view.findViewById(R.id.saveButton);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -148,6 +152,18 @@ public class SheetDialogTaskClass extends BottomSheetDialogFragment {
                 dismiss();
             }
 
+        });
+
+        trashButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                objTask.getKey();
+                objTask.setState("3");
+                objTask.save();
+                v = getActivity().findViewById(R.id.contentfragment);
+                Snackbar.make(v,R.string.experience,Snackbar.LENGTH_SHORT).show();
+                dismiss();
+            }
         });
 
 
